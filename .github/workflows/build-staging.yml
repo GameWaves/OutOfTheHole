@@ -16,7 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [linux, windows, mac]
+        platform:
+          - name: Windows
+            file: game.exe
+          - name: MacOS
+            file: game.zip
+          - name: Linux
+            file: game
     steps:
       - uses: actions/checkout@v2
         with:
@@ -25,11 +31,11 @@ jobs:
         id: build
         uses: manleydev/build-godot-action@v1.5.0
         with:
-          name: out-of-the-hole-staging-${{ github.event.number }}
-          preset: ${{ matrix.platform }}
+          name: ${{ matrix.platform.file }}
+          preset: ${{ matrix.platform.name }}
           debugMode: "true"
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Client - ${{ matrix.platform }}
+          name: Client - ${{ matrix.platform.name }}
           path: ${{ github.workspace }}/${{ steps.build.outputs.build }}
