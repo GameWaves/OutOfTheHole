@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using OutOfTheHole.scripts;
 
 public partial class MultiplayerController : Control
 {
@@ -34,6 +35,7 @@ public partial class MultiplayerController : Control
 	private void ConnectedToServer()
 	{
 		GD.Print("Connected to server");
+		RpcId(1, "sendPlayerInformation", GetNode<LineEdit>("LineEdit").Text, Multiplayer.GetUniqueId());
 	}
 
 	/// <summary>
@@ -43,7 +45,7 @@ public partial class MultiplayerController : Control
 	/// <exception cref="NotImplementedException"></exception>
 	private void PeerDisconnected(long id)
 	{
-		GD.Print("Player disconnected: " + id.ToString());
+		GD.Print("PlayerInfo disconnected: " + id.ToString());
 	}
 
 	/// <summary>
@@ -53,7 +55,7 @@ public partial class MultiplayerController : Control
 	/// <exception cref="NotImplementedException"></exception>
 	private void PeerConnected(long id)
 	{
-		GD.Print("Player connected: " + id.ToString());
+		GD.Print("PlayerInfo connected: " + id.ToString());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -76,6 +78,7 @@ public partial class MultiplayerController : Control
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
 		GD.Print("Waiting for Players!");
+		sendPlayerInformation(GetNode<LineEdit>("LineEdit").Text, 1);
 	}
 	
 	/// <summary>
@@ -102,9 +105,40 @@ public partial class MultiplayerController : Control
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void startGame()
 	{
+		foreach (var item in GameManager.Players)
+		{
+			GD.Print(item.Name + " is playing");
+		}
 		var scene = ResourceLoader.Load<PackedScene>("res://test_scene.tscn").Instantiate<Node2D>();
 		GetTree().Root.AddChild(scene);
 		this.Hide();
+	}
+
+	/// <summary>
+	/// Send player information to all client
+	/// </summary>
+	/// <param name="name">The name of the player</param>
+	/// <param name="id">The id of the player</param>
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+	private void sendPlayerInformation(string name, int id)
+	{
+		PlayerInfo playerInfo = new PlayerInfo()
+		{
+			Name = name,
+			Id = id
+		};
+		if (!GameManager.Players.Contains(playerInfo))
+		{
+			GameManager.Players.Add(playerInfo);
+		}
+
+		if (Multiplayer.IsServer())
+		{
+			foreach (var item in GameManager.Players)
+			{
+				Rpc("sendPlayerInformation", name, id);
+			}
+		}
 	}
 }
 
