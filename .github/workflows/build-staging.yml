@@ -2,7 +2,14 @@ name: Build Godot Project
 
 on:
   push: 
-    - main
+    branches:
+      - feature/*
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
 
 jobs:
   Godot:
@@ -18,7 +25,7 @@ jobs:
         id: build
         uses: manleydev/build-godot-action@v1.4.1
         with:
-          name: out-of-the-hole-prod
+          name: out-of-the-hole-staging-${{ github.event.number }}
           preset: ${{ matrix.platform }}
           debugMode: "true"
       - name: Upload Artifact
