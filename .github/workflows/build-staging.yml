@@ -23,7 +23,7 @@ jobs:
           lfs: true
       - name: Build
         id: build
-        uses: manleydev/build-godot-action@v1.4.1
+        uses: manleydev/build-godot-action@v1.5.0
         with:
           name: out-of-the-hole-staging-${{ github.event.number }}
           preset: ${{ matrix.platform }}
