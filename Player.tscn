@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://c1fge0yxmuyh1"]
+
+[ext_resource type="Script" path="res://mvplayer.cs" id="1_0colk"]
+[ext_resource type="Texture2D" uid="uid://ba0jecqfacke5" path="res://Sprite/Placeholder-idle1.png" id="2_t8c00"]
+[ext_resource type="Texture2D" uid="uid://b0vwnuak8a5nl" path="res://Sprite/Placeholder-idle2.png" id="3_w0m62"]
+[ext_resource type="Texture2D" uid="uid://c34bhqow2ei6" path="res://Sprite/Placeholder-idle3.png" id="4_1v6wf"]
+[ext_resource type="Texture2D" uid="uid://0w5l0iu1mdhy" path="res://Sprite/Placeholder-Left2.png" id="5_had78"]
+[ext_resource type="Texture2D" uid="uid://dcmvt61iyaoff" path="res://Sprite/Placeholder-Left1.png" id="6_vwqe2"]
+[ext_resource type="Texture2D" uid="uid://84m7q0ob7ijm" path="res://Sprite/Placeholder-Right1.png" id="7_8m2ow"]
+[ext_resource type="Texture2D" uid="uid://ckpq27nnd6yn3" path="res://Sprite/Placeholder-Right2.png" id="8_nkoql"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chgji"]
+size = Vector2(19, 27)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4gqkv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_t8c00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_w0m62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1v6wf")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fwg33"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_had78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vwqe2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fjaiu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_8m2ow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_nkoql")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(256, 222)
+script = ExtResource("1_0colk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_chgji")
+
+[node name="Idle" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_4gqkv")
+animation = &"Idle"
+autoplay = "Idle"
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+zoom = Vector2(2, 2)
+
+[node name="WalkLeft" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_fwg33")
+autoplay = "default"
+frame_progress = 0.534903
+
+[node name="Walkright" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_fjaiu")
+autoplay = "default"
