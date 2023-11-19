@@ -1,11 +1,9 @@
 name: Build Godot Project
 
 on:
-  push: 
+  push:
     branches:
-      - feature/*
       - develop
-      - main
   pull_request:
     branches:
       - develop
@@ -37,5 +35,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Client - ${{ matrix.platform.name }}
+          name: Client DEV - ${{ matrix.platform.name }}
           path: ${{ github.workspace }}/${{ steps.build.outputs.build }}
