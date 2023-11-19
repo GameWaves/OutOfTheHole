@@ -130,13 +130,13 @@ public partial class mvplayer : CharacterBody2D
 		{
 			idleSprite.Play();
 		}
-		if (idleSprite.Visible)
+		if (Walkleft.Visible)
 		{
-			idleSprite.Play();
+			Walkleft.Play();
 		}
-		if (idleSprite.Visible)
+		if (Walkright.Visible)
 		{
-			idleSprite.Play();
+			Walkright.Play();
 		}
 		
 		//kill yourself (to test gameover screen)

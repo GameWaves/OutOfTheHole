@@ -70,16 +70,13 @@ shape = SubResource("RectangleShape2D_chgji")
 [node name="Idle" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_4gqkv")
 animation = &"Idle"
-autoplay = "Idle"
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 zoom = Vector2(2, 2)
 
 [node name="WalkLeft" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_fwg33")
-autoplay = "default"
 frame_progress = 0.534903
 
 [node name="Walkright" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_fjaiu")
-autoplay = "default"
