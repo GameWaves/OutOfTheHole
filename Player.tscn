@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1fge0yxmuyh1"]
+[gd_scene load_steps=25 format=3 uid="uid://c1fge0yxmuyh1"]
 
 [ext_resource type="Script" path="res://mvplayer.cs" id="1_0colk"]
 [ext_resource type="Texture2D" uid="uid://ba0jecqfacke5" path="res://Sprite/Placeholder-idle1.png" id="2_t8c00"]
@@ -8,6 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://dcmvt61iyaoff" path="res://Sprite/Placeholder-Left1.png" id="6_vwqe2"]
 [ext_resource type="Texture2D" uid="uid://84m7q0ob7ijm" path="res://Sprite/Placeholder-Right1.png" id="7_8m2ow"]
 [ext_resource type="Texture2D" uid="uid://ckpq27nnd6yn3" path="res://Sprite/Placeholder-Right2.png" id="8_nkoql"]
+[ext_resource type="Script" path="res://mvplayer2.cs" id="9_6coqb"]
+[ext_resource type="Texture2D" uid="uid://dg1o6ufxb2642" path="res://Sprite/Placeholder-idle1-P2.png" id="10_nc17j"]
+[ext_resource type="Texture2D" uid="uid://bqfb66kny8bwn" path="res://Sprite/Placeholder-idle2-P2.png" id="11_a4qfw"]
+[ext_resource type="Texture2D" uid="uid://ce0sqq11fixcv" path="res://Sprite/Placeholder-idle3-P2.png" id="12_q0my1"]
+[ext_resource type="Texture2D" uid="uid://xhe06x0ig816" path="res://Sprite/Placeholder-Left1-P2.png" id="13_ttx7w"]
+[ext_resource type="Texture2D" uid="uid://bd5hjeiw1llw5" path="res://Sprite/Placeholder-Left2-P2.png" id="14_xy8bj"]
+[ext_resource type="Texture2D" uid="uid://c1ri0ont8vrco" path="res://Sprite/Placeholder-Right1-P2.png" id="15_4vpfh"]
+[ext_resource type="Texture2D" uid="uid://kgfokhwxwhvk" path="res://Sprite/Placeholder-Right2-P2.png" id="16_vqdqg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_chgji"]
 size = Vector2(19, 27)
@@ -57,26 +65,93 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vp4tt"]
+size = Vector2(19, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1xusc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_nc17j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_a4qfw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_q0my1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8clsx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_ttx7w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_xy8bj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rxqkd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_4vpfh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_vqdqg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Player" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Player1" type="CharacterBody2D" parent="."]
 position = Vector2(256, 222)
 script = ExtResource("1_0colk")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player1"]
 position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_chgji")
 
-[node name="Idle" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="Idle" type="AnimatedSprite2D" parent="Player1"]
 sprite_frames = SubResource("SpriteFrames_4gqkv")
 animation = &"Idle"
+frame_progress = 0.540794
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-zoom = Vector2(2, 2)
-
-[node name="WalkLeft" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="WalkLeft" type="AnimatedSprite2D" parent="Player1"]
 sprite_frames = SubResource("SpriteFrames_fwg33")
-frame_progress = 0.534903
+frame_progress = 0.704017
 
-[node name="Walkright" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="Walkright" type="AnimatedSprite2D" parent="Player1"]
 sprite_frames = SubResource("SpriteFrames_fjaiu")
+frame_progress = 0.995125
+
+[node name="Player2" type="CharacterBody2D" parent="."]
+script = ExtResource("9_6coqb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player2"]
+position = Vector2(299, 222)
+shape = SubResource("RectangleShape2D_vp4tt")
+
+[node name="Idle2" type="AnimatedSprite2D" parent="Player2"]
+position = Vector2(299, 223)
+sprite_frames = SubResource("SpriteFrames_1xusc")
+frame_progress = 0.276357
+
+[node name="WalkLeft2" type="AnimatedSprite2D" parent="Player2"]
+position = Vector2(299, 223)
+sprite_frames = SubResource("SpriteFrames_8clsx")
+
+[node name="WalkRight2" type="AnimatedSprite2D" parent="Player2"]
+position = Vector2(299, 223)
+sprite_frames = SubResource("SpriteFrames_rxqkd")

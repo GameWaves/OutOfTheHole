@@ -1,29 +1,27 @@
 using Godot;
 using System;
 
-public partial class mvplayer : CharacterBody2D
+public partial class mvplayer2 : CharacterBody2D
 {
-	
 	/// <summary>
-	/// All value are in pixel 
+	/// Same as player 1  but this time with player 2 (inverted)
 	/// </summary>
-	//Set a acceleration speed (arbitrarly chosen)
-	public const float Speed = 10.0f;
+	public const float Speed2 = 10.0f;
 	//Set a initial speed (arbitrarly chosen)
-	public const float intSpeed = 200.0f;
+	public const float intSpeed2 = 200.0f;
 	//Set a slowing down speed (arbitrarly chosen)
-	public const float SlowSpeed = 40.0f;
+	public const float SlowSpeed2 = 40.0f;
 	//Set a Jump Height / Jump speed (arbitrarly chosen)
-	public const float JumpVelocity = -400.0f;
+	public const float JumpVelocity2 = 400.0f;
 	//Set a gravity (do not change, is the default to have a consistant gravity accros the game)
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-	// to know if the player is alive
-	public static bool alive; 
+	public float gravity2 = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+	//to know if the player is alive
+	public static bool alive;
 	
 	//set maxHp of player
-	public const int MaxHp = 100;
-	public int hp;
-
+	public const int MaxHp2 = 100;
+	public int hp2;
+	
 	//define the sprite (currently placholder)
 	private AnimatedSprite2D idleSprite;
 	private AnimatedSprite2D Walkleft;
@@ -32,15 +30,11 @@ public partial class mvplayer : CharacterBody2D
 	public override void _Ready()
 	{
 		//set the sprite
-		idleSprite = GetNode<AnimatedSprite2D>("Idle");
-		Walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-		Walkright = GetNode<AnimatedSprite2D>("Walkright");
-		
-		//set player hp
-		hp = MaxHp;
+		idleSprite = GetNode<AnimatedSprite2D>("Idle2");
+		Walkleft = GetNode<AnimatedSprite2D>("WalkLeft2");
+		Walkright = GetNode<AnimatedSprite2D>("WalkRight2");
 		alive = true;
 	}
-
 
 	/// <summary>
 	/// Main loop, will update every 60 frame 
@@ -51,21 +45,24 @@ public partial class mvplayer : CharacterBody2D
 	{
 		if (alive)
 		{
+
 			//create a variable velocity 
 			Vector2 velocity = Velocity;
 
+			// /!\ Player is inverted as such he is on the ceilling. if you use the function is on floor replace it with is on ceilling
+
 			// Add the gravity to the vector velocity /!\ on godot, y axis is inverted, as such you gain Y when you go down 
-			if (!IsOnFloor())
-				velocity.Y += gravity * (float)delta;
+			if (!IsOnCeiling())
+				velocity.Y += gravity2 * (float)delta;
 
 			// Handle Jump
-			if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
+			if ((Input.IsKeyPressed(Key.Z)) && IsOnCeiling())
 			{
-				velocity.Y += JumpVelocity;
+				velocity.Y += JumpVelocity2;
 			}
 
 			//set movement (currenty arrow)
-			if (Input.IsKeyPressed(Key.Right) && !Input.IsKeyPressed(Key.Left))
+			if (Input.IsKeyPressed(Key.D) && !Input.IsKeyPressed(Key.Q))
 			{
 				//show (or not) each sprite
 				idleSprite.Visible = false;
@@ -73,19 +70,19 @@ public partial class mvplayer : CharacterBody2D
 				Walkright.Visible = true;
 				if (velocity.X >= 200)
 				{
-					velocity.X += Speed;
+					velocity.X += Speed2;
 				}
 				else if (velocity.X < 0)
 				{
-					velocity.X += SlowSpeed;
+					velocity.X += SlowSpeed2;
 				}
 				else
 				{
-					velocity.X = intSpeed;
+					velocity.X = intSpeed2;
 				}
 			}
 
-			if (Input.IsKeyPressed(Key.Left) && !Input.IsKeyPressed(Key.Right))
+			if (Input.IsKeyPressed(Key.Q) && !Input.IsKeyPressed(Key.D))
 			{
 				//show (or not) each sprite
 				idleSprite.Visible = false;
@@ -93,28 +90,28 @@ public partial class mvplayer : CharacterBody2D
 				Walkright.Visible = false;
 				if (velocity.X <= -200)
 				{
-					velocity.X -= Speed;
+					velocity.X -= Speed2;
 				}
 				else if (velocity.X > 0)
 				{
-					velocity.X -= SlowSpeed;
+					velocity.X -= SlowSpeed2;
 				}
 				else
 				{
-					velocity.X = -intSpeed;
+					velocity.X = -intSpeed2;
 				}
 
 			}
 
 			//adding a litlle momentum
-			if ((!Input.IsKeyPressed(Key.Left) && !Input.IsKeyPressed(Key.Right)) ||
-				(Input.IsKeyPressed(Key.Left) && Input.IsKeyPressed(Key.Right)))
+			if ((!Input.IsKeyPressed(Key.Q) && !Input.IsKeyPressed(Key.D)) ||
+				(Input.IsKeyPressed(Key.Q) && Input.IsKeyPressed(Key.D)))
 			{
 				//show (or not) each sprite
 				idleSprite.Visible = true;
 				Walkleft.Visible = false;
 				Walkright.Visible = false;
-				if (velocity.X <= SlowSpeed && velocity.X >= -SlowSpeed)
+				if (velocity.X <= SlowSpeed2 && velocity.X >= -SlowSpeed2)
 				{
 					velocity.X = 0;
 
@@ -122,16 +119,17 @@ public partial class mvplayer : CharacterBody2D
 
 				if (velocity.X > 0)
 				{
-					velocity.X -= SlowSpeed;
+					velocity.X -= SlowSpeed2;
 				}
 
 				if (velocity.X < 0)
 				{
-					velocity.X += SlowSpeed;
+					velocity.X += SlowSpeed2;
 				}
 			}
 
 			Velocity = velocity;
+
 
 			//play the sprite
 			if (idleSprite.Visible)
@@ -150,9 +148,9 @@ public partial class mvplayer : CharacterBody2D
 			}
 
 			//kill yourself (to test gameover screen)
-			if (Input.IsKeyPressed(Key.K))
+			if (Input.IsKeyPressed(Key.J))
 			{
-				ishurt(MaxHp);
+				ishurt2(MaxHp2);
 			}
 
 
@@ -165,20 +163,21 @@ public partial class mvplayer : CharacterBody2D
 	/// Set the damage, and death  
 	/// </summary>
 	/// <param name="n"> the amount of damage taken</param>
-	public void ishurt(int n)
+	public void ishurt2(int n)
+{
+	hp2 = hp2 - n;
+	if (hp2 <= 0)
 	{
-		hp = hp - n;
-		if (hp <= 0)
+		alive = false;
+		//hide the player 
+		idleSprite.Visible = false;
+		Walkright.Visible = false;
+		Walkleft.Visible = false; 
+			if (!mvplayer.alive)
 		{
-			alive = false;
-			//hide the player 
-			idleSprite.Visible = false;
-			Walkright.Visible = false;
-			Walkleft.Visible = false;
-			if (!mvplayer2.alive)
-			{
-				GetTree().ChangeSceneToFile("res://GameOver.tscn");
-			} 
-		}
+
+			GetTree().ChangeSceneToFile("res://GameOver.tscn");
+		} 
 	}
+}
 }
