@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="OutOfTheHole"
-run/main_scene="res://basic_player.tscn"
+run/main_scene="res://multiplayer_controler.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
