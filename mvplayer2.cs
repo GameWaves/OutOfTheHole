@@ -1,0 +1,183 @@
+using Godot;
+using System;
+
+public partial class mvplayer2 : CharacterBody2D
+{
+	/// <summary>
+	/// Same as player 1  but this time with player 2 (inverted)
+	/// </summary>
+	public const float Speed2 = 10.0f;
+	//Set a initial speed (arbitrarly chosen)
+	public const float intSpeed2 = 200.0f;
+	//Set a slowing down speed (arbitrarly chosen)
+	public const float SlowSpeed2 = 40.0f;
+	//Set a Jump Height / Jump speed (arbitrarly chosen)
+	public const float JumpVelocity2 = 400.0f;
+	//Set a gravity (do not change, is the default to have a consistant gravity accros the game)
+	public float gravity2 = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+	//to know if the player is alive
+	public static bool alive;
+	
+	//set maxHp of player
+	public const int MaxHp2 = 100;
+	public int hp2;
+	
+	//define the sprite (currently placholder)
+	private AnimatedSprite2D idleSprite;
+	private AnimatedSprite2D Walkleft;
+	private AnimatedSprite2D Walkright;
+
+	public override void _Ready()
+	{
+		//set the sprite
+		idleSprite = GetNode<AnimatedSprite2D>("Idle2");
+		Walkleft = GetNode<AnimatedSprite2D>("WalkLeft2");
+		Walkright = GetNode<AnimatedSprite2D>("WalkRight2");
+		alive = true;
+	}
+
+	/// <summary>
+	/// Main loop, will update every 60 frame 
+	/// </summary>
+	/// <param name="delta"> it is the time</param>
+	/// <returns> void </returns>
+	public override void _PhysicsProcess(double delta)
+	{
+		if (alive)
+		{
+
+			//create a variable velocity 
+			Vector2 velocity = Velocity;
+
+			// /!\ Player is inverted as such he is on the ceilling. if you use the function is on floor replace it with is on ceilling
+
+			// Add the gravity to the vector velocity /!\ on godot, y axis is inverted, as such you gain Y when you go down 
+			if (!IsOnCeiling())
+				velocity.Y += gravity2 * (float)delta;
+
+			// Handle Jump
+			if ((Input.IsKeyPressed(Key.Z)) && IsOnCeiling())
+			{
+				velocity.Y += JumpVelocity2;
+			}
+
+			//set movement (currenty arrow)
+			if (Input.IsKeyPressed(Key.D) && !Input.IsKeyPressed(Key.Q))
+			{
+				//show (or not) each sprite
+				idleSprite.Visible = false;
+				Walkleft.Visible = false;
+				Walkright.Visible = true;
+				if (velocity.X >= 200)
+				{
+					velocity.X += Speed2;
+				}
+				else if (velocity.X < 0)
+				{
+					velocity.X += SlowSpeed2;
+				}
+				else
+				{
+					velocity.X = intSpeed2;
+				}
+			}
+
+			if (Input.IsKeyPressed(Key.Q) && !Input.IsKeyPressed(Key.D))
+			{
+				//show (or not) each sprite
+				idleSprite.Visible = false;
+				Walkleft.Visible = true;
+				Walkright.Visible = false;
+				if (velocity.X <= -200)
+				{
+					velocity.X -= Speed2;
+				}
+				else if (velocity.X > 0)
+				{
+					velocity.X -= SlowSpeed2;
+				}
+				else
+				{
+					velocity.X = -intSpeed2;
+				}
+
+			}
+
+			//adding a litlle momentum
+			if ((!Input.IsKeyPressed(Key.Q) && !Input.IsKeyPressed(Key.D)) ||
+				(Input.IsKeyPressed(Key.Q) && Input.IsKeyPressed(Key.D)))
+			{
+				//show (or not) each sprite
+				idleSprite.Visible = true;
+				Walkleft.Visible = false;
+				Walkright.Visible = false;
+				if (velocity.X <= SlowSpeed2 && velocity.X >= -SlowSpeed2)
+				{
+					velocity.X = 0;
+
+				}
+
+				if (velocity.X > 0)
+				{
+					velocity.X -= SlowSpeed2;
+				}
+
+				if (velocity.X < 0)
+				{
+					velocity.X += SlowSpeed2;
+				}
+			}
+
+			Velocity = velocity;
+
+
+			//play the sprite
+			if (idleSprite.Visible)
+			{
+				idleSprite.Play();
+			}
+
+			if (Walkleft.Visible)
+			{
+				Walkleft.Play();
+			}
+
+			if (Walkright.Visible)
+			{
+				Walkright.Play();
+			}
+
+			//kill yourself (to test gameover screen)
+			if (Input.IsKeyPressed(Key.J))
+			{
+				ishurt2(MaxHp2);
+			}
+
+
+			// function MoveAndSlide apply the Velocity to the player
+			MoveAndSlide();
+		}
+	}
+
+	/// <summary>
+	/// Set the damage, and death  
+	/// </summary>
+	/// <param name="n"> the amount of damage taken</param>
+	public void ishurt2(int n)
+{
+	hp2 = hp2 - n;
+	if (hp2 <= 0)
+	{
+		alive = false;
+		//hide the player 
+		idleSprite.Visible = false;
+		Walkright.Visible = false;
+		Walkleft.Visible = false; 
+			if (!mvplayer.alive)
+		{
+
+			GetTree().ChangeSceneToFile("res://GameOver.tscn");
+		} 
+	}
+}
+}
