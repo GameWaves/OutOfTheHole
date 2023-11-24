@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://0o15xmot4480"]
+[gd_scene load_steps=9 format=3 uid="uid://0o15xmot4480"]
 
 [ext_resource type="Texture2D" uid="uid://chnjxjxtv72m" path="res://0x72_DungeonTilesetII_v1.6.png" id="1_b5xv2"]
-[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/players/basic_player.tscn" id="2_0awsx"]
+[ext_resource type="Script" path="res://src/multiplayer/SceneManager.cs" id="1_f5ceg"]
+[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/players/Player.tscn" id="2_0awsx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_32dul"]
 texture = ExtResource("1_b5xv2")
@@ -649,6 +650,8 @@ size = Vector2(386, 16)
 size = Vector2(340, 16)
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_f5ceg")
+playerScene = ExtResource("2_0awsx")
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2(1.00198, 1)
@@ -662,10 +665,6 @@ layer_0/tile_data = PackedInt32Array(786419, 65536, 1, 786420, 65536, 1, 786421,
 position = Vector2(191, 184)
 shape = SubResource("RectangleShape2D_wb3rh")
 
-[node name="basic_player" parent="." instance=ExtResource("2_0awsx")]
-position = Vector2(92, -100)
-scale = Vector2(0.277419, 0.31189)
-
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
@@ -677,3 +676,12 @@ shape = SubResource("RectangleShape2D_wklqy")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 position = Vector2(569, 87)
 shape = SubResource("RectangleShape2D_cnbwt")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(24, 0)
+
+[node name="0" type="Node2D" parent="Node2D" groups=["SpawnPoints"]]
+position = Vector2(301, 115)
+
+[node name="1" type="Node2D" parent="Node2D" groups=["SpawnPoints"]]
+position = Vector2(163, 167)

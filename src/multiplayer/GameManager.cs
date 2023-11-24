@@ -1,12 +1,13 @@
 using Godot;
 using System;
-using OutofTheHole.src.multiplayer;
+using OutofTheHole.multiplayer;
+using OutofTheHole.players;
 using System.Collections.Generic;
 
 public partial class GameManager : Node
 {
 	public static List<PlayerInfo> Players = new List<PlayerInfo>();
-	// Called when the node enters the scene tree for the first time.
+
 	public override void _Ready()
 	{
 	}

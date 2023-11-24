@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using OutofTheHole.src.multiplayer;
+using OutofTheHole.multiplayer;
 
 public partial class MultiplayerController : Control
 {
@@ -109,7 +109,7 @@ public partial class MultiplayerController : Control
 		{
 			GD.Print(item.Name + " is playing");
 		}
-		var scene = ResourceLoader.Load<PackedScene>("res://test_scene.tscn").Instantiate<Node2D>();
+		var scene = ResourceLoader.Load<PackedScene>("res://src/test_scene.tscn").Instantiate<Node2D>();
 		GetTree().Root.AddChild(scene);
 		this.Hide();
 	}
@@ -122,10 +122,20 @@ public partial class MultiplayerController : Control
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	private void sendPlayerInformation(string name, int id)
 	{
+		int playerRole;
+		if (id == 1)
+		{
+			playerRole = 1;
+		}
+		else
+		{
+			playerRole = 2;
+		}
 		PlayerInfo playerInfo = new PlayerInfo()
 		{
 			Name = name,
-			Id = id
+			Id = id,
+			Role = playerRole
 		};
 		if (!GameManager.Players.Contains(playerInfo))
 		{
@@ -136,7 +146,7 @@ public partial class MultiplayerController : Control
 		{
 			foreach (var item in GameManager.Players)
 			{
-				Rpc("sendPlayerInformation", name, id);
+				Rpc("sendPlayerInformation", item.Name, item.Id);
 			}
 		}
 	}
