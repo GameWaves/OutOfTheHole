@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using OutOfTheHole.scripts;
+using OutofTheHole.src.multiplayer;
 
 public partial class MultiplayerController : Control
 {

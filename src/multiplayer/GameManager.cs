@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using OutOfTheHole.scripts;
+using OutofTheHole.src.multiplayer;
 using System.Collections.Generic;
 
 public partial class GameManager : Node

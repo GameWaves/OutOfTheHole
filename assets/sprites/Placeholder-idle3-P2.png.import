@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0vwnuak8a5nl"
-path="res://.godot/imported/Placeholder-idle2.png-13c39fedae4306a2684f0df135c36c0e.ctex"
+uid="uid://ce0sqq11fixcv"
+path="res://.godot/imported/Placeholder-idle3-P2.png-a5c7af530afc755f966f3bb1d900a4d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/Placeholder-idle2.png"
-dest_files=["res://.godot/imported/Placeholder-idle2.png-13c39fedae4306a2684f0df135c36c0e.ctex"]
+source_file="res://assets/sprites/Placeholder-idle3-P2.png"
+dest_files=["res://.godot/imported/Placeholder-idle3-P2.png-a5c7af530afc755f966f3bb1d900a4d7.ctex"]
 
 [params]
 

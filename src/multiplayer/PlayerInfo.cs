@@ -1,4 +1,4 @@
-namespace OutOfTheHole.scripts;
+namespace OutofTheHole.src.multiplayer;
 
 public class PlayerInfo
 {
