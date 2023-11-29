@@ -1,15 +1,15 @@
-using Godot;
 using System;
+using Godot;
 using OutofTheHole.multiplayer;
 
 public partial class MultiplayerController : Control
 {
-	[Export]
-	private int port = 4242;
-	[Export]
-	private string address = "127.0.0.1";
+	[Export] private string address = "127.0.0.1";
 
 	private ENetMultiplayerPeer peer;
+
+	[Export] private int port = 4242;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -20,7 +20,7 @@ public partial class MultiplayerController : Control
 	}
 
 	/// <summary>
-	///  Runs when the connection fails and it runs only on the client
+	///     Runs when the connection fails and it runs only on the client
 	/// </summary>
 	/// <exception cref="NotImplementedException"></exception>
 	private void ConnectionFailed()
@@ -29,7 +29,7 @@ public partial class MultiplayerController : Control
 	}
 
 	/// <summary>
-	/// Runs when the connection is successful and only runs on the client
+	///     Runs when the connection is successful and only runs on the client
 	/// </summary>
 	/// <exception cref="NotImplementedException"></exception>
 	private void ConnectedToServer()
@@ -39,32 +39,32 @@ public partial class MultiplayerController : Control
 	}
 
 	/// <summary>
-	/// Runs when a player disconnects and runs on all peers
+	///     Runs when a player disconnects and runs on all peers
 	/// </summary>
 	/// <param name="id">id of the player that disconnect</param>
 	/// <exception cref="NotImplementedException"></exception>
 	private void PeerDisconnected(long id)
 	{
-		GD.Print("PlayerInfo disconnected: " + id.ToString());
+		GD.Print("PlayerInfo disconnected: " + id);
 	}
 
 	/// <summary>
-	/// Runs when a player connects and run on all peers
+	///     Runs when a player connects and run on all peers
 	/// </summary>
 	/// <param name="id">id of the player that connected</param>
 	/// <exception cref="NotImplementedException"></exception>
 	private void PeerConnected(long id)
 	{
-		GD.Print("PlayerInfo connected: " + id.ToString());
+		GD.Print("PlayerInfo connected: " + id);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
-	
+
 	/// <summary>
-	/// Function called when the host button is pressed
+	///     Function called when the host button is pressed
 	/// </summary>
 	private void _on_host_button_button_down()
 	{
@@ -72,17 +72,18 @@ public partial class MultiplayerController : Control
 		var error = peer.CreateServer(port, 2);
 		if (error != Error.Ok)
 		{
-			GD.Print("error cannot host!" + error.ToString());
+			GD.Print("error cannot host!" + error);
 			return;
 		}
+
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
 		GD.Print("Waiting for Players!");
 		sendPlayerInformation(GetNode<LineEdit>("LineEdit").Text, 1);
 	}
-	
+
 	/// <summary>
-	/// Function called when the join button is pressed
+	///     Function called when the join button is pressed
 	/// </summary>
 	private void _on_join_button_button_down()
 	{
@@ -95,7 +96,7 @@ public partial class MultiplayerController : Control
 
 
 	/// <summary>
-	/// Function called when the start game button is pressed
+	///     Function called when the start game button is pressed
 	/// </summary>
 	private void _on_start_game_button_button_down()
 	{
@@ -105,17 +106,14 @@ public partial class MultiplayerController : Control
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void startGame()
 	{
-		foreach (var item in GameManager.Players)
-		{
-			GD.Print(item.Name + " is playing");
-		}
-		var scene = ResourceLoader.Load<PackedScene>("res://src/test_scene.tscn").Instantiate<Node2D>();
+		foreach (var item in GameManager.Players) GD.Print(item.Name + " is playing");
+		var scene = ResourceLoader.Load<PackedScene>("res://src/map/Map.tscn").Instantiate<Node2D>();
 		GetTree().Root.AddChild(scene);
-		this.Hide();
+		Hide();
 	}
 
 	/// <summary>
-	/// Send player information to all client
+	///     Send player information to all client
 	/// </summary>
 	/// <param name="name">The name of the player</param>
 	/// <param name="id">The id of the player</param>
@@ -124,33 +122,19 @@ public partial class MultiplayerController : Control
 	{
 		int playerRole;
 		if (id == 1)
-		{
 			playerRole = 1;
-		}
 		else
-		{
 			playerRole = 2;
-		}
-		PlayerInfo playerInfo = new PlayerInfo()
+		var playerInfo = new PlayerInfo
 		{
 			Name = name,
 			Id = id,
 			Role = playerRole
 		};
-		if (!GameManager.Players.Contains(playerInfo))
-		{
-			GameManager.Players.Add(playerInfo);
-		}
+		if (!GameManager.Players.Contains(playerInfo)) GameManager.Players.Add(playerInfo);
 
 		if (Multiplayer.IsServer())
-		{
 			foreach (var item in GameManager.Players)
-			{
 				Rpc("sendPlayerInformation", item.Name, item.Id);
-			}
-		}
 	}
 }
-
-
-

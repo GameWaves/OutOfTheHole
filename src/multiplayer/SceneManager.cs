@@ -1,33 +1,38 @@
-namespace OutofTheHole.multiplayer;
-
 using Godot;
-using System;
-using System.Data.Common;
-using OutofTheHole.multiplayer;
 using OutofTheHole.players;
-using System.Collections.Generic;
+
+namespace OutofTheHole.multiplayer;
 
 public partial class SceneManager : Node2D
 {
-	[Export]
-	private PackedScene playerScene;
+	[Export] private PackedScene player1Scene;
+	[Export] private PackedScene player2Scene;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		int index = 0;
+		var index = 0;
 		foreach (var item in GameManager.Players)
-		{
-			Player currentPlayer = playerScene.Instantiate<Player>();
-			currentPlayer.Name = item.Id.ToString();
-			AddChild(currentPlayer);
-			foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
+			if (item.Role == 1)
 			{
-				if(int.Parse(spawnPoint.Name) == index){
-					currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
-				}
+				var currentPlayer = player1Scene.Instantiate<mvplayer>();
+				currentPlayer.Name = item.Id.ToString();
+				AddChild(currentPlayer);
+				foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
+					if (int.Parse(spawnPoint.Name) == index)
+						currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
+				index++;
 			}
-			index ++;
-		}
+			else if (item.Role == 2)
+			{
+				var currentPlayer = player2Scene.Instantiate<mvplayer2>();
+				currentPlayer.Name = item.Id.ToString();
+				AddChild(currentPlayer);
+				foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
+					if (int.Parse(spawnPoint.Name) == index)
+						currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
+				index++;
+			}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
