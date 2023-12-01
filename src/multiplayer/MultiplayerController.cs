@@ -62,6 +62,9 @@ public partial class MultiplayerController : Control
 	private void PeerConnected(long id)
 	{
 		GD.Print("PlayerInfo connected: " + id);
+		GetNode<Button>("StartGameButton").Show();
+		GetNode<Button>("JoinButton").Hide();
+		GetNode<Button>("HostButton").Hide();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

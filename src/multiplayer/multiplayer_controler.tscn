@@ -48,6 +48,7 @@ text = "Connect
 
 [node name="RemoteAddress" type="LineEdit" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 318.0
 offset_top = 124.0
 offset_right = 883.0
