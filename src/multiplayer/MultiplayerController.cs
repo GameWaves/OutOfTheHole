@@ -19,6 +19,12 @@ public partial class MultiplayerController : Control
 		Multiplayer.ConnectionFailed += ConnectionFailed;
 	}
 
+	private void QueryAdress()
+	{
+		var queryField = GetNode<LineEdit>("RemoteAddress");
+		GetNode<LineEdit>("RemoteAddress").Show();
+	}
+
 	/// <summary>
 	///     Runs when the connection fails and it runs only on the client
 	/// </summary>
@@ -35,7 +41,7 @@ public partial class MultiplayerController : Control
 	private void ConnectedToServer()
 	{
 		GD.Print("Connected to server");
-		RpcId(1, "sendPlayerInformation", GetNode<LineEdit>("LineEdit").Text, Multiplayer.GetUniqueId());
+		RpcId(1, "sendPlayerInformation", GetNode<LineEdit>("Username").Text, Multiplayer.GetUniqueId());
 	}
 
 	/// <summary>
@@ -56,6 +62,9 @@ public partial class MultiplayerController : Control
 	private void PeerConnected(long id)
 	{
 		GD.Print("PlayerInfo connected: " + id);
+		GetNode<Button>("StartGameButton").Show();
+		GetNode<Button>("JoinButton").Hide();
+		GetNode<Button>("HostButton").Hide();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -79,7 +88,7 @@ public partial class MultiplayerController : Control
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
 		GD.Print("Waiting for Players!");
-		sendPlayerInformation(GetNode<LineEdit>("LineEdit").Text, 1);
+		sendPlayerInformation(GetNode<LineEdit>("Username").Text, 1);
 	}
 
 	/// <summary>
@@ -87,11 +96,34 @@ public partial class MultiplayerController : Control
 	/// </summary>
 	private void _on_join_button_button_down()
 	{
+		QueryAdress();
+
+		var hostButton = GetNode<Button>("HostButton");
+		var joinButton = GetNode<Button>("JoinButton");
+
+		hostButton.Hide();
+
+		//joinButton.SetPosition(new Vector2(joinButton.Position.X - 210, joinButton.Position.Y));
+		//joinButton.Text = "Start";
+		joinButton.Hide();
+		GetNode<Button>("StartButton").Show();
+	}
+
+	private void _on_start_button_button_down()
+	{
+		var addressInput = GetNode<LineEdit>("RemoteAddress").Text;
+		if (addressInput != "") address = addressInput;
 		peer = new ENetMultiplayerPeer();
 		peer.CreateClient(address, port);
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
 		GD.Print("Joining Game!");
+		GD.Print(address);
+
+		GetNode<Button>("StartButton").Hide();
+		GetNode<Button>("StartGameButton").Show();
+
+		//GetNode<Button>("StartButton").Connect("button_down", Callable.From(_on_start_game_button_button_down));
 	}
 
 
