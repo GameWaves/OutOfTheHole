@@ -36,7 +36,7 @@ offset_right = 735.0
 offset_bottom = 403.0
 text = "Start game"
 
-[node name="StartButton" type="Button" parent="."]
+[node name="ConnectButton" type="Button" parent="."]
 visible = false
 layout_mode = 0
 offset_left = 496.0
@@ -65,7 +65,7 @@ offset_bottom = 84.0
 placeholder_text = "Username"
 alignment = 1
 
-[connection signal="button_down" from="HostButton" to="." method="_on_host_button_button_down"]
-[connection signal="button_down" from="JoinButton" to="." method="_on_join_button_button_down"]
-[connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]
-[connection signal="button_down" from="StartButton" to="." method="_on_start_button_button_down"]
+[connection signal="button_down" from="HostButton" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="JoinButton" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="StartGameButton" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="ConnectButton" to="." method="_on_connect_button_down"]
