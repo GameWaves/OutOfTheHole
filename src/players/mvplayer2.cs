@@ -1,9 +1,22 @@
 using Godot;
+using System;
 
 namespace OutofTheHole.players;
 
 public partial class mvplayer2 : CharacterBody2D
 {
+	[Export] private float bps = 5f;
+
+	[Export] private float bullet_damage = 30f;
+
+	//arbitrary values for the ability to shoot
+	[Export] private PackedScene bullet_scn;
+	[Export] private float bullet_speed = 800f;
+	[Export] private CharacterBody2D CharacterBody;
+	private float time_until_fire = 300f;
+
+
+	private float fire_rate;
 	/// <summary>
 	///     Same as player 1  but this time with player 2 (inverted)
 	/// </summary>
@@ -124,6 +137,7 @@ public partial class mvplayer2 : CharacterBody2D
 
 			//kill yourself (to test gameover screen)
 			if (Input.IsKeyPressed(Key.K)) ishurt2(MaxHp2);
+			if (Input.IsActionPressed("click")) Rpc("fire");
 
 
 			// function MoveAndSlide apply the Velocity to the player
@@ -147,5 +161,28 @@ public partial class mvplayer2 : CharacterBody2D
 			Walkleft.Visible = false;
 			if (!mvplayer.alive) GetTree().ChangeSceneToFile("res://GameOver.tscn");
 		}
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	public void fire()
+	{
+		var maxdistance = 20f;
+
+		var playerPosition = CharacterBody.GlobalPosition;
+
+		var bullet = bullet_scn.Instantiate<RigidBody2D>(); // create the bullet
+		var mousePostion = GetGlobalMousePosition() - playerPosition;
+
+		bullet.GlobalPosition =
+			playerPosition + maxdistance * mousePostion.Normalized(); //change the position according to the mouse
+
+		if (mousePostion.X < 0)
+			bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X) + Mathf.Pi;
+		else
+			bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X);
+
+		GetTree().Root.AddChild(bullet);
+		bullet.LinearVelocity = (bullet.GlobalPosition - playerPosition).Normalized() * bullet_speed;
+		time_until_fire = 0f;
 	}
 }
