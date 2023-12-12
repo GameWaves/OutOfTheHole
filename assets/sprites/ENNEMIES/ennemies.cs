@@ -25,4 +25,4 @@ public partial class Enemy1 : CharacterBody2D
 			velocity = new Vector2(random.Next(-1, 2), random.Next(-1, 2)).Normalized() * 100;
 		}
 	}
-}
+} 
