@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxddvenjkemj8"]
+
+[ext_resource type="Texture2D" uid="uid://cxymsrxj0pspa" path="res://assets/sprites/GAMEOVER/6f92cf277d64fc2fc2a6f043a3510837 (1).jpg" id="1_uqpht"]
+[ext_resource type="Script" path="res://assets/sprites/GAMEOVER/Label.cs" id="2_d0w3f"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = 30.0
+offset_right = -23.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.624
+anchor_bottom = 0.642
+offset_left = 24.0
+offset_top = -32.0
+offset_right = 24.152
+offset_bottom = -33.016
+color = Color(0.380392, 1, 1, 1)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.267
+anchor_top = 0.378
+anchor_right = 0.339
+anchor_bottom = 0.378
+offset_left = 13.416
+offset_top = -92.944
+offset_right = 31.472
+offset_bottom = -61.944
+text = "PLAY AGAIN"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(383.875, 177.125)
+scale = Vector2(1.28286, 1.31782)
+texture = ExtResource("1_uqpht")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 57.0
+offset_right = 1007.0
+offset_bottom = 282.0
+text = "GAME OVER "
+script = ExtResource("2_d0w3f")
