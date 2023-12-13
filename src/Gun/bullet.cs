@@ -1,20 +1,24 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class bullet : RigidBody2D
 {
-	[Export] private int longetivity;
-	public override void _Ready()
-	{
-		longetivity = 100;
-	}
+    [Export] private int longetivity = 1;
 
-	public void _Process(int delta)
-	{
-		if (longetivity == 0)
-		{
-			QueueFree();
-		}
-		longetivity -= delta;
-	}
+    public override void _Ready()
+    {
+        longetivity = 100;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        GD.Print(longetivity);
+        if (longetivity == 0)
+        {
+            QueueFree();
+            if (IsQueuedForDeletion()) Free();
+        }
+
+        longetivity -= (int)Math.Ceiling(delta);
+    }
 }
