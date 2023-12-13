@@ -191,9 +191,10 @@ public partial class mvplayer : CharacterBody2D
             playerPosition + maxdistance * mousePostion.Normalized(); //change the position according to the mouse
 
         if (mousePostion.X < 0)
-            bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X) + Mathf.Pi;
-        else
             bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X);
+        else
+            bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X) + Mathf.Pi;
+
 
         GetTree().Root.AddChild(bullet);
         bullet.LinearVelocity = (bullet.GlobalPosition - playerPosition).Normalized() * bullet_speed;
