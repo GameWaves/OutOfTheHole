@@ -21,7 +21,6 @@ public partial class Gun : Node2D
     /// </summary>
     public override void _Ready()
     {
-        GD.Print("HEYY");
         fire_rate = 1 / bps;
         GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
         GD.Print(GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer"));
@@ -34,9 +33,8 @@ public partial class Gun : Node2D
     /// <param name="delta">seconds</param>
     public override void _Process(double delta)
     {
-        
         var maxdistance = 20f;
-        if (Input.IsActionPressed("click") && fire_rate < time_until_fire )
+        if (Input.IsActionPressed("click") && fire_rate < time_until_fire)
         {
             var playerPosition = CharacterBody.GlobalPosition;
 

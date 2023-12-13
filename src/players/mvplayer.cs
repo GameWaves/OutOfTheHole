@@ -5,18 +5,6 @@ namespace OutofTheHole.players;
 
 public partial class mvplayer : CharacterBody2D
 {
-    [Export] private float bps = 5f;
-
-    [Export] private float bullet_damage = 30f;
-
-    //arbitrary values for the ability to shoot
-    [Export] private PackedScene bullet_scn;
-    [Export] private float bullet_speed = 800f;
-    [Export] private CharacterBody2D CharacterBody;
-    private float time_until_fire = 300f;
-
-
-    private float fire_rate;
     /// <summary>
     ///     All value are in pixel
     /// </summary>
@@ -37,7 +25,18 @@ public partial class mvplayer : CharacterBody2D
 
     // to know if the player is alive
     public static bool alive;
-    
+    [Export] private float bps = 5f;
+
+    [Export] private float bullet_damage = 30f;
+
+    //arbitrary values for the ability to shoot
+    [Export] private PackedScene bullet_scn;
+    [Export] private float bullet_speed = 800f;
+    [Export] private CharacterBody2D CharacterBody;
+
+
+    private float fire_rate;
+
 
     //Set a gravity (do not change, is the default to have a consistant gravity accros the game)
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -45,6 +44,7 @@ public partial class mvplayer : CharacterBody2D
 
     //define the sprite (currently placholder)
     private AnimatedSprite2D idleSprite;
+    private float time_until_fire = 300f;
 
     private AnimatedSprite2D Walkleft;
     private AnimatedSprite2D Walkright;
@@ -143,7 +143,15 @@ public partial class mvplayer : CharacterBody2D
             //kill yourself (to test gameover screen)
             if (Input.IsKeyPressed(Key.K)) ishurt(MaxHp);
 
-            if (Input.IsActionPressed("click")) Rpc("fire");
+            if (Input.IsActionPressed("click") && fire_rate < time_until_fire)
+            {
+                time_until_fire = 0f;
+                Rpc("fire");
+            }
+            else
+            {
+                time_until_fire += (float)delta; //timer until ability to shoot again
+            }
 
 
             // function MoveAndSlide apply the Velocity to the player
