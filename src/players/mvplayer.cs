@@ -1,6 +1,8 @@
 using System;
 using Godot;
 
+using OutofTheHole.Gun;
+
 namespace OutofTheHole.players;
 
 public partial class mvplayer : CharacterBody2D
@@ -27,12 +29,7 @@ public partial class mvplayer : CharacterBody2D
     public static bool alive;
     [Export] private float bps = 5f;
 
-    [Export] private float bullet_damage = 30f;
-
-    //arbitrary values for the ability to shoot
-    [Export] private PackedScene bullet_scn;
-    [Export] private float bullet_speed = 800f;
-    [Export] private CharacterBody2D CharacterBody;
+    [Export] private PackedScene gunScene;
 
 
     private float fire_rate;
@@ -48,6 +45,8 @@ public partial class mvplayer : CharacterBody2D
 
     private AnimatedSprite2D Walkleft;
     private AnimatedSprite2D Walkright;
+    
+    private float GunRotation = 0;
 
     public override void _Ready()
     {
@@ -62,6 +61,8 @@ public partial class mvplayer : CharacterBody2D
 
         // Allows this player to be played only by the player that is assigned to player 1
         GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
+        
+        
     }
 
 
@@ -146,7 +147,7 @@ public partial class mvplayer : CharacterBody2D
             if (Input.IsActionPressed("click") && fire_rate < time_until_fire)
             {
                 time_until_fire = 0f;
-                Rpc("fire");
+                Rpc("fire", GetGlobalMousePosition());
             }
             else
             {
@@ -156,6 +157,12 @@ public partial class mvplayer : CharacterBody2D
 
             // function MoveAndSlide apply the Velocity to the player
             MoveAndSlide();
+            GunRotation = GetNode<Node2D>("Gun").RotationDegrees;
+        }
+        else
+        {
+            //Always sync the Gun rotation
+            GetNode<Node2D>("Gun").RotationDegrees = Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
         }
     }
 
@@ -180,24 +187,6 @@ public partial class mvplayer : CharacterBody2D
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     public void fire()
     {
-        var maxdistance = 20f;
-
-        var playerPosition = CharacterBody.GlobalPosition;
-
-        var bullet = bullet_scn.Instantiate<RigidBody2D>(); // create the bullet
-        var mousePostion = GetGlobalMousePosition() - playerPosition;
-
-        bullet.GlobalPosition =
-            playerPosition + maxdistance * mousePostion.Normalized(); //change the position according to the mouse
-
-        if (mousePostion.X < 0)
-            bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X);
-        else
-            bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X) + Mathf.Pi;
-
-
-        GetTree().Root.AddChild(bullet);
-        bullet.LinearVelocity = (bullet.GlobalPosition - playerPosition).Normalized() * bullet_speed;
-        time_until_fire = 0f;
+        
     }
 }
