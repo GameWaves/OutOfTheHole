@@ -1,7 +1,4 @@
-using System;
 using Godot;
-
-using OutofTheHole.Gun;
 
 namespace OutofTheHole.players;
 
@@ -28,15 +25,18 @@ public partial class mvplayer : CharacterBody2D
     // to know if the player is alive
     public static bool alive;
     [Export] private float bps = 5f;
-
-    [Export] private PackedScene gunScene;
-
+    [Export] private PackedScene bullet_scn;
+    [Export] private float bullet_speed = 800f;
 
     private float fire_rate;
 
 
     //Set a gravity (do not change, is the default to have a consistant gravity accros the game)
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    private float GunRotation;
+
+    [Export] private PackedScene gunScene;
+
     public int hp;
 
     //define the sprite (currently placholder)
@@ -45,11 +45,15 @@ public partial class mvplayer : CharacterBody2D
 
     private AnimatedSprite2D Walkleft;
     private AnimatedSprite2D Walkright;
-    
-    private float GunRotation = 0;
+
 
     public override void _Ready()
     {
+        // var GunObject = gunScene.Instantiate<Gun.Gun>();
+        // AddChild(GunObject);
+        // GunObject.GlobalPosition = GetNode<Node2D>("GunPosition").GlobalPosition;
+
+
         //set the sprite
         idleSprite = GetNode<AnimatedSprite2D>("Idle");
         Walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
@@ -61,8 +65,6 @@ public partial class mvplayer : CharacterBody2D
 
         // Allows this player to be played only by the player that is assigned to player 1
         GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
-        
-        
     }
 
 
@@ -83,6 +85,8 @@ public partial class mvplayer : CharacterBody2D
             // Add the gravity to the vector velocity /!\ on godot, y axis is inverted, as such you gain Y when you go down 
             if (!IsOnFloor())
                 velocity.Y += gravity * (float)delta;
+
+            GetNode<Node2D>("Gun").LookAt(GetViewport().GetMousePosition());
 
             // Handle Jump
             if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
@@ -147,7 +151,7 @@ public partial class mvplayer : CharacterBody2D
             if (Input.IsActionPressed("click") && fire_rate < time_until_fire)
             {
                 time_until_fire = 0f;
-                Rpc("fire", GetGlobalMousePosition());
+                Rpc("fire");
             }
             else
             {
@@ -156,13 +160,15 @@ public partial class mvplayer : CharacterBody2D
 
 
             // function MoveAndSlide apply the Velocity to the player
+
             MoveAndSlide();
             GunRotation = GetNode<Node2D>("Gun").RotationDegrees;
         }
         else
         {
             //Always sync the Gun rotation
-            GetNode<Node2D>("Gun").RotationDegrees = Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
+            GetNode<Node2D>("Gun").RotationDegrees =
+                Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
         }
     }
 
@@ -187,6 +193,9 @@ public partial class mvplayer : CharacterBody2D
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     public void fire()
     {
-        
+        var bullet = bullet_scn.Instantiate<RigidBody2D>(); // create the bullet
+        bullet.Rotation = GetNode<Node2D>("Gun").Rotation;
+        bullet.GlobalPosition = GetNode<Node2D>("Gun/ShootPoint").GlobalPosition;
+        GetTree().Root.AddChild(bullet);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b8s0e4hxebqpn"]
+[gd_scene load_steps=16 format=3 uid="uid://b8s0e4hxebqpn"]
 
 [ext_resource type="Script" path="res://src/players/mvplayer2.cs" id="1_iie5g"]
 [ext_resource type="Texture2D" uid="uid://dg1o6ufxb2642" path="res://assets/sprites/Placeholder-idle1-P2.png" id="2_tdcb3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bd5hjeiw1llw5" path="res://assets/sprites/Placeholder-Left2-P2.png" id="6_5lsqq"]
 [ext_resource type="Texture2D" uid="uid://c1ri0ont8vrco" path="res://assets/sprites/Placeholder-Right1-P2.png" id="7_kxxcu"]
 [ext_resource type="Texture2D" uid="uid://kgfokhwxwhvk" path="res://assets/sprites/Placeholder-Right2-P2.png" id="8_ltcha"]
+[ext_resource type="PackedScene" uid="uid://byexr753no7oj" path="res://src/Gun/Gun.tscn" id="10_ljwmm"]
 [ext_resource type="PackedScene" uid="uid://b8nh16frhokyw" path="res://src/Gun/bullet.tscn" id="10_qb0am"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5h1fq"]
@@ -15,6 +16,10 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
 properties/0/watch = false
+properties/1/path = NodePath(".:GunRotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/1/watch = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0b83x"]
 size = Vector2(19, 25)
@@ -91,3 +96,6 @@ sprite_frames = SubResource("SpriteFrames_bugts")
 
 [node name="Shoot_point" type="Node2D" parent="."]
 position = Vector2(18, 2.08165e-12)
+
+[node name="Gun" parent="." instance=ExtResource("10_ljwmm")]
+position = Vector2(17.8438, 0.125)

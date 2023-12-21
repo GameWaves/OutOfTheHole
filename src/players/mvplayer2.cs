@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 namespace OutofTheHole.players;
@@ -38,6 +37,7 @@ public partial class mvplayer2 : CharacterBody2D
 
     //Set a gravity (do not change, is the default to have a consistant gravity accros the game)
     public float gravity2 = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    private float GunRotation;
     public int hp2;
 
     //define the sprite (currently placholder)
@@ -72,6 +72,8 @@ public partial class mvplayer2 : CharacterBody2D
             //create a variable velocity 
             var velocity = Velocity;
 
+            GetNode<Node2D>("Gun").LookAt(GetViewport().GetMousePosition());
+
             // /!\ Player is inverted as such he is on the ceilling. if you use the function is on floor replace it with is on ceilling
 
             // Add the gravity to the vector velocity /!\ on godot, y axis is inverted, as such you gain Y when you go down 
@@ -79,7 +81,8 @@ public partial class mvplayer2 : CharacterBody2D
                 velocity.Y += gravity2 * (float)delta;
 
             // Handle Jump
-            if (Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) velocity.Y += JumpVelocity2;
+            if (Input.IsKeyPressed(Key.Space) || (Input.IsKeyPressed(Key.Up) && IsOnCeiling()))
+                velocity.Y += JumpVelocity2;
 
             //set movement (currenty arrow)
             if (Input.IsKeyPressed(Key.Right))
@@ -150,6 +153,13 @@ public partial class mvplayer2 : CharacterBody2D
 
             // function MoveAndSlide apply the Velocity to the player
             MoveAndSlide();
+            GunRotation = GetNode<Node2D>("Gun").RotationDegrees;
+        }
+        else
+        {
+            //Always sync the Gun rotation
+            GetNode<Node2D>("Gun").RotationDegrees =
+                Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
         }
     }
 
@@ -174,23 +184,9 @@ public partial class mvplayer2 : CharacterBody2D
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     public void fire()
     {
-        var maxdistance = 20f;
-
-        var playerPosition = CharacterBody.GlobalPosition;
-
         var bullet = bullet_scn.Instantiate<RigidBody2D>(); // create the bullet
-        var mousePostion = GetGlobalMousePosition() - playerPosition;
-
-        bullet.GlobalPosition =
-            playerPosition + maxdistance * mousePostion.Normalized(); //change the position according to the mouse
-
-        if (mousePostion.X < 0)
-            bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X) + Mathf.Pi;
-        else
-            bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X);
-
+        bullet.Rotation = GetNode<Node2D>("Gun").Rotation;
+        bullet.GlobalPosition = GetNode<Node2D>("Gun/ShootPoint").GlobalPosition;
         GetTree().Root.AddChild(bullet);
-        bullet.LinearVelocity = (bullet.GlobalPosition - playerPosition).Normalized() * bullet_speed;
-        time_until_fire = 0f;
     }
 }
