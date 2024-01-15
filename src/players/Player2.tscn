@@ -14,8 +14,7 @@
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5h1fq"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/sync = true
-properties/0/watch = false
+properties/0/replication_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0b83x"]
 size = Vector2(19, 25)
@@ -88,8 +87,7 @@ sprite_frames = SubResource("SpriteFrames_cykqo")
 position = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_bugts")
 
-[node name="Shoot_point" type="Node2D" parent="." node_paths=PackedStringArray("CharacterBody")]
+[node name="Shoot_point" type="Node2D" parent="."]
 position = Vector2(18, 2.08165e-12)
 script = ExtResource("9_g26dv")
 bullet_scn = ExtResource("10_qb0am")
-CharacterBody = NodePath("..")
