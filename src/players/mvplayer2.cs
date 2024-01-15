@@ -81,7 +81,7 @@ public partial class mvplayer2 : CharacterBody2D
                 velocity.Y += gravity2 * (float)delta;
 
             // Handle Jump
-            if (Input.IsKeyPressed(Key.Space) || (Input.IsKeyPressed(Key.Up) && IsOnCeiling()))
+            if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
                 velocity.Y += JumpVelocity2;
 
             //set movement (currenty arrow)
