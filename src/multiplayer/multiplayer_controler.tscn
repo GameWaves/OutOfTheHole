@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjuiitkmi38lb"]
+[gd_scene load_steps=3 format=3 uid="uid://bjuiitkmi38lb"]
 
 [ext_resource type="Script" path="res://src/multiplayer/MultiplayerController.cs" id="1_i4s07"]
+[ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="2_bgx8r"]
 
 [node name="Multiplayer Controler" type="Control"]
 layout_mode = 3
@@ -11,61 +12,99 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i4s07")
 
-[node name="HostButton" type="Button" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 257.0
-offset_top = 291.0
-offset_right = 526.0
-offset_bottom = 403.0
-text = "Host"
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.454902, 0.329412, 0.317647, 1)
 
-[node name="JoinButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 706.0
-offset_top = 291.0
-offset_right = 946.0
-offset_bottom = 403.0
-text = "Join"
+[node name="MenuMarginContainer" type="MarginContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 640.0
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 50
 
-[node name="StartGameButton" type="Button" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 499.0
-offset_top = 291.0
-offset_right = 735.0
-offset_bottom = 403.0
-text = "Start game"
+[node name="MenuVBoxContainer" type="VBoxContainer" parent="MenuMarginContainer"]
+layout_mode = 2
 
-[node name="ConnectButton" type="Button" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 496.0
-offset_top = 291.0
-offset_right = 736.0
-offset_bottom = 403.0
-text = "Connect
-"
+[node name="WelcomeTitle" type="Label" parent="MenuMarginContainer/MenuVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_bgx8r")
+theme_override_font_sizes/font_size = 87
+text = "LET's PLAY"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
-[node name="RemoteAddress" type="LineEdit" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 318.0
-offset_top = 124.0
-offset_right = 883.0
-offset_bottom = 155.0
-placeholder_text = "Remote IP Address"
-alignment = 1
+[node name="ButtonContainer" type="VBoxContainer" parent="MenuMarginContainer/MenuVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
 
-[node name="Username" type="LineEdit" parent="."]
-layout_mode = 0
-offset_left = 314.0
-offset_top = 53.0
-offset_right = 879.0
-offset_bottom = 84.0
+[node name="Username" type="LineEdit" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+layout_mode = 2
 placeholder_text = "Username"
 alignment = 1
 
-[connection signal="button_down" from="HostButton" to="." method="_on_host_button_down"]
-[connection signal="button_down" from="JoinButton" to="." method="_on_join_button_down"]
-[connection signal="button_down" from="StartGameButton" to="." method="_on_start_button_down"]
-[connection signal="button_down" from="ConnectButton" to="." method="_on_connect_button_down"]
+[node name="RemoteAddress" type="LineEdit" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+visible = false
+layout_mode = 2
+placeholder_text = "Remote IP Address"
+alignment = 1
+
+[node name="HostButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="HostButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="JoinButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="StartButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="ConnectButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer"]
+visible = false
+layout_mode = 2
+text = "Connect
+"
+
+[node name="StartGameButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer"]
+visible = false
+layout_mode = 2
+text = "Start game"
+
+[node name="ReturnButtonMargin" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="ReturnButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ReturnButtonMargin"]
+layout_mode = 2
+text = "Return to menu"
+
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton" to="." method="_on_connect_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ReturnButtonMargin/ReturnButton" to="." method="_on_return_button_button_down"]

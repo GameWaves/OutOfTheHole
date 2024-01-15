@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dibsmp116ile0"]
+
+[ext_resource type="Texture2D" uid="uid://kgfokhwxwhvk" path="res://assets/sprites/Placeholder-Right2-P2.png" id="1_blxya"]
+
+[node name="Gun" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.76837e-07, 9.53674e-07)
+scale = Vector2(0.775024, 0.210644)
+texture = ExtResource("1_blxya")
+
+[node name="ShootPoint" type="Node2D" parent="."]
+position = Vector2(3, 0)

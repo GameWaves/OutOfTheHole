@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvo3xth7fpxec"]
+
+[ext_resource type="Script" path="res://src/menus/CreditsMenu.cs" id="1_hgy71"]
+[ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="2_q4vec"]
+[ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="3_6v4ji"]
+
+[node name="CreditsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hgy71")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 644.0
+color = Color(0.454902, 0.329412, 0.317647, 1)
+
+[node name="MenuMarginContainer" type="MarginContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 640.0
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 50
+
+[node name="MenuVBoxContainer" type="VBoxContainer" parent="MenuMarginContainer"]
+layout_mode = 2
+
+[node name="WelcomeTitle" type="Label" parent="MenuMarginContainer/MenuVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_q4vec")
+theme_override_font_sizes/font_size = 87
+text = "Credits
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Text" type="VBoxContainer" parent="MenuMarginContainer/MenuVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 64.0
+theme_override_fonts/font = ExtResource("3_6v4ji")
+theme_override_font_sizes/font_size = 35
+text = "EXIT"
+
+[connection signal="button_down" from="ExitButton" to="." method="_on_exit_button_button_down"]
