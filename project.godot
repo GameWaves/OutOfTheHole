@@ -12,7 +12,7 @@ config_version=5
 
 config/name="OutOfTheHole"
 run/main_scene="res://src/multiplayer/multiplayer_controler.tscn"
-config/features=PackedStringArray("4.1", "C#", "Forward Plus")
+config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
