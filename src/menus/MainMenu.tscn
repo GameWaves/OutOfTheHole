@@ -28,25 +28,23 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 expand_margin_top = 15.0
 
-[node name="MainMenu" type="Control"]
-layout_mode = 3
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_ee6e6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ee6e6")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 644.0
 color = Color(0.454902, 0.329412, 0.317647, 1)
 
 [node name="MenuMarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 640.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 200
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 200

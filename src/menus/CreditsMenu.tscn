@@ -4,18 +4,15 @@
 [ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="2_q4vec"]
 [ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="3_6v4ji"]
 
-[node name="CreditsMenu" type="Control"]
-layout_mode = 3
+[node name="CreditsMenu" type="CanvasLayer"]
+script = ExtResource("1_hgy71")
+
+[node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_hgy71")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 644.0
 color = Color(0.454902, 0.329412, 0.317647, 1)
 
 [node name="MenuMarginContainer" type="MarginContainer" parent="."]
@@ -47,7 +44,6 @@ size_flags_vertical = 3
 theme_override_constants/separation = 30
 
 [node name="ExitButton" type="Button" parent="."]
-layout_mode = 0
 offset_right = 192.0
 offset_bottom = 64.0
 theme_override_fonts/font = ExtResource("3_6v4ji")

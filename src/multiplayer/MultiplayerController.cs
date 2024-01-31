@@ -2,7 +2,7 @@ using System;
 using Godot;
 using OutofTheHole.multiplayer;
 
-public partial class MultiplayerController : Control
+public partial class MultiplayerController : CanvasLayer
 {
 	[Export] private string address = "127.0.0.1";
 
