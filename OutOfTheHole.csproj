@@ -4,6 +4,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="src\players\Player.tscn" />
+    <Content Include="scripts\Multiplayer\.gitkeep" />
+    <Content Include="scripts\Weapons\.gitkeep" />
   </ItemGroup>
 </Project>
