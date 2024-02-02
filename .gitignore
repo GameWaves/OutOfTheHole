@@ -464,3 +464,4 @@ mono_crash.*.json
 
 # old file exclusion
 *.csproj.old.*
+*.csproj.old
