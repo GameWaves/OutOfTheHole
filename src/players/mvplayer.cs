@@ -24,11 +24,8 @@ public partial class mvplayer : CharacterBody2D
 
     // to know if the player is alive
     public static bool alive;
-    [Export] private float bps = 5f;
-    [Export] private PackedScene bullet_scn;
-    [Export] private float bullet_speed = 800f;
-
-    private float fire_rate;
+    private Gun.Gun _gunObject;
+    private float _timeUntilFire = 300f;
 
 
     //Set a gravity (do not change, is the default to have a consistant gravity accros the game)
@@ -37,11 +34,11 @@ public partial class mvplayer : CharacterBody2D
 
     [Export] private PackedScene gunScene;
 
+
     public int hp;
 
     //define the sprite (currently placholder)
     private AnimatedSprite2D idleSprite;
-    private float time_until_fire = 300f;
 
     private AnimatedSprite2D Walkleft;
     private AnimatedSprite2D Walkright;
@@ -49,10 +46,8 @@ public partial class mvplayer : CharacterBody2D
 
     public override void _Ready()
     {
-        // var GunObject = gunScene.Instantiate<Gun.Gun>();
-        // AddChild(GunObject);
-        // GunObject.GlobalPosition = GetNode<Node2D>("GunPosition").GlobalPosition;
-
+        // instantiate the gun of the player 
+        _gunObject = gunScene.Instantiate<Gun.Gun>();
 
         //set the sprite
         idleSprite = GetNode<AnimatedSprite2D>("Idle");
@@ -148,20 +143,21 @@ public partial class mvplayer : CharacterBody2D
             //kill yourself (to test gameover screen)
             if (Input.IsKeyPressed(Key.K)) ishurt(MaxHp);
 
-            if (Input.IsActionPressed("click") && fire_rate < time_until_fire)
+            if (Input.IsActionPressed("click") && _gunObject.FireRate < _timeUntilFire)
             {
-                time_until_fire = 0f;
-                Rpc("fire");
+                _timeUntilFire = 0f;
+                Rpc("FireBulletRpc");
             }
             else
             {
-                time_until_fire += (float)delta; //timer until ability to shoot again
+                _timeUntilFire += (float)delta; //timer until ability to shoot again
             }
 
 
             // function MoveAndSlide apply the Velocity to the player
-
             MoveAndSlide();
+
+            //Prepare the gun rotation for the sync and the "Mathf.Lerp".
             GunRotation = GetNode<Node2D>("Gun").RotationDegrees;
         }
         else
@@ -190,12 +186,15 @@ public partial class mvplayer : CharacterBody2D
         }
     }
 
+    /// <summary>
+    ///     This function receives the fire commands from the other player via the "FireBulletRpc" message
+    ///     It sends the calls to the FireBullet function in the Gun Class.
+    /// </summary>
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-    public void fire()
+    private void FireBulletRpc()
     {
-        var bullet = bullet_scn.Instantiate<RigidBody2D>(); // create the bullet
-        bullet.Rotation = GetNode<Node2D>("Gun").Rotation;
-        bullet.GlobalPosition = GetNode<Node2D>("Gun/ShootPoint").GlobalPosition;
-        GetTree().Root.AddChild(bullet);
+        var gunNode = GetNode<Node2D>("Gun");
+        var shootPoint = GetNode<Node2D>("Gun/ShootPoint");
+        _gunObject.FireBullet(gunNode, shootPoint, GetTree());
     }
 }

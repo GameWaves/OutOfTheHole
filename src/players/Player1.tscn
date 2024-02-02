@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c13btmnbey1tq"]
+[gd_scene load_steps=15 format=3 uid="uid://c13btmnbey1tq"]
 
 [ext_resource type="Script" path="res://src/players/mvplayer.cs" id="1_77yes"]
 [ext_resource type="PackedScene" uid="uid://byexr753no7oj" path="res://src/Gun/Gun.tscn" id="2_klm4n"]
@@ -9,8 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://dcmvt61iyaoff" path="res://assets/sprites/Placeholder-Left1.png" id="6_vwqe2"]
 [ext_resource type="Texture2D" uid="uid://84m7q0ob7ijm" path="res://assets/sprites/Placeholder-Right1.png" id="7_8m2ow"]
 [ext_resource type="Texture2D" uid="uid://ckpq27nnd6yn3" path="res://assets/sprites/Placeholder-Right2.png" id="8_nkoql"]
-[ext_resource type="Texture2D" uid="uid://kgfokhwxwhvk" path="res://assets/sprites/Placeholder-Right2-P2.png" id="10_32iqq"]
-[ext_resource type="PackedScene" uid="uid://b8nh16frhokyw" path="res://src/Gun/bullet.tscn" id="10_274xp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jy6yd"]
 size = Vector2(19, 27)
@@ -63,16 +61,13 @@ animations = [{
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5h1fq"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/sync = true
-properties/0/watch = false
+properties/0/replication_mode = 1
 properties/1/path = NodePath(".:GunRotation")
 properties/1/spawn = true
-properties/1/sync = true
-properties/1/watch = false
+properties/1/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_77yes")
-bullet_scn = ExtResource("10_274xp")
 gunScene = ExtResource("2_klm4n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -95,20 +90,8 @@ sprite_frames = SubResource("SpriteFrames_aajsx")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_5h1fq")
 
-[node name="GunPosition" type="Node2D" parent="."]
-position = Vector2(18.25, 0.375)
-
 [node name="Shoot_point" type="Node2D" parent="."]
 position = Vector2(18, 0)
 
-[node name="Gun" type="Node2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="Gun"]
-position = Vector2(14, 2.60772e-08)
-rotation = 1.56521
-scale = Vector2(0.775024, 0.210644)
-texture = ExtResource("10_32iqq")
-
-[node name="ShootPoint" type="Node2D" parent="Gun"]
-position = Vector2(3, 0)
-rotation = 1.15534
+[node name="Gun" parent="." instance=ExtResource("2_klm4n")]
+position = Vector2(17.8438, 0.125)

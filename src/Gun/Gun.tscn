@@ -1,13 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://byexr753no7oj"]
+[gd_scene load_steps=4 format=3 uid="uid://byexr753no7oj"]
 
-[ext_resource type="Texture2D" uid="uid://kgfokhwxwhvk" path="res://assets/sprites/Placeholder-Right2-P2.png" id="1_blxya"]
+[ext_resource type="Script" path="res://src/Gun/Gun.cs" id="1_klk6k"]
+[ext_resource type="Texture2D" uid="uid://c4ey7j8om4fr8" path="res://assets/sprites/famas.png" id="1_wvxv2"]
+[ext_resource type="PackedScene" uid="uid://b8nh16frhokyw" path="res://src/Gun/bullet.tscn" id="2_nv3ud"]
 
 [node name="Gun" type="Node2D"]
+script = ExtResource("1_klk6k")
+bullet_scn = ExtResource("2_nv3ud")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(4.76837e-07, 9.53674e-07)
-scale = Vector2(0.775024, 0.210644)
-texture = ExtResource("1_blxya")
+position = Vector2(-9.53674e-07, 4)
+scale = Vector2(0.083, 0.083)
+texture = ExtResource("1_wvxv2")
 
 [node name="ShootPoint" type="Node2D" parent="."]
 position = Vector2(3, 0)

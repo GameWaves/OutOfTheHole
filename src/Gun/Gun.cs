@@ -1,50 +1,45 @@
-using System;
 using Godot;
+using OutOfTheHole.Gun;
 
 namespace OutofTheHole.Gun;
 
-
 public partial class Gun : Node2D
 {
-    [Export] private float bps = 5f;
+    [Export] private float _bps = 5f;
+    [Export] private float _bulletDamage = 30f;
+    [Export] private float _bulletSpeed = 800f;
 
-    [Export] private float bullet_damage = 30f;
+    private float _timeUntilFire = 300f;
 
     //arbitrary values for the ability to shoot
     [Export] private PackedScene bullet_scn;
-    
-    [Export] private float bullet_speed = 800f;
-    
-    private float fire_rate;
 
-    private float time_until_fire = 300f;
+    public float FireRate;
 
     /// <summary>
     ///     Initiate the fire_rate value when the player spawn;
     /// </summary>
     public override void _Ready()
     {
-        fire_rate = 1 / bps;
+        FireRate = 1 / _bps;
         GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
         GD.Print(GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer"));
     }
 
     /// <summary>
-    ///     Test when the left_click is pressed and create the bullet as a new node with initial values (also verify if the
-    ///     player is able to shoot)
+    ///     The function manages all the bullet shooting. It creates the bullet, sets the rotation and position and adds it to
+    ///     the scene.
+    ///     The velocity management has been offloaded to the bullet.
     /// </summary>
-    /// <param name="delta">seconds</param>
-    public override void _Process(double delta)
+    /// <param name="gunNode">The node corresponding to the gun</param>
+    /// <param name="shootPoint">The shoot point Node included int the Gun</param>
+    /// <param name="sceneTree">The global scene tree so the bullet can be added.</param>
+    public void FireBullet(Node2D gunNode, Node2D shootPoint, SceneTree sceneTree)
     {
-        GetNode<Node2D>("Gun").LookAt(GetViewport().GetMousePosition());
-    }
-
-    public void fireBullet()
-    {
-        var bullet = bullet_scn.Instantiate<RigidBody2D>(); // create the bullet
-        bullet.Rotation = GetNode<Node2D>("Gun").RotationDegrees;
-        bullet.GlobalPosition = GetNode<Node2D>("Gun/ShootPoint").GlobalPosition;
-        GetTree().Root.AddChild(bullet);
-        bullet.LinearVelocity = (bullet.GlobalPosition - GetNode<Node2D>("Gun").GlobalPosition).Normalized() * bullet_speed;
+        var bullet = bullet_scn.Instantiate<bullet>(); // create the bullet
+        bullet.Speed = _bulletSpeed;
+        bullet.Rotation = gunNode.Rotation;
+        bullet.GlobalPosition = shootPoint.GlobalPosition;
+        sceneTree.Root.AddChild(bullet);
     }
 }
