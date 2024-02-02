@@ -190,7 +190,7 @@ public partial class mvplayer : CharacterBody2D
     ///     This function receives the fire commands from the other player via the "FireBulletRpc" message
     ///     It sends the calls to the FireBullet function in the Gun Class.
     /// </summary>
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     private void FireBulletRpc()
     {
         var gunNode = GetNode<Node2D>("Gun");
