@@ -1,59 +1,45 @@
 using Godot;
-using System;
+using OutOfTheHole.Gun;
+
+namespace OutofTheHole.Gun;
 
 public partial class Gun : Node2D
 {
-	//arbitrary values for the ability to shoot
-	[Export] private PackedScene bullet_scn;
-	[Export] private CharacterBody2D CharacterBody;
-	[Export] private float bullet_speed = 800f;
-	[Export] private float bps = 5f;
-	[Export] private float bullet_damage = 30f;
-	
-	private float fire_rate;
+    [Export] private float _bps = 5f;
+    [Export] private float _bulletDamage = 30f;
+    [Export] private float _bulletSpeed = 800f;
 
-	private float time_until_fire = 300f;
+    private float _timeUntilFire = 300f;
 
-	/// <summary>
-	/// Initiate the fire_rate value when the player spawn;
-	/// </summary>
-	public override void _Ready()
-	{
-		fire_rate = 1 / bps;
-	}
+    //arbitrary values for the ability to shoot
+    [Export] private PackedScene bullet_scn;
 
-	/// <summary>
-	/// Test when the left_click is pressed and create the bullet as a new node with initial values (also verify if the player is able to shoot)
-	/// </summary>
-	/// <param name="delta">seconds</param>
-	public override void _Process(double delta)
-	{
-		float maxdistance = 20f;
-		if (Input.IsActionPressed("click") && fire_rate < time_until_fire)
-		{
-			Vector2 playerPosition = CharacterBody.GlobalPosition;
-			
-			RigidBody2D bullet = bullet_scn.Instantiate<RigidBody2D>(); // create the bullet
-			Vector2 mousePostion = GetGlobalMousePosition() - playerPosition;
-			
-			bullet.GlobalPosition = playerPosition + maxdistance*(mousePostion.Normalized()); //change the position according to the mouse
-			
-			if (mousePostion.X < 0)
-			{
-				bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X) + Mathf.Pi;
-			}
-			else
-			{
-				bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X);
-			}
-			
-			GetTree().Root.AddChild(bullet);
-			bullet.LinearVelocity = (bullet.GlobalPosition-playerPosition).Normalized() * bullet_speed;
-			time_until_fire = 0f;
-		}
-		else
-		{
-			time_until_fire += (float)delta; //timer until ability to shoot again
-		}
-	}
+    public float FireRate;
+
+    /// <summary>
+    ///     Initiate the fire_rate value when the player spawn;
+    /// </summary>
+    public override void _Ready()
+    {
+        FireRate = 1 / _bps;
+        GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
+        GD.Print(GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer"));
+    }
+
+    /// <summary>
+    ///     The function manages all the bullet shooting. It creates the bullet, sets the rotation and position and adds it to
+    ///     the scene.
+    ///     The velocity management has been offloaded to the bullet.
+    /// </summary>
+    /// <param name="gunNode">The node corresponding to the gun</param>
+    /// <param name="shootPoint">The shoot point Node included int the Gun</param>
+    /// <param name="sceneTree">The global scene tree so the bullet can be added.</param>
+    public void FireBullet(Node2D gunNode, Node2D shootPoint, SceneTree sceneTree)
+    {
+        var bullet = bullet_scn.Instantiate<bullet>(); // create the bullet
+        bullet.Speed = _bulletSpeed;
+        bullet.Rotation = gunNode.Rotation;
+        bullet.GlobalPosition = shootPoint.GlobalPosition;
+        sceneTree.Root.AddChild(bullet);
+    }
 }

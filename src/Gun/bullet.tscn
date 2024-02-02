@@ -9,6 +9,7 @@ radius = 3.0
 [node name="bullet" type="RigidBody2D"]
 gravity_scale = 2.66454e-15
 script = ExtResource("1_tdbc2")
+longetivity = 100
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.02, 0.02)
