@@ -75,7 +75,7 @@ public partial class MultiplayerController : Control
 	/// <summary>
 	///     Function called when the host button is pressed
 	/// </summary>
-	private void _on_host_button_button_down()
+	private void _on_host_button_down()
 	{
 		peer = new ENetMultiplayerPeer();
 		var error = peer.CreateServer(port, 2);
@@ -94,7 +94,7 @@ public partial class MultiplayerController : Control
 	/// <summary>
 	///     Function called when the join button is pressed
 	/// </summary>
-	private void _on_join_button_button_down()
+	private void _on_join_button_down()
 	{
 		QueryAdress();
 
@@ -106,10 +106,10 @@ public partial class MultiplayerController : Control
 		//joinButton.SetPosition(new Vector2(joinButton.Position.X - 210, joinButton.Position.Y));
 		//joinButton.Text = "Start";
 		joinButton.Hide();
-		GetNode<Button>("StartButton").Show();
+		GetNode<Button>("ConnectButton").Show();
 	}
 
-	private void _on_start_button_button_down()
+	private void _on_connect_button_down()
 	{
 		var addressInput = GetNode<LineEdit>("RemoteAddress").Text;
 		if (addressInput != "") address = addressInput;
@@ -120,17 +120,17 @@ public partial class MultiplayerController : Control
 		GD.Print("Joining Game!");
 		GD.Print(address);
 
-		GetNode<Button>("StartButton").Hide();
+		GetNode<Button>("ConnectButton").Hide();
 		GetNode<Button>("StartGameButton").Show();
 
-		//GetNode<Button>("StartButton").Connect("button_down", Callable.From(_on_start_game_button_button_down));
+		//GetNode<Button>("ConnectButton").Connect("button_down", Callable.From(_on_start_game_button_button_down));
 	}
 
 
 	/// <summary>
 	///     Function called when the start game button is pressed
 	/// </summary>
-	private void _on_start_game_button_button_down()
+	private void _on_start_button_down()
 	{
 		Rpc("startGame");
 	}
