@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/Gun/Gun.cs" id="1_klk6k"]
 [ext_resource type="Texture2D" uid="uid://c4ey7j8om4fr8" path="res://assets/sprites/famas.png" id="1_wvxv2"]
-[ext_resource type="PackedScene" uid="uid://b8nh16frhokyw" path="res://src/Gun/bullet.tscn" id="2_nv3ud"]
+[ext_resource type="PackedScene" uid="uid://b8nh16frhokyw" path="res://src/Entity/bullets/BasicBullet.tscn" id="2_nv3ud"]
 
 [node name="Gun" type="Node2D"]
 script = ExtResource("1_klk6k")

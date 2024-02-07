@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://c2em77lmsto1a"]
 
 [ext_resource type="Script" path="res://src/multiplayer/SceneManager.cs" id="1_dqc3g"]
-[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/players/Player1.tscn" id="2_rm3d1"]
-[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/players/Player2.tscn" id="3_jkbqt"]
+[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/players/Player1.tscn" id="2_rm3d1"]
+[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/players/Player2.tscn" id="3_jkbqt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_muvmw"]
 size = Vector2(1159, 226)

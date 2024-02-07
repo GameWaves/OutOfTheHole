@@ -1,9 +1,13 @@
 <Project Sdk="Godot.NET.Sdk/4.2.1">
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <EnableDynamicLoading>true</EnableDynamicLoading>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="src\players\Player.tscn" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+    </PropertyGroup>
+    <ItemGroup>
+        <Content Include="src\Entity\bullets\BasicBullet.tscn"/>
+        <Content Include="src\Entity\players\Player.tscn"/>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Include="src\Entity\players\Player2.cs.old" />
+    </ItemGroup>
 </Project>

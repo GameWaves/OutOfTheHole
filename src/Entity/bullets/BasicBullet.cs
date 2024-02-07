@@ -3,7 +3,7 @@ using Godot;
 
 namespace OutOfTheHole.Gun;
 
-public partial class bullet : RigidBody2D
+public partial class BasicBullet : RigidBody2D
 {
     private Vector2 direction;
 

@@ -1,5 +1,6 @@
+using System;
+using Entity.players;
 using Godot;
-using OutofTheHole.players;
 
 namespace OutofTheHole.multiplayer;
 
@@ -15,8 +16,9 @@ public partial class SceneManager : Node2D
 		foreach (var item in GameManager.Players)
 			if (item.Role == 1)
 			{
-				var currentPlayer = player1Scene.Instantiate<mvplayer>();
+				var currentPlayer = player1Scene.Instantiate<Player>();
 				currentPlayer.Name = item.Id.ToString();
+				currentPlayer.reversed = false;
 				AddChild(currentPlayer);
 				foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
 					if (int.Parse(spawnPoint.Name) == index)
@@ -25,8 +27,10 @@ public partial class SceneManager : Node2D
 			}
 			else if (item.Role == 2)
 			{
-				var currentPlayer = player2Scene.Instantiate<mvplayer2>();
+				var currentPlayer = player2Scene.Instantiate<Player>();
 				currentPlayer.Name = item.Id.ToString();
+				currentPlayer.Gravity = -currentPlayer.Gravity;
+				currentPlayer.reversed = true;
 				AddChild(currentPlayer);
 				foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
 					if (int.Parse(spawnPoint.Name) == index)
