@@ -6,6 +6,8 @@ namespace Entity.players;
 
 public partial class Player : OutOfTheHole.Entity
 {
+	public string GunType = "Basic";
+	
 	//Set a Jump Height / Jump speed
 	public const float JumpVelocity = -400.0f;
 
@@ -115,8 +117,8 @@ public partial class Player : OutOfTheHole.Entity
 				idleSprite.Visible = false;
 				Walkleft.Visible = false;
 				Walkright.Visible = true;
-				if (velocity.X >= 200)
-					velocity.X += Speed;
+				if (velocity.X >= 300)
+					velocity.X -= Speed;
 				else if (velocity.X < 0)
 					velocity.X -= Acceleration;
 				else
@@ -129,8 +131,8 @@ public partial class Player : OutOfTheHole.Entity
 				idleSprite.Visible = false;
 				Walkleft.Visible = true;
 				Walkright.Visible = false;
-				if (velocity.X <= -200)
-					velocity.X -= Speed;
+				if (velocity.X <= -300)
+					velocity.X += Speed;
 				else if (velocity.X > 0)
 					velocity.X += Acceleration;
 				else
@@ -203,6 +205,7 @@ public partial class Player : OutOfTheHole.Entity
 			idleSprite.Visible = false;
 			Walkright.Visible = false;
 			Walkleft.Visible = false;
+			death();
 		}
 	}
 	
@@ -217,6 +220,6 @@ public partial class Player : OutOfTheHole.Entity
 	{
 		var gunNode = GetNode<Node2D>("Gun");
 		var shootPoint = GetNode<Node2D>("Gun/ShootPoint");
-		_gunObject.FireBullet(gunNode, shootPoint, GetTree());
+		_gunObject.FireBullet(gunNode, shootPoint, GetTree(),GunType);
 	}
 }

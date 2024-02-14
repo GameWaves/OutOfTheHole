@@ -25,6 +25,10 @@ public abstract partial class Entity : CharacterBody2D
 	//to define the loss of Hp
 	//hpLoss is the amount of damage 
 	public abstract void Hurt(int hpLoss);
-	public abstract override void _Ready();
-	public abstract override void _PhysicsProcess(double delta);
+
+	public void death()
+	{
+		QueueFree();
+		if (IsQueuedForDeletion()) Free();
+	}
 }
