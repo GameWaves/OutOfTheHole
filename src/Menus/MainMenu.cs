@@ -1,5 +1,7 @@
 using Godot;
 
+namespace OutofTheHole.Menus;
+
 public partial class MainMenu : CanvasLayer
 {
 	// Called when the node enters the scene tree for the first time.
@@ -17,7 +19,7 @@ public partial class MainMenu : CanvasLayer
 	/// </summary>
 	private void _on_play_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/multiplayer/multiplayer_controler.tscn");
+		GetTree().ChangeSceneToFile("res://src/Multiplayer/multiplayer_controler.tscn");
 	}
 
 	/// <summary>
@@ -25,7 +27,7 @@ public partial class MainMenu : CanvasLayer
 	/// </summary>
 	private void _on_option_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/menus/OptionMenu.tscn");
+		GetTree().ChangeSceneToFile("res://src/Menus/OptionMenu.tscn");
 	}
 
 	/// <summary>
@@ -33,7 +35,7 @@ public partial class MainMenu : CanvasLayer
 	/// </summary>
 	private void _on_credits_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/menus/CreditsMenu.tscn");
+		GetTree().ChangeSceneToFile("res://src/Menus/CreditsMenu.tscn");
 	}
 
 	/// <summary>

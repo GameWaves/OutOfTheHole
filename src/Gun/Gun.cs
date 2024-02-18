@@ -10,7 +10,8 @@ public partial class Gun : Node2D
 	private float _timeUntilFire;
 
 	//arbitrary values for the ability to shoot
-	private PackedScene bulletScene; 
+
+	[Export] private PackedScene _bulletScene;
 	
 	public float FireRate;
 	
@@ -38,9 +39,8 @@ public partial class Gun : Node2D
 		{
 			//arbitrary value for Basic gun
 			FireRate = 1 / 5f;
-			bulletScene = ResourceLoader.Load("res://src/bullets/BulletType/BasicBullet.tscn") as PackedScene;
 		}
-		var bullet = bulletScene.Instantiate<BasicBullet>(); // create the bullet
+		var bullet = _bulletScene.Instantiate<BasicBullet>(); // create the bullet
 		bullet.Rotation = gunNode.Rotation;
 		bullet.GlobalPosition = shootPoint.GlobalPosition;
 		sceneTree.Root.AddChild(bullet);

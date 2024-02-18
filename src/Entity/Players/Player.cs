@@ -2,9 +2,11 @@ using System;
 using Godot;
 using OutofTheHole.Gun;
 
-namespace Entity.players;
+using OutofTheHole.Entity;
 
-public partial class Player : OutOfTheHole.Entity
+namespace OutofTheHole.Entity.Players;
+
+public partial class Player : Entity
 {
 	public string GunType = "Basic";
 	
@@ -13,7 +15,7 @@ public partial class Player : OutOfTheHole.Entity
 
 	public new static bool Alive;
 
-	private Gun _gunObject;
+	private Gun.Gun _gunObject;
 
 	private float _timeUntilFire = 300f;
 
@@ -23,7 +25,7 @@ public partial class Player : OutOfTheHole.Entity
  
 	private float GunRotation;
 
-	[Export] private PackedScene gunScene;
+	[Export] private PackedScene _gunScene;
 
 	/// <summary>
 	///     All value are in pixel
@@ -31,37 +33,37 @@ public partial class Player : OutOfTheHole.Entity
 	public new int Hp;
 
 	//define the sprite (currently placholder)
-	private AnimatedSprite2D idleSprite;
+	private AnimatedSprite2D _idleSprite;
 
 	public new int MaxHp = 100;
 
 	public new float Speed = 200.0f;
 
-	private AnimatedSprite2D Walkleft;
+	private AnimatedSprite2D _walkleft;
 
-	private AnimatedSprite2D Walkright;
-
-	public bool reversed;
+	private AnimatedSprite2D _walkright;
+	
+	public bool Reversed;
 	public override void _Ready()
 	{
 		// instantiate the gun of the player 
-		_gunObject = gunScene.Instantiate<Gun>();
+		_gunObject = _gunScene.Instantiate<Gun.Gun>();
 		_gunObject.Id = int.Parse(Name);
 		
 		//set the sprite
-		if (reversed)
+		if (Reversed)
 		{
 			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			idleSprite = GetNode<AnimatedSprite2D>("Idle2");
-			Walkleft = GetNode<AnimatedSprite2D>("WalkLeft2");
-			Walkright = GetNode<AnimatedSprite2D>("WalkRight2");
+			_idleSprite = GetNode<AnimatedSprite2D>("Idle2");
+			_walkleft = GetNode<AnimatedSprite2D>("WalkLeft2");
+			_walkright = GetNode<AnimatedSprite2D>("WalkRight2");
 		}
 		else
 		{
 			this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			idleSprite = GetNode<AnimatedSprite2D>("Idle");
-			Walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-			Walkright = GetNode<AnimatedSprite2D>("Walkright");
+			_idleSprite = GetNode<AnimatedSprite2D>("Idle");
+			_walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
+			_walkright = GetNode<AnimatedSprite2D>("Walkright");
 		}
 
 		//set player hp
@@ -89,7 +91,7 @@ public partial class Player : OutOfTheHole.Entity
 			//create a variable velocity 
 			var velocity = Velocity;
 
-			if (reversed)
+			if (Reversed)
 			{
 				// Add the gravity to the vector velocity /!\ on godot, y axis is inverted, as such you gain Y when you go down 
 				if (!IsOnCeiling()) velocity.Y += Gravity * (float)delta;
@@ -114,9 +116,9 @@ public partial class Player : OutOfTheHole.Entity
 			if (Input.IsKeyPressed(Key.Right))
 			{
 				//show (or not) each sprite
-				idleSprite.Visible = false;
-				Walkleft.Visible = false;
-				Walkright.Visible = true;
+				_idleSprite.Visible = false;
+				_walkleft.Visible = false;
+				_walkright.Visible = true;
 				if (velocity.X >= 300)
 					velocity.X -= Speed;
 				else if (velocity.X < 0)
@@ -128,9 +130,9 @@ public partial class Player : OutOfTheHole.Entity
 			if (Input.IsKeyPressed(Key.Left))
 			{
 				//show (or not) each sprite
-				idleSprite.Visible = false;
-				Walkleft.Visible = true;
-				Walkright.Visible = false;
+				_idleSprite.Visible = false;
+				_walkleft.Visible = true;
+				_walkright.Visible = false;
 				if (velocity.X <= -300)
 					velocity.X += Speed;
 				else if (velocity.X > 0)
@@ -144,9 +146,9 @@ public partial class Player : OutOfTheHole.Entity
 				(Input.IsKeyPressed(Key.Left) && Input.IsKeyPressed(Key.Right)))
 			{
 				//show (or not) each sprite
-				idleSprite.Visible = true;
-				Walkleft.Visible = false;
-				Walkright.Visible = false;
+				_idleSprite.Visible = true;
+				_walkleft.Visible = false;
+				_walkright.Visible = false;
 				if (velocity.X <= 8 * Acceleration && velocity.X >= -8 * Acceleration) velocity.X = 0;
 
 				if (velocity.X > 0) velocity.X -= 8 * Acceleration;
@@ -157,11 +159,11 @@ public partial class Player : OutOfTheHole.Entity
 			Velocity = velocity;
 
 			//play the sprite
-			if (idleSprite.Visible) idleSprite.Play();
+			if (_idleSprite.Visible) _idleSprite.Play();
 
-			if (Walkleft.Visible) Walkleft.Play();
+			if (_walkleft.Visible) _walkleft.Play();
 
-			if (Walkright.Visible) Walkright.Play();
+			if (_walkright.Visible) _walkright.Play();
 
 			//kill yourself (to test gameover screen)
 			if (Input.IsKeyPressed(Key.K)) Hurt(MaxHp);
@@ -202,9 +204,9 @@ public partial class Player : OutOfTheHole.Entity
 		{
 			Alive = false;
 			//hide the player 
-			idleSprite.Visible = false;
-			Walkright.Visible = false;
-			Walkleft.Visible = false;
+			_idleSprite.Visible = false;
+			_walkright.Visible = false;
+			_walkleft.Visible = false;
 			death();
 		}
 	}

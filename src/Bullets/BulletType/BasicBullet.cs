@@ -13,7 +13,7 @@ public partial class BasicBullet : Bullets
 	{
 		Damage = 30;
 		Speed = 800.0f;
-		longetivity = 100;
+		Longetivity = 100;
 	}
 
 	public override void OnHit()

@@ -1,14 +1,16 @@
 using System;
 using Godot;
-using OutofTheHole.multiplayer;
+
+namespace OutofTheHole.Multiplayer;
+
 
 public partial class MultiplayerController : CanvasLayer
 {
-	[Export] private string address = "127.0.0.1";
+	[Export] private string _address = "127.0.0.1";
 
-	private ENetMultiplayerPeer peer;
+	private ENetMultiplayerPeer _peer;
 
-	[Export] private int port = 4242;
+	[Export] private int _port = 4242;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -41,7 +43,7 @@ public partial class MultiplayerController : CanvasLayer
 	private void ConnectedToServer()
 	{
 		GD.Print("Connected to server");
-		RpcId(1, "sendPlayerInformation",
+		RpcId(1, "SendPlayerInformation",
 			GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text,
 			Multiplayer.GetUniqueId());
 	}
@@ -85,8 +87,8 @@ public partial class MultiplayerController : CanvasLayer
 	/// </summary>
 	private void _on_host_button_down()
 	{
-		peer = new ENetMultiplayerPeer();
-		var error = peer.CreateServer(port, 2);
+		_peer = new ENetMultiplayerPeer();
+		var error = _peer.CreateServer(_port, 2);
 		if (error != Error.Ok)
 		{
 			GD.Print("error cannot host!" + error);
@@ -104,10 +106,10 @@ public partial class MultiplayerController : CanvasLayer
 		GetNode<Button>(
 			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
 
-		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
-		Multiplayer.MultiplayerPeer = peer;
+		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
+		Multiplayer.MultiplayerPeer = _peer;
 		GD.Print("Waiting for Players!");
-		sendPlayerInformation(GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text,
+		SendPlayerInformation(GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text,
 			1);
 	}
 
@@ -138,13 +140,13 @@ public partial class MultiplayerController : CanvasLayer
 	{
 		var addressInput = GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/RemoteAddress")
 			.Text;
-		if (addressInput != "") address = addressInput;
-		peer = new ENetMultiplayerPeer();
-		peer.CreateClient(address, port);
-		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
-		Multiplayer.MultiplayerPeer = peer;
+		if (addressInput != "") _address = addressInput;
+		_peer = new ENetMultiplayerPeer();
+		_peer.CreateClient(_address, _port);
+		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
+		Multiplayer.MultiplayerPeer = _peer;
 		GD.Print("Joining Game!");
-		GD.Print(address);
+		GD.Print(_address);
 
 		GetNode<Button>(
 			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Hide();
@@ -160,14 +162,14 @@ public partial class MultiplayerController : CanvasLayer
 	/// </summary>
 	private void _on_start_button_down()
 	{
-		Rpc("startGame");
+		Rpc("StartGame");
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void startGame()
+	private void StartGame()
 	{
 		foreach (var item in GameManager.Players) GD.Print(item.Name + " is playing");
-		var scene = ResourceLoader.Load<PackedScene>("res://src/map/Map.tscn").Instantiate<Node2D>();
+		var scene = ResourceLoader.Load<PackedScene>("res://src/Map/Map.tscn").Instantiate<Node2D>();
 		GetTree().Root.AddChild(scene);
 		Hide();
 	}
@@ -178,7 +180,7 @@ public partial class MultiplayerController : CanvasLayer
 	/// <param name="name">The name of the player</param>
 	/// <param name="id">The id of the player</param>
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-	private void sendPlayerInformation(string name, int id)
+	private void SendPlayerInformation(string name, int id)
 	{
 		int playerRole;
 		if (id == 1)
@@ -195,11 +197,11 @@ public partial class MultiplayerController : CanvasLayer
 
 		if (Multiplayer.IsServer())
 			foreach (var item in GameManager.Players)
-				Rpc("sendPlayerInformation", item.Name, item.Id);
+				Rpc("SendPlayerInformation", item.Name, item.Id);
 	}
 
 	private void _on_return_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/menus/MainMenu.tscn");
+		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
 	}
 }

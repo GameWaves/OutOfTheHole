@@ -1,5 +1,7 @@
 using Godot;
 
+namespace OutofTheHole.Gameover;
+
 public partial class GameOver : Node2D
 {
 	/// <summary>

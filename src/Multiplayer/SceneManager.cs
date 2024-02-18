@@ -1,13 +1,15 @@
 using System;
-using Entity.players;
 using Godot;
 
-namespace OutofTheHole.multiplayer;
+using OutofTheHole.Entity.Players;
+
+
+namespace OutofTheHole.Multiplayer;
 
 public partial class SceneManager : Node2D
 {
-	[Export] private PackedScene player1Scene;
-	[Export] private PackedScene player2Scene;
+	[Export] private PackedScene _player1Scene;
+	[Export] private PackedScene _player2Scene;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -16,9 +18,9 @@ public partial class SceneManager : Node2D
 		foreach (var item in GameManager.Players)
 			if (item.Role == 1)
 			{
-				var currentPlayer = player1Scene.Instantiate<Player>();
+				var currentPlayer = _player1Scene.Instantiate<Player>();
 				currentPlayer.Name = item.Id.ToString();
-				currentPlayer.reversed = false;
+				currentPlayer.Reversed = false;
 				AddChild(currentPlayer);
 				foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
 					if (int.Parse(spawnPoint.Name) == index)
@@ -27,10 +29,10 @@ public partial class SceneManager : Node2D
 			}
 			else if (item.Role == 2)
 			{
-				var currentPlayer = player2Scene.Instantiate<Player>();
+				var currentPlayer = _player2Scene.Instantiate<Player>();
 				currentPlayer.Name = item.Id.ToString();
 				currentPlayer.Gravity = -currentPlayer.Gravity;
-				currentPlayer.reversed = true;
+				currentPlayer.Reversed = true;
 				AddChild(currentPlayer);
 				foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
 					if (int.Parse(spawnPoint.Name) == index)

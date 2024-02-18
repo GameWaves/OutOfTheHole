@@ -1,6 +1,6 @@
 using Godot;
 
-namespace OutOfTheHole;
+namespace OutofTheHole.Entity;
 
 public abstract partial class Entity : CharacterBody2D
 {

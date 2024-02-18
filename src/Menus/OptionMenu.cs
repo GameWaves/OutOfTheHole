@@ -1,6 +1,8 @@
 using System;
 using Godot;
 
+namespace OutofTheHole.Menus;
+
 public partial class OptionMenu : CanvasLayer
 {
 	// Called when the node enters the scene tree for the first time.
@@ -34,6 +36,6 @@ public partial class OptionMenu : CanvasLayer
 	/// </summary>
 	private void _on_exit_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/menus/MainMenu.tscn");
+		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
 	}
 }

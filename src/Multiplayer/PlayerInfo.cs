@@ -1,4 +1,4 @@
-namespace OutofTheHole.multiplayer;
+namespace OutofTheHole.Multiplayer;
 
 public class PlayerInfo
 {

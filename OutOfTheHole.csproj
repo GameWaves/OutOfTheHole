@@ -4,10 +4,10 @@
         <EnableDynamicLoading>true</EnableDynamicLoading>
     </PropertyGroup>
     <ItemGroup>
-        <Content Include="src\Entity\bullets\BasicBullet.tscn"/>
+        <Content Include="src\Entity\Bullets\BasicBullet.tscn" />
         <Content Include="src\Entity\players\Player.tscn"/>
     </ItemGroup>
     <ItemGroup>
-      <Compile Include="src\Entity\players\Player2.cs.old" />
+      <Compile Include="src\Entity\Players\Player2.cs.old" />
     </ItemGroup>
 </Project>

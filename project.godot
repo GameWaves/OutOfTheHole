@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="OutOfTheHole"
-run/main_scene="res://src/menus/MainMenu.tscn"
+run/main_scene="res://src/Multiplayer/multiplayer_controler.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*res://src/multiplayer/GameManager.cs"
+GameManager="*res://src/Multiplayer/GameManager.cs"
 
 [dotnet]
 

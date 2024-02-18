@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bjuiitkmi38lb"]
 
-[ext_resource type="Script" path="res://src/multiplayer/MultiplayerController.cs" id="1_i4s07"]
+[ext_resource type="Script" path="res://src/Multiplayer/MultiplayerController.cs" id="1_i4s07"]
 [ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="2_bgx8r"]
 
 [node name="Multiplayer Controler" type="CanvasLayer"]

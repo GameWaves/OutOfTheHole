@@ -7,26 +7,26 @@ namespace OutOfTheHole.Bullet;
 public abstract partial class Bullets : RigidBody2D
 {
 	
-	protected AnimatedSprite2D bulletsprite;
+	protected AnimatedSprite2D BulletSprite;
 
 	//speed of bullet
-	public float Speed { get; set; }
+	public float Speed { get; protected set; }
 	
 	//direction of bullet
-	protected Vector2 direction
+	protected Vector2 Direction
 	{
 		get => new Vector2(1, 0).Rotated(Rotation);
 		
 	}
 	
 	//lifspan of bullet
-	public int longetivity { get; set; }
+	public int Longetivity { get; set; }
 	
 	//damage of bullet (correspond to the number of hp he player/enemy will lose)
 	public int Damage { get; set; }
 	
 	//gravity of bullet (and everything else)
-	protected float gravity
+	protected float Gravity
 	{
 		get => ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	}
@@ -38,13 +38,13 @@ public abstract partial class Bullets : RigidBody2D
 	/// <param name="delta"></param>
 	public override void _PhysicsProcess(double delta)
 	{
-		LinearVelocity = Speed * direction;
-		if (longetivity == 0)
+		LinearVelocity = Speed * Direction;
+		if (Longetivity == 0)
 		{
 			QueueFree();
 			if (IsQueuedForDeletion()) Free();
 		}
-		longetivity -= (int)Math.Ceiling(delta);
+		Longetivity -= (int)Math.Ceiling(delta);
 		
 	}
 	/// <summary>
