@@ -26,7 +26,7 @@ public abstract partial class Entity : CharacterBody2D
 	//hpLoss is the amount of damage 
 	public abstract void Hurt(int hpLoss);
 
-	public void death()
+	public void Death()
 	{
 		QueueFree();
 		if (IsQueuedForDeletion()) Free();

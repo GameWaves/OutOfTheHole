@@ -207,7 +207,7 @@ public partial class Player : Entity
 			_idleSprite.Visible = false;
 			_walkright.Visible = false;
 			_walkleft.Visible = false;
-			death();
+			Death();
 		}
 	}
 	
