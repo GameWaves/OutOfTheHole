@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bj8r0766uo6ap"]
 
 [ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="1_61p2r"]
-[ext_resource type="Script" path="res://src/menus/MainMenu.cs" id="1_ee6e6"]
+[ext_resource type="Script" path="res://src/Menus/MainMenu.cs" id="1_ee6e6"]
 [ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="2_rah62"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yvfhi"]
