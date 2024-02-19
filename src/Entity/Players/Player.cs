@@ -28,7 +28,7 @@ public partial class Player : Entity
 	[Export] private PackedScene _gunScene;
 
 	/// <summary>
-	///     All value are in pixel
+	/// All value are in pixel
 	/// </summary>
 	public new int Hp;
 
@@ -77,7 +77,7 @@ public partial class Player : Entity
 
 
 	/// <summary>
-	///     Main loop, will update every 60 frame
+	/// Main loop, will update every 60 frame
 	/// </summary>
 	/// <param name="delta"> it is the time</param>
 	/// <returns> void </returns>
@@ -194,7 +194,7 @@ public partial class Player : Entity
 	}
 
 	/// <summary>
-	///     Set the damage, and death
+	/// Set the damage, and death
 	/// </summary>
 	/// <param name="n"> the amount of damage taken</param>
 	public override void Hurt(int n)
@@ -212,8 +212,8 @@ public partial class Player : Entity
 	}
 	
 	/// <summary>
-	///     This function receives the fire commands from the other player via the "FireBulletRpc" message
-	///     It sends the calls to the FireBullet function in the Gun Class.
+	/// This function receives the fire commands from the other player via the "FireBulletRpc" message
+	/// It sends the calls to the FireBullet function in the Gun Class.
 	/// </summary>
 	
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

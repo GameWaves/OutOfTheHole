@@ -7,7 +7,7 @@ public partial class BasicBullet : Bullets
 {
 	
 	/// <summary>
-	///     Initialize the default longevity and compute the direction.
+	/// Initialize the default longevity and compute the direction.
 	/// </summary>
 	public override void _Ready()
 	{

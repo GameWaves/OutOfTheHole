@@ -32,7 +32,7 @@ public abstract partial class Bullets : RigidBody2D
 	}
 	
 	/// <summary>
-	///     Updated 60 times per seconds, detects when the bullet needs to be destroyed.
+	/// Updated 60 times per seconds, detects when the bullet needs to be destroyed.
 	///		Write general code that will apply to all bullets
 	/// </summary>
 	/// <param name="delta"></param>

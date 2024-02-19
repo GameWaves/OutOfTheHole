@@ -28,7 +28,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Runs when the connection fails and it runs only on the client
+	/// Runs when the connection fails and it runs only on the client
 	/// </summary>
 	/// <exception cref="NotImplementedException"></exception>
 	private void ConnectionFailed()
@@ -37,7 +37,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Runs when the connection is successful and only runs on the client
+	/// Runs when the connection is successful and only runs on the client
 	/// </summary>
 	/// <exception cref="NotImplementedException"></exception>
 	private void ConnectedToServer()
@@ -49,7 +49,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Runs when a player disconnects and runs on all peers
+	/// Runs when a player disconnects and runs on all peers
 	/// </summary>
 	/// <param name="id">id of the player that disconnect</param>
 	/// <exception cref="NotImplementedException"></exception>
@@ -59,7 +59,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Runs when a player connects and run on all peers
+	/// Runs when a player connects and run on all peers
 	/// </summary>
 	/// <param name="id">id of the player that connected</param>
 	/// <exception cref="NotImplementedException"></exception>
@@ -83,7 +83,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Function called when the host button is pressed
+	/// Function called when the host button is pressed
 	/// </summary>
 	private void _on_host_button_down()
 	{
@@ -114,7 +114,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Function called when the join button is pressed
+	/// Function called when the join button is pressed
 	/// </summary>
 	private void _on_join_button_down()
 	{
@@ -158,7 +158,7 @@ public partial class MultiplayerController : CanvasLayer
 
 
 	/// <summary>
-	///     Function called when the start game button is pressed
+	/// Function called when the start game button is pressed
 	/// </summary>
 	private void _on_start_button_down()
 	{
@@ -175,7 +175,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Send player information to all client
+	/// Send player information to all client
 	/// </summary>
 	/// <param name="name">The name of the player</param>
 	/// <param name="id">The id of the player</param>

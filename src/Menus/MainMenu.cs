@@ -15,7 +15,7 @@ public partial class MainMenu : CanvasLayer
 	}
 
 	/// <summary>
-	///     Function called when the play button is pressed (show the multiplayer menu)
+	/// Function called when the play button is pressed (show the multiplayer menu)
 	/// </summary>
 	private void _on_play_button_button_down()
 	{
@@ -23,7 +23,7 @@ public partial class MainMenu : CanvasLayer
 	}
 
 	/// <summary>
-	///     Function called when the option button is pressed (show the option menu)
+	/// Function called when the option button is pressed (show the option menu)
 	/// </summary>
 	private void _on_option_button_button_down()
 	{
@@ -31,7 +31,7 @@ public partial class MainMenu : CanvasLayer
 	}
 
 	/// <summary>
-	///     Function called when the credits button is pressed (show the credits)
+	/// Function called when the credits button is pressed (show the credits)
 	/// </summary>
 	private void _on_credits_button_button_down()
 	{
@@ -39,7 +39,7 @@ public partial class MainMenu : CanvasLayer
 	}
 
 	/// <summary>
-	///     Function called when the exit button is pressed (quit the game)
+	/// Function called when the exit button is pressed (quit the game)
 	/// </summary>
 	private void _on_exit_button_button_down()
 	{

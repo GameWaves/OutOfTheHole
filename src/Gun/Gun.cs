@@ -16,7 +16,7 @@ public partial class Gun : Node2D
 	public float FireRate;
 	
 	/// <summary>
-	///     Initiate the fire_rate value when the player spawn;
+	/// Initiate the fire_rate value when the player spawn;
 	/// </summary>
 	public override void _Ready()
 	{
@@ -26,9 +26,9 @@ public partial class Gun : Node2D
 	}
 
 	/// <summary>
-	///     The function manages all the bullet shooting. It creates the bullet, sets the rotation and position and adds it to
-	///     the scene.
-	///     The velocity management has been offloaded to the bullet.
+	/// The function manages all the bullet shooting. It creates the bullet, sets the rotation and position and adds it to
+	/// the scene.
+	/// The velocity management has been offloaded to the bullet.
 	/// </summary>
 	/// <param name="gunNode">The node corresponding to the gun</param>
 	/// <param name="shootPoint">The shoot point Node included int the Gun</param>

@@ -16,7 +16,7 @@ public partial class OptionMenu : CanvasLayer
 	}
 
 	/// <summary>
-	///     Called when the keymap button is pressed
+	/// Called when the keymap button is pressed
 	/// </summary>
 	private void _on_keymap_button_button_down()
 	{
@@ -24,7 +24,7 @@ public partial class OptionMenu : CanvasLayer
 	}
 
 	/// <summary>
-	///     Called when the volumes button is pressed
+	/// Called when the volumes button is pressed
 	/// </summary>
 	private void _on_volumes_button_button_down()
 	{
@@ -32,7 +32,7 @@ public partial class OptionMenu : CanvasLayer
 	}
 
 	/// <summary>
-	///     Called when the exit button is pressed
+	/// Called when the exit button is pressed
 	/// </summary>
 	private void _on_exit_button_button_down()
 	{
