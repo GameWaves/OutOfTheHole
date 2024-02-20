@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://c2em77lmsto1a"]
 
-[ext_resource type="Script" path="res://src/multiplayer/SceneManager.cs" id="1_dqc3g"]
-[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/players/Player1.tscn" id="2_rm3d1"]
-[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/players/Player2.tscn" id="3_jkbqt"]
+[ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_yw8ut"]
+[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_lptt6"]
+[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_x5212"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_muvmw"]
 size = Vector2(1159, 226)
@@ -17,9 +17,9 @@ size = Vector2(63, 22)
 size = Vector2(1137, 54)
 
 [node name="Map" type="Node2D"]
-script = ExtResource("1_dqc3g")
-player1Scene = ExtResource("2_rm3d1")
-player2Scene = ExtResource("3_jkbqt")
+script = ExtResource("1_yw8ut")
+_player1Scene = ExtResource("2_lptt6")
+_player2Scene = ExtResource("3_x5212")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(1, 4)

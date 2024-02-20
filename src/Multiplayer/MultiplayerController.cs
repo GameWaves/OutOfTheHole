@@ -1,14 +1,16 @@
 using System;
 using Godot;
-using OutofTheHole.multiplayer;
+
+namespace OutofTheHole.Multiplayer;
+
 
 public partial class MultiplayerController : CanvasLayer
 {
-	[Export] private string address = "127.0.0.1";
+	[Export] private string _address = "127.0.0.1";
 
-	private ENetMultiplayerPeer peer;
+	private ENetMultiplayerPeer _peer;
 
-	[Export] private int port = 4242;
+	[Export] private int _port = 4242;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -26,7 +28,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Runs when the connection fails and it runs only on the client
+	/// Runs when the connection fails and it runs only on the client
 	/// </summary>
 	/// <exception cref="NotImplementedException"></exception>
 	private void ConnectionFailed()
@@ -35,17 +37,19 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Runs when the connection is successful and only runs on the client
+	/// Runs when the connection is successful and only runs on the client
 	/// </summary>
 	/// <exception cref="NotImplementedException"></exception>
 	private void ConnectedToServer()
 	{
 		GD.Print("Connected to server");
-		RpcId(1, "sendPlayerInformation", GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text, Multiplayer.GetUniqueId());
+		RpcId(1, "SendPlayerInformation",
+			GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text,
+			Multiplayer.GetUniqueId());
 	}
 
 	/// <summary>
-	///     Runs when a player disconnects and runs on all peers
+	/// Runs when a player disconnects and runs on all peers
 	/// </summary>
 	/// <param name="id">id of the player that disconnect</param>
 	/// <exception cref="NotImplementedException"></exception>
@@ -55,7 +59,7 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Runs when a player connects and run on all peers
+	/// Runs when a player connects and run on all peers
 	/// </summary>
 	/// <param name="id">id of the player that connected</param>
 	/// <exception cref="NotImplementedException"></exception>
@@ -65,9 +69,12 @@ public partial class MultiplayerController : CanvasLayer
 		GetNode<Button>(
 				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton")
 			.Disabled = false;
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton").Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton").Hide();
+		GetNode<Button>(
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
+		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton")
+			.Hide();
+		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton")
+			.Hide();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -76,89 +83,104 @@ public partial class MultiplayerController : CanvasLayer
 	}
 
 	/// <summary>
-	///     Function called when the host button is pressed
+	/// Function called when the host button is pressed
 	/// </summary>
 	private void _on_host_button_down()
 	{
-		peer = new ENetMultiplayerPeer();
-		var error = peer.CreateServer(port, 2);
+		_peer = new ENetMultiplayerPeer();
+		var error = _peer.CreateServer(_port, 2);
 		if (error != Error.Ok)
 		{
 			GD.Print("error cannot host!" + error);
 			return;
 		}
-		var joinButton = GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
+
+		var joinButton =
+			GetNode<Button>(
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
 		joinButton.Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Disabled = true;
+		GetNode<Button>(
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton")
+			.Disabled =
+			true;
 		GetNode<Button>(
 			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
 
-		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
-		Multiplayer.MultiplayerPeer = peer;
+		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
+		Multiplayer.MultiplayerPeer = _peer;
 		GD.Print("Waiting for Players!");
-		sendPlayerInformation(GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text, 1);
+		SendPlayerInformation(GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text,
+			1);
 	}
 
 	/// <summary>
-	///     Function called when the join button is pressed
+	/// Function called when the join button is pressed
 	/// </summary>
 	private void _on_join_button_down()
 	{
 		QueryAdress();
 
-		var hostButton = GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton");
-		var joinButton = GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
+		var hostButton =
+			GetNode<Button>(
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton");
+		var joinButton =
+			GetNode<Button>(
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
 
 		hostButton.Hide();
 
 		//joinButton.SetPosition(new Vector2(joinButton.Position.X - 210, joinButton.Position.Y));
 		//joinButton.Text = "Start";
 		joinButton.Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
+		GetNode<Button>(
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
 	}
 
 	private void _on_connect_button_down()
 	{
-		var addressInput = GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/RemoteAddress").Text;
-		if (addressInput != "") address = addressInput;
-		peer = new ENetMultiplayerPeer();
-		peer.CreateClient(address, port);
-		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
-		Multiplayer.MultiplayerPeer = peer;
+		var addressInput = GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/RemoteAddress")
+			.Text;
+		if (addressInput != "") _address = addressInput;
+		_peer = new ENetMultiplayerPeer();
+		_peer.CreateClient(_address, _port);
+		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
+		Multiplayer.MultiplayerPeer = _peer;
 		GD.Print("Joining Game!");
-		GD.Print(address);
+		GD.Print(_address);
 
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
+		GetNode<Button>(
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Hide();
+		GetNode<Button>(
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
 
 		//GetNode<Button>("ConnectButton").Connect("button_down", Callable.From(_on_start_game_button_button_down));
 	}
 
 
 	/// <summary>
-	///     Function called when the start game button is pressed
+	/// Function called when the start game button is pressed
 	/// </summary>
 	private void _on_start_button_down()
 	{
-		Rpc("startGame");
+		Rpc("StartGame");
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void startGame()
+	private void StartGame()
 	{
 		foreach (var item in GameManager.Players) GD.Print(item.Name + " is playing");
-		var scene = ResourceLoader.Load<PackedScene>("res://src/map/Map.tscn").Instantiate<Node2D>();
+		var scene = ResourceLoader.Load<PackedScene>("res://src/Map/Map.tscn").Instantiate<Node2D>();
 		GetTree().Root.AddChild(scene);
 		Hide();
 	}
 
 	/// <summary>
-	///     Send player information to all client
+	/// Send player information to all client
 	/// </summary>
 	/// <param name="name">The name of the player</param>
 	/// <param name="id">The id of the player</param>
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-	private void sendPlayerInformation(string name, int id)
+	private void SendPlayerInformation(string name, int id)
 	{
 		int playerRole;
 		if (id == 1)
@@ -175,11 +197,11 @@ public partial class MultiplayerController : CanvasLayer
 
 		if (Multiplayer.IsServer())
 			foreach (var item in GameManager.Players)
-				Rpc("sendPlayerInformation", item.Name, item.Id);
+				Rpc("SendPlayerInformation", item.Name, item.Id);
 	}
-	
+
 	private void _on_return_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/menus/MainMenu.tscn");
+		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
 	}
 }

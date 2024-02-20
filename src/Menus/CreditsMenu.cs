@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace OutofTheHole.Menus;
 
 public partial class CreditsMenu : CanvasLayer
 {
@@ -15,6 +16,6 @@ public partial class CreditsMenu : CanvasLayer
 
 	private void _on_exit_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/menus/MainMenu.tscn");
+		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
 	}
 }

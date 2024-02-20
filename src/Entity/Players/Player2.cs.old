@@ -1,72 +1,73 @@
+/*
 using Godot;
+using OutofTheHole.Gun;
 
-namespace OutofTheHole.players;
+namespace Entity.players;
 
-public partial class mvplayer2 : CharacterBody2D
+public partial class Player2 : OutOfTheHole.Entity
 {
-    /// <summary>
-    ///     Same as player 1  but this time with player 2 (inverted)
-    /// </summary>
-    public const float Speed2 = 10.0f;
+    //Set a Jump Height / Jump speed
+    public const float JumpVelocity = -400.0f;
 
-    //Set a initial speed (arbitrarly chosen)
-    public const float intSpeed2 = 200.0f;
+    public new static bool Alive;
 
-    //Set a slowing down speed (arbitrarly chosen)
-    public const float SlowSpeed2 = 40.0f;
+    private Gun _gunObject;
 
-    //Set a Jump Height / Jump speed (arbitrarly chosen)
-    public const float JumpVelocity2 = 400.0f;
-
-    //set maxHp of player
-    public const int MaxHp2 = 100;
-
-    //to know if the player is alive
-    public static bool alive;
-    private Gun.Gun _gunObject;
     private float _timeUntilFire = 300f;
 
+    public new float Acceleration = 10.0f;
 
     [Export] private CharacterBody2D CharacterBody;
 
+    public float Gravity;
 
-    //Set a gravity (do not change, is the default to have a consistant gravity accros the game)
-    public float gravity2 = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
     private float GunRotation;
 
     [Export] private PackedScene gunScene;
 
-    public int hp2;
+    /// <summary>
+    /// All value are in pixel
+    /// </summary>
+    public new int Hp;
+
 
     //define the sprite (currently placholder)
     private AnimatedSprite2D idleSprite;
+
+    public new int MaxHp = 100;
+
+    public new float Speed = 200.0f;
+
     private AnimatedSprite2D Walkleft;
+
     private AnimatedSprite2D Walkright;
+
 
     public override void _Ready()
     {
+        Gravity = -Gravity;
         // instantiate the gun of the player 
-        _gunObject = gunScene.Instantiate<Gun.Gun>();
+        _gunObject = gunScene.Instantiate<Gun>();
 
         //set the sprite
         idleSprite = GetNode<AnimatedSprite2D>("Idle2");
         Walkleft = GetNode<AnimatedSprite2D>("WalkLeft2");
         Walkright = GetNode<AnimatedSprite2D>("WalkRight2");
-        alive = true;
+        Alive = true;
 
         // Allows this player to be played only by the player that is assigned to player 2
-        GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
+        GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse((string)Name));
     }
 
     /// <summary>
-    ///     Main loop, will update every 60 frame
+    /// Main loop, will update every 60 frame
     /// </summary>
     /// <param name="delta"> it is the time</param>
     /// <returns> void </returns>
     public override void _PhysicsProcess(double delta)
     {
         // Check if the player is allowed to control this player according to the authority set at initialization. 
-        if (alive && GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() ==
+        if (Alive && GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() ==
             Multiplayer.GetUniqueId())
         {
             //create a variable velocity 
@@ -78,11 +79,11 @@ public partial class mvplayer2 : CharacterBody2D
 
             // Add the gravity to the vector velocity /!\ on godot, y axis is inverted, as such you gain Y when you go down 
             if (!IsOnCeiling())
-                velocity.Y += gravity2 * (float)delta;
+                velocity.Y += Gravity * (float)delta;
 
             // Handle Jump
             if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
-                velocity.Y += JumpVelocity2;
+                velocity.Y += JumpVelocity;
 
             //set movement (currenty arrow)
             if (Input.IsKeyPressed(Key.Right))
@@ -92,11 +93,11 @@ public partial class mvplayer2 : CharacterBody2D
                 Walkleft.Visible = false;
                 Walkright.Visible = true;
                 if (velocity.X >= 200)
-                    velocity.X += Speed2;
+                    velocity.X += Speed;
                 else if (velocity.X < 0)
-                    velocity.X += SlowSpeed2;
+                    velocity.X += 4 * Acceleration;
                 else
-                    velocity.X = intSpeed2;
+                    velocity.X = Speed;
             }
 
             if (Input.IsKeyPressed(Key.Left))
@@ -106,11 +107,11 @@ public partial class mvplayer2 : CharacterBody2D
                 Walkleft.Visible = true;
                 Walkright.Visible = false;
                 if (velocity.X <= -200)
-                    velocity.X -= Speed2;
+                    velocity.X -= Speed;
                 else if (velocity.X > 0)
-                    velocity.X -= SlowSpeed2;
+                    velocity.X -= 4 * Acceleration;
                 else
-                    velocity.X = -intSpeed2;
+                    velocity.X = -Speed;
             }
 
             //adding a litlle momentum
@@ -121,11 +122,11 @@ public partial class mvplayer2 : CharacterBody2D
                 idleSprite.Visible = true;
                 Walkleft.Visible = false;
                 Walkright.Visible = false;
-                if (velocity.X <= SlowSpeed2 && velocity.X >= -SlowSpeed2) velocity.X = 0;
+                if (velocity.X <= Acceleration && velocity.X >= -Acceleration) velocity.X = 0;
 
-                if (velocity.X > 0) velocity.X -= SlowSpeed2;
+                if (velocity.X > 0) velocity.X += Acceleration;
 
-                if (velocity.X < 0) velocity.X += SlowSpeed2;
+                if (velocity.X < 0) velocity.X -= Acceleration;
             }
 
             Velocity = velocity;
@@ -139,7 +140,7 @@ public partial class mvplayer2 : CharacterBody2D
             if (Walkright.Visible) Walkright.Play();
 
             //kill yourself (to test gameover screen)
-            if (Input.IsKeyPressed(Key.K)) ishurt2(MaxHp2);
+            if (Input.IsKeyPressed(Key.K)) Hurt(MaxHp);
             if (Input.IsActionPressed("click") && _gunObject.FireRate < _timeUntilFire)
             {
                 _timeUntilFire = 0f;
@@ -170,26 +171,26 @@ public partial class mvplayer2 : CharacterBody2D
     }
 
     /// <summary>
-    ///     Set the damage, and death
+    /// Set the damage, and death
     /// </summary>
     /// <param name="n"> the amount of damage taken</param>
-    public void ishurt2(int n)
+    public override void Hurt(int n)
     {
-        hp2 = hp2 - n;
-        if (hp2 <= 0)
+        Hp = Hp - n;
+        if (Hp <= 0)
         {
-            alive = false;
+            Alive = false;
             //hide the player 
             idleSprite.Visible = false;
             Walkright.Visible = false;
             Walkleft.Visible = false;
-            if (!mvplayer.alive) GetTree().ChangeSceneToFile("res://GameOver.tscn");
+            if (!Player1.Alive) GetTree().ChangeSceneToFile("res://GameOver.tscn");
         }
     }
 
     /// <summary>
-    ///     This function receives the fire commands from the other player via the "FireBulletRpc" message
-    ///     It sends the calls to the FireBullet function in the Gun Class.
+    /// This function receives the fire commands from the other player via the "FireBulletRpc" message
+    /// It sends the calls to the FireBullet function in the Gun Class.
     /// </summary>
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     private void FireBulletRpc()
@@ -199,3 +200,4 @@ public partial class mvplayer2 : CharacterBody2D
         _gunObject.FireBullet(gunNode, shootPoint, GetTree());
     }
 }
+*/

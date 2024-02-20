@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://b8s0e4hxebqpn"]
 
-[ext_resource type="Script" path="res://src/players/mvplayer2.cs" id="1_iie5g"]
+[ext_resource type="Script" path="res://src/Entity/Players/Player.cs" id="1_77yes"]
 [ext_resource type="Texture2D" uid="uid://dg1o6ufxb2642" path="res://assets/sprites/Placeholder-idle1-P2.png" id="2_tdcb3"]
 [ext_resource type="Texture2D" uid="uid://bqfb66kny8bwn" path="res://assets/sprites/Placeholder-idle2-P2.png" id="3_1uk6x"]
 [ext_resource type="Texture2D" uid="uid://ce0sqq11fixcv" path="res://assets/sprites/Placeholder-idle3-P2.png" id="4_2cw7e"]
@@ -9,14 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://c1ri0ont8vrco" path="res://assets/sprites/Placeholder-Right1-P2.png" id="7_kxxcu"]
 [ext_resource type="Texture2D" uid="uid://kgfokhwxwhvk" path="res://assets/sprites/Placeholder-Right2-P2.png" id="8_ltcha"]
 [ext_resource type="PackedScene" uid="uid://byexr753no7oj" path="res://src/Gun/Gun.tscn" id="10_ljwmm"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5h1fq"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:GunRotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0b83x"]
 size = Vector2(19, 25)
@@ -66,14 +58,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CharacterBody")]
-position = Vector2(1, 0)
-script = ExtResource("1_iie5g")
-CharacterBody = NodePath(".")
-gunScene = ExtResource("10_ljwmm")
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5h1fq"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:GunRotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_5h1fq")
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(1, 0)
+script = ExtResource("1_77yes")
+_gunScene = ExtResource("10_ljwmm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
@@ -90,6 +86,9 @@ sprite_frames = SubResource("SpriteFrames_cykqo")
 [node name="WalkRight2" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_bugts")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_5h1fq")
 
 [node name="Shoot_point" type="Node2D" parent="."]
 position = Vector2(18, 2.08165e-12)
