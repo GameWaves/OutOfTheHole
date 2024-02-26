@@ -1,27 +1,23 @@
 using Godot;
+using OutofTheHole.Entity;
 
 namespace OutOfTheHole.Enemies
 {
 
-    public class Enemy : CharacterBody2D
+    public class Enemy : Entity
     {
-        public const float Speed = 10.0f;
-        public const float intSpeed = 200.0f;
-        public const float SlowSpeed = 40.0f;
-        public const float JumpVelocity = -400.0f;
-        public const int MaxHp = 100;
-        public static bool alive;
-        public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-        public int hp;
-        private AnimatedSprite2D idleSprite;
-
+        //initialize the enemy
         public override void _Ready()
         {
+            Speed = 100.0f;
+            MaxHp = 300;
+            Hp = 200;
+            Acceleration = 100;
+            Alive = true;
+            AnimatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+            AnimatedSprite2D.Play();
             //initialize the enemy 
-            idleSprite = GetNode<AnimatedSprite2D>("Idle");
-            idleSprite.Play();
-            hp = MaxHp;
-            alive = true;
+            Alive = true;
         }
 
         public override void _PhysicsProcess(double delta)
@@ -30,14 +26,14 @@ namespace OutOfTheHole.Enemies
             MoveAndSlide();
             //TODO: not sure of the concept of this method
         }
-
-        public void Ishurt(int n)
+        
+        //death
+        public override void Hurt(int hpLoss)
         {
-            hp = hp - n;
-            if (hp <= 0)
+            Hp -= hpLoss;
+            if (Hp <= 0)
             {
-                alive = false;
-                idleSprite.Visible = false;
+                Death();
             }
         }
     }
