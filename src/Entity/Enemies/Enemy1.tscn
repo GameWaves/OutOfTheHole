@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://jiaef84oed5c"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bwmtd"]
+height = 72.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d83oe"]
+
+[node name="Enemy1" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_bwmtd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_d83oe")
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
+position = Vector2(-8, 10)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
