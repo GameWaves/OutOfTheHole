@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using OutOfTheHole.Enemies;
+using OutOfTheHole.Entity.Enemies;
 using OutofTheHole.Entity.Players;
 using Enemy = OutOfTheHole.Entity.Enemies.Enemy;
 
@@ -36,7 +36,7 @@ public partial class SceneManager : Node2D
 			{
 				throw new ArgumentException("Role should be 1 or 2");
 			}
-			
+
 			currentPlayer.Name = item.Id.ToString();
 			AddChild(currentPlayer);
 			InitEnemy();
@@ -45,7 +45,6 @@ public partial class SceneManager : Node2D
 					currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
 			index++;
 		}
-			
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -55,11 +54,9 @@ public partial class SceneManager : Node2D
 
 	public void InitEnemy()
 	{
-		Enemy enemy1;
-		enemy1 = _enemyScene.Instantiate<Enemy>();
-		enemy1.Name = "1";
-		enemy1.GlobalPosition = new Vector2(100, 100);
-		enemy1.Reversed = false;
-		AddChild(enemy1);
+		var ennemyScene = ResourceLoader.Load("res://src/Enemies/Enemy1.tscn") as PackedScene;
+		var ennemy = ennemyScene.Instantiate<Enemy>();
+		SceneTree sceneRoot = GetTree();
+		sceneRoot.Root.AddChild(ennemy);
 	}
 }

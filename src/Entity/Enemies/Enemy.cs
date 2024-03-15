@@ -27,7 +27,6 @@ namespace OutOfTheHole.Entity.Enemies
 			Hp = 200;
 			Alive = true;
 			//initialize the enemy 
-			Alive = true;
 			Movements = Movements.IDLE;
 
 			if (Reversed)
@@ -39,7 +38,7 @@ namespace OutOfTheHole.Entity.Enemies
 			}
 
 			GD.Print("Enemy Ready");
-			GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse((string)Name));
+			// GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse((string)Name));
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -92,16 +91,6 @@ namespace OutOfTheHole.Entity.Enemies
 			{
 				Death();
 			}
-		}
-
-		/// <summary>
-		/// Function that will be called when the enemy is hitted
-		/// The function get the position of the bullet and will
-		/// change the position of the enemy
-		/// </summary>
-		public void isHitted()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }
