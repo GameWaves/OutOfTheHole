@@ -1,7 +1,8 @@
 using System;
 using Godot;
-
+using OutOfTheHole.Enemies;
 using OutofTheHole.Entity.Players;
+using Enemy = OutOfTheHole.Entity.Enemies.Enemy;
 
 
 namespace OutofTheHole.Multiplayer;
@@ -10,6 +11,7 @@ public partial class SceneManager : Node2D
 {
 	[Export] private PackedScene _player1Scene;
 	[Export] private PackedScene _player2Scene;
+	[Export] private PackedScene _enemyScene;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -37,6 +39,7 @@ public partial class SceneManager : Node2D
 			
 			currentPlayer.Name = item.Id.ToString();
 			AddChild(currentPlayer);
+			InitEnemy();
 			foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
 				if (int.Parse(spawnPoint.Name) == index)
 					currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
@@ -48,5 +51,15 @@ public partial class SceneManager : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	public void InitEnemy()
+	{
+		Enemy enemy1;
+		enemy1 = _enemyScene.Instantiate<Enemy>();
+		enemy1.Name = "1";
+		enemy1.GlobalPosition = new Vector2(100, 100);
+		enemy1.Reversed = false;
+		AddChild(enemy1);
 	}
 }

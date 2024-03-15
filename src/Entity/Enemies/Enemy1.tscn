@@ -1,21 +1,80 @@
-[gd_scene load_steps=3 format=3 uid="uid://jiaef84oed5c"]
+[gd_scene load_steps=13 format=3 uid="uid://jiaef84oed5c"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bwmtd"]
-height = 72.0
+[ext_resource type="Script" path="res://src/Entity/Enemies/Enemy.cs" id="1_wdqg0"]
+[ext_resource type="Texture2D" uid="uid://ba0jecqfacke5" path="res://assets/sprites/Placeholder-idle1.png" id="2_kxqvd"]
+[ext_resource type="Texture2D" uid="uid://b0vwnuak8a5nl" path="res://assets/sprites/Placeholder-idle2.png" id="3_1dhod"]
+[ext_resource type="Texture2D" uid="uid://c34bhqow2ei6" path="res://assets/sprites/Placeholder-idle3.png" id="4_8bjtb"]
+[ext_resource type="Texture2D" uid="uid://0w5l0iu1mdhy" path="res://assets/sprites/Placeholder-Left2.png" id="5_vhnwp"]
+[ext_resource type="Texture2D" uid="uid://dcmvt61iyaoff" path="res://assets/sprites/Placeholder-Left1.png" id="6_q77jh"]
+[ext_resource type="Texture2D" uid="uid://84m7q0ob7ijm" path="res://assets/sprites/Placeholder-Right1.png" id="7_x8leo"]
+[ext_resource type="Texture2D" uid="uid://ckpq27nnd6yn3" path="res://assets/sprites/Placeholder-Right2.png" id="8_36f3a"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_d83oe"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ug518"]
+size = Vector2(18, 26)
 
-[node name="Enemy1" type="CharacterBody2D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_s8ldg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kxqvd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1dhod")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8bjtb")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lduwi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_vhnwp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_q77jh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_os3nu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_x8leo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_36f3a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_wdqg0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_bwmtd")
+position = Vector2(-1, -3)
+shape = SubResource("RectangleShape2D_ug518")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Idle" type="AnimatedSprite2D" parent="CollisionShape2D"]
+position = Vector2(-1, -1)
+sprite_frames = SubResource("SpriteFrames_s8ldg")
+animation = &"Idle"
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_d83oe")
+[node name="WalkLeft" type="AnimatedSprite2D" parent="CollisionShape2D"]
+position = Vector2(-1, -1)
+sprite_frames = SubResource("SpriteFrames_lduwi")
 
-[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
-position = Vector2(-8, 10)
+[node name="Walkright" type="AnimatedSprite2D" parent="CollisionShape2D"]
+position = Vector2(-1, -1)
+sprite_frames = SubResource("SpriteFrames_os3nu")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
