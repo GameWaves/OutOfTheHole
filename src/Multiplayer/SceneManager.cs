@@ -54,9 +54,14 @@ public partial class SceneManager : Node2D
 
 	public void InitEnemy()
 	{
-		var ennemyScene = ResourceLoader.Load("res://src/Enemies/Enemy1.tscn") as PackedScene;
+		/*var ennemyScene = ResourceLoader.Load("res://src/Enemies/Enemy1.tscn") as PackedScene;
 		var ennemy = ennemyScene.Instantiate<Enemy>();
 		SceneTree sceneRoot = GetTree();
-		sceneRoot.Root.AddChild(ennemy);
+		sceneRoot.Root.AddChild(ennemy);*/
+		Enemy enemy1;
+		enemy1 = _enemyScene.Instantiate<Enemy>();
+		enemy1.Reversed = false;
+		AddChild(enemy1);
+		enemy1.GlobalPosition = GetNode<Node2D>("SpawnPoints/0").GlobalPosition;
 	}
 }
