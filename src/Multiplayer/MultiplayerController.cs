@@ -98,14 +98,14 @@ public partial class MultiplayerController : CanvasLayer
 
 		var joinButton =
 			GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButton");
 		joinButton.Hide();
 		GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton")
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ConnectButton")
 			.Disabled =
 			true;
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ConnectButton").Show();
 
 		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = _peer;
@@ -123,10 +123,10 @@ public partial class MultiplayerController : CanvasLayer
 
 		var hostButton =
 			GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton");
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButton");
 		var joinButton =
 			GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButton");
 
 		hostButton.Hide();
 
@@ -134,7 +134,7 @@ public partial class MultiplayerController : CanvasLayer
 		//joinButton.Text = "Start";
 		joinButton.Hide();
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ConnectButton").Show();
 	}
 
 	private void _on_connect_button_down()
@@ -150,9 +150,9 @@ public partial class MultiplayerController : CanvasLayer
 		GD.Print(_address);
 
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Hide();
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ConnectButton").Hide();
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartGameButton").Show();
 
 		//GetNode<Button>("ConnectButton").Connect("button_down", Callable.From(_on_start_game_button_button_down));
 	}
