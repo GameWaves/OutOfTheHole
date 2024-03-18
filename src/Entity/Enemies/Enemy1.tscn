@@ -60,6 +60,7 @@ animations = [{
 }]
 
 [node name="Enemy" type="CharacterBody2D"]
+scale = Vector2(0.275, 0.275)
 script = ExtResource("1_wdqg0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
