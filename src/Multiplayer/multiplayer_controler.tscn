@@ -1,18 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bjuiitkmi38lb"]
+[gd_scene load_steps=5 format=3 uid="uid://bjuiitkmi38lb"]
 
 [ext_resource type="Script" path="res://src/Multiplayer/MultiplayerController.cs" id="1_i4s07"]
 [ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="2_bgx8r"]
+[ext_resource type="Texture2D" uid="uid://cv4qb088la36g" path="res://assets/background/Background_000.png" id="2_kgpem"]
+[ext_resource type="Theme" uid="uid://c5ucyskhud1l2" path="res://assets/ui/MenuTheme.tres" id="3_hhmhh"]
 
 [node name="Multiplayer Controler" type="CanvasLayer"]
 script = ExtResource("1_i4s07")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.454902, 0.329412, 0.317647, 1)
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_kgpem")
 
 [node name="MenuMarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -27,6 +26,7 @@ theme_override_constants/margin_bottom = 50
 
 [node name="MenuVBoxContainer" type="VBoxContainer" parent="MenuMarginContainer"]
 layout_mode = 2
+theme = ExtResource("3_hhmhh")
 
 [node name="WelcomeTitle" type="Label" parent="MenuMarginContainer/MenuVBoxContainer"]
 layout_mode = 2
@@ -55,55 +55,31 @@ layout_mode = 2
 placeholder_text = "Remote IP Address"
 alignment = 1
 
-[node name="HostButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="HostButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer"]
+[node name="HostButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
 layout_mode = 2
 text = "Host"
 
-[node name="JoinButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="JoinButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer"]
+[node name="JoinButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
 layout_mode = 2
 text = "Join"
 
-[node name="StartButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="ConnectButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer"]
+[node name="ConnectButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
 visible = false
 layout_mode = 2
 text = "Connect
 "
 
-[node name="StartGameButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer"]
+[node name="StartGameButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
 visible = false
 layout_mode = 2
 text = "Start game"
 
-[node name="ReturnButtonMargin" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="ReturnButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ReturnButtonMargin"]
+[node name="ReturnButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
 layout_mode = 2
 text = "Return to menu"
 
-[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton" to="." method="_on_host_button_down"]
-[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton" to="." method="_on_join_button_down"]
-[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton" to="." method="_on_connect_button_down"]
-[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton" to="." method="_on_start_button_down"]
-[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ReturnButtonMargin/ReturnButton" to="." method="_on_return_button_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButton" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButton" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ConnectButton" to="." method="_on_connect_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartGameButton" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ReturnButton" to="." method="_on_return_button_button_down"]

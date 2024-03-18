@@ -5,11 +5,17 @@
 [ext_resource type="PackedScene" uid="uid://b8nh16frhokyw" path="res://src/Bullets/BulletType/BasicBullet.tscn" id="2_6lydr"]
 
 [node name="Gun" type="Node2D"]
+scale = Vector2(0.275, 0.275)
 script = ExtResource("1_klk6k")
 _bulletScene = ExtResource("2_6lydr")
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 3.63636)
+scale = Vector2(0.443, 0.443)
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-9.53674e-07, 4)
+position = Vector2(1.13687e-13, 3.63636)
 scale = Vector2(0.083, 0.083)
 texture = ExtResource("1_wvxv2")
 

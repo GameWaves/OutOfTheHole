@@ -73,25 +73,29 @@ _gunScene = ExtResource("10_ljwmm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
+scale = Vector2(0.275, 0.275)
 shape = SubResource("RectangleShape2D_0b83x")
 
 [node name="Idle2" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 1)
+scale = Vector2(0.275, 0.275)
 sprite_frames = SubResource("SpriteFrames_t412b")
 
 [node name="WalkLeft2" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 1)
+scale = Vector2(0.275, 0.275)
 sprite_frames = SubResource("SpriteFrames_cykqo")
 
 [node name="WalkRight2" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 1)
+scale = Vector2(0.275, 0.275)
 sprite_frames = SubResource("SpriteFrames_bugts")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_5h1fq")
 
 [node name="Shoot_point" type="Node2D" parent="."]
-position = Vector2(18, 2.08165e-12)
+position = Vector2(0.1562, 0)
 
 [node name="Gun" parent="." instance=ExtResource("10_ljwmm")]
-position = Vector2(17.8438, 0.125)
+position = Vector2(0, 0.125)
