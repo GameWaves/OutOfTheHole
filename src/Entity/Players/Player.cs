@@ -3,6 +3,7 @@ using Godot;
 using OutofTheHole.Gun;
 
 using OutofTheHole.Entity;
+using OutOfTheHole.Entity.Enemies;
 
 namespace OutofTheHole.Entity.Players;
 
@@ -33,15 +34,12 @@ public partial class Player : Entity
 	public new int Hp;
 
 	//define the sprite (currently placholder)
-	private AnimatedSprite2D _idleSprite;
 
 	public new int MaxHp = 100;
 
 	public new float Speed = 200.0f;
+	
 
-	private AnimatedSprite2D _walkleft;
-
-	private AnimatedSprite2D _walkright;
 	
 	public bool Reversed;
 	public override void _Ready()
@@ -88,6 +86,7 @@ public partial class Player : Entity
 		if (Alive && GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() ==
 			Multiplayer.GetUniqueId())
 		{
+			
 			//create a variable velocity 
 			var velocity = Velocity;
 
@@ -164,10 +163,7 @@ public partial class Player : Entity
 			if (_walkleft.Visible) _walkleft.Play();
 
 			if (_walkright.Visible) _walkright.Play();
-
-			//kill yourself (to test gameover screen)
-			if (Input.IsKeyPressed(Key.K)) Hurt(MaxHp);
-
+			
 			if (Input.IsActionPressed("click") && _gunObject.FireRate < _timeUntilFire)
 			{
 				_timeUntilFire = 0f;
@@ -197,16 +193,11 @@ public partial class Player : Entity
 	/// Set the damage, and death
 	/// </summary>
 	/// <param name="n"> the amount of damage taken</param>
-	public override void Hurt(int n)
+	public override void Hurt(int n,Entity source)
 	{
 		Hp = Hp - n;
 		if (Hp <= 0)
 		{
-			Alive = false;
-			//hide the player 
-			_idleSprite.Visible = false;
-			_walkright.Visible = false;
-			_walkleft.Visible = false;
 			Death();
 		}
 	}
@@ -222,6 +213,6 @@ public partial class Player : Entity
 	{
 		var gunNode = GetNode<Node2D>("Gun");
 		var shootPoint = GetNode<Node2D>("Gun/ShootPoint");
-		_gunObject.FireBullet(gunNode, shootPoint, GetTree(),GunType);
+		_gunObject.FireBullet(gunNode, shootPoint, GetTree(),GunType,this);
 	}
 }

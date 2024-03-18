@@ -33,7 +33,7 @@ public partial class Gun : Node2D
 	/// <param name="gunNode">The node corresponding to the gun</param>
 	/// <param name="shootPoint">The shoot point Node included int the Gun</param>
 	/// <param name="sceneTree">The global scene tree so the bullet can be added.</param>
-	public void FireBullet(Node2D gunNode, Node2D shootPoint, SceneTree sceneTree,string type)
+	public void FireBullet(Node2D gunNode, Node2D shootPoint, SceneTree sceneTree,string type,Entity.Entity source)
 	{
 		if (type == "Basic")
 		{
@@ -43,6 +43,7 @@ public partial class Gun : Node2D
 		var bullet = _bulletScene.Instantiate<BasicBullet>(); // create the bullet
 		bullet.Rotation = gunNode.Rotation;
 		bullet.GlobalPosition = shootPoint.GlobalPosition;
+		bullet.source = source;
 		sceneTree.Root.AddChild(bullet);
 	}
 }

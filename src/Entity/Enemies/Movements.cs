@@ -2,7 +2,7 @@ namespace OutOfTheHole.Enemies;
 
 public enum Movements
 {
-    RIGHT,
-    LEFT,
-    IDLE
+	RIGHT,
+	LEFT,
+	IDLE
 }

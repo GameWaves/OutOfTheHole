@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2em77lmsto1a"]
+[gd_scene load_steps=10 format=3 uid="uid://c2em77lmsto1a"]
 
 [ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_yw8ut"]
 [ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_lptt6"]
 [ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_x5212"]
 [ext_resource type="PackedScene" uid="uid://jiaef84oed5c" path="res://src/Entity/Enemies/Enemy1.tscn" id="4_cmwsi"]
+[ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_veg83"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_muvmw"]
 size = Vector2(1159, 226)
@@ -21,7 +22,8 @@ size = Vector2(1137, 54)
 script = ExtResource("1_yw8ut")
 _player1Scene = ExtResource("2_lptt6")
 _player2Scene = ExtResource("3_x5212")
-_enemyScene = ExtResource("4_cmwsi")
+_enemy1Scene = ExtResource("4_cmwsi")
+_enemy1ReversedScene = ExtResource("5_veg83")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(1, 4)
@@ -122,10 +124,16 @@ offset_right = 331.0
 offset_bottom = 119.0
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2(24, 0)
+position = Vector2(558, 291)
 
 [node name="0" type="Node2D" parent="Node2D" groups=["SpawnPoints"]]
-position = Vector2(1022, 88)
+position = Vector2(488, -185)
 
 [node name="1" type="Node2D" parent="Node2D" groups=["SpawnPoints"]]
-position = Vector2(82, 402)
+position = Vector2(-406, 89)
+
+[node name="2" type="Node2D" parent="Node2D" groups=["Enemy_1_spawn"]]
+position = Vector2(270, -75)
+
+[node name="3" type="Node2D" parent="Node2D" groups=["Enemy_1_spawn"]]
+position = Vector2(-257, -42)

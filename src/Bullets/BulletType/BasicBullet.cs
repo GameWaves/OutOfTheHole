@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using OutOfTheHole.Entity.Enemies;
 
 namespace OutOfTheHole.Bullet;
 
@@ -16,8 +17,16 @@ public partial class BasicBullet : Bullets
 		Longetivity = 100;
 	}
 
-	public override void OnHit()
+	public override void OnHit(Node2D target)
 	{
-		// do something on hit 
+		if (target is OutofTheHole.Entity.Entity entity)
+		{
+			if (entity != source)
+			{
+				entity.Hurt(Damage,source);
+			}
+		}
+
 	}
 }
+

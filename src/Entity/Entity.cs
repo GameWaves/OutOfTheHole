@@ -7,6 +7,12 @@ public abstract partial class Entity : CharacterBody2D
 	//Set a acceleration speed
 	public float Acceleration;
 
+	protected AnimatedSprite2D _idleSprite;
+
+	protected AnimatedSprite2D _walkleft;
+
+	protected AnimatedSprite2D _walkright;
+	
 	//define if the Entity is Alive
 	public bool Alive;
 
@@ -24,10 +30,15 @@ public abstract partial class Entity : CharacterBody2D
 
 	//to define the loss of Hp
 	//hpLoss is the amount of damage 
-	public abstract void Hurt(int hpLoss);
+	public abstract void Hurt(int hpLoss,Entity source);
 
 	public void Death()
 	{
+		Alive = false;
+		//hide the entity 
+		_idleSprite.Visible = false;
+		_walkright.Visible = false;
+		_walkleft.Visible = false;
 		QueueFree();
 		if (IsQueuedForDeletion()) Free();
 	}

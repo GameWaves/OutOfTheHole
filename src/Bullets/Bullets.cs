@@ -1,6 +1,8 @@
 using System;
 using Godot;
+using Godot.Collections;
 using OutofTheHole.Gun;
+using Array = Godot.Collections.Array;
 
 namespace OutOfTheHole.Bullet;
 
@@ -18,6 +20,8 @@ public abstract partial class Bullets : RigidBody2D
 		get => new Vector2(1, 0).Rotated(Rotation);
 		
 	}
+
+	public OutofTheHole.Entity.Entity source;
 	
 	//lifspan of bullet
 	public int Longetivity { get; set; }
@@ -30,7 +34,7 @@ public abstract partial class Bullets : RigidBody2D
 	{
 		get => ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	}
-	
+
 	/// <summary>
 	/// Updated 60 times per seconds, detects when the bullet needs to be destroyed.
 	///		Write general code that will apply to all bullets
@@ -45,11 +49,16 @@ public abstract partial class Bullets : RigidBody2D
 			if (IsQueuedForDeletion()) Free();
 		}
 		Longetivity -= (int)Math.Ceiling(delta);
-		
+
 	}
+
 	/// <summary>
 	///		function to call if bullet hit player
 	/// </summary>
-	public virtual void OnHit(){}
-	
+	public abstract void OnHit(Node2D target);
+
+	private void _on_area_2d_body_entered(Node2D body)
+	{
+		OnHit(body);
+	}
 }
