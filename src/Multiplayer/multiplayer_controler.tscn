@@ -1,10 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bjuiitkmi38lb"]
+[gd_scene load_steps=4 format=3 uid="uid://bjuiitkmi38lb"]
 
 [ext_resource type="Script" path="res://src/Multiplayer/MultiplayerController.cs" id="1_i4s07"]
+[ext_resource type="PackedScene" uid="uid://bj8r0766uo6ap" path="res://src/Menus/MainMenu.tscn" id="2_23bi0"]
 [ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="2_bgx8r"]
 
 [node name="Multiplayer Controler" type="CanvasLayer"]
 script = ExtResource("1_i4s07")
+_fallbackScene = ExtResource("2_23bi0")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
