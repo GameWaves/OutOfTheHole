@@ -7,6 +7,7 @@ namespace OutofTheHole.Multiplayer;
 public partial class MultiplayerController : CanvasLayer
 {
 	[Export] private string _address = "127.0.0.1";
+	[Export] private PackedScene _fallbackScene;
 
 	private ENetMultiplayerPeer _peer;
 
@@ -57,6 +58,8 @@ public partial class MultiplayerController : CanvasLayer
 	private void PeerDisconnected(long id)
 	{
 		GD.Print("PlayerInfo disconnected: " + id);
+		GetTree().ChangeSceneToPacked(_fallbackScene);
+
 	}
 
 	/// <summary>

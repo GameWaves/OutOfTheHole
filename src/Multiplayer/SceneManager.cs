@@ -48,5 +48,18 @@ public partial class SceneManager : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		
+	}
+	
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event is InputEventKey eventKey)
+			if (eventKey.Pressed && eventKey.Keycode == Key.Escape)
+				GetNode<Control>("PauseMenu").Visible = !GetNode<Control>("PauseMenu").Visible;
+	}
+
+	private void _on_disconnect_button_pressed()
+	{
+		GetTree().Quit();
 	}
 }
