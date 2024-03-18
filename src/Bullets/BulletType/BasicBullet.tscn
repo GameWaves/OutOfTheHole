@@ -28,3 +28,5 @@ shape = SubResource("CircleShape2D_vnxhh")
 position = Vector2(10, 0)
 shape = SubResource("CircleShape2D_vnxhh")
 disabled = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
