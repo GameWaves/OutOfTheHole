@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b8nh16frhokyw" path="res://src/Bullets/BulletType/BasicBullet.tscn" id="2_6lydr"]
 
 [node name="Gun" type="Node2D"]
+scale = Vector2(0.275, 0.275)
 script = ExtResource("1_klk6k")
 _bulletScene = ExtResource("2_6lydr")
 
