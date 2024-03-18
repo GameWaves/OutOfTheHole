@@ -1,8 +1,49 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6sbprucu0f81"]
+[gd_scene load_steps=7 format=3 uid="uid://ds73igafrfdmg"]
 
-[ext_resource type="Script" path="res://src/menus/OptionMenu.cs" id="1_dqv10"]
 [ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="1_smmng"]
 [ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="2_il8dg"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_i42ek"]
+script/source = "using Godot;
+using System;
+
+public partial class OptionMenu : CanvasLayer
+{
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+
+	/// <summary>
+	/// Called when the keymap button is pressed
+	/// </summary>
+	private void _on_keymap_button_button_down()
+	{
+		throw new NotImplementedException();
+	}
+
+	/// <summary>
+	/// Called when the volumes button is pressed
+	/// </summary>
+	private void _on_volumes_button_button_down()
+	{
+		throw new NotImplementedException();
+	}
+
+	/// <summary>
+	/// Called when the exit button is pressed
+	/// </summary>
+	private void _on_exit_button_button_down()
+	{
+		GetTree().ChangeSceneToFile(\"res://src/menus/MainMenu.tscn\");
+	}
+ }
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_433r2"]
 bg_color = Color(0.184314, 0.219608, 0.235294, 1)
@@ -29,7 +70,7 @@ corner_radius_bottom_left = 10
 expand_margin_top = 15.0
 
 [node name="OptionMenu" type="CanvasLayer"]
-script = ExtResource("1_dqv10")
+script = SubResource("CSharpScript_i42ek")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15

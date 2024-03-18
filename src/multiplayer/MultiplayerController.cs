@@ -13,6 +13,7 @@ public partial class MultiplayerController : CanvasLayer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		GetNode<LineEdit>("MenuVBoxContainer/ButtonContainer/Username").GrabFocus();
 		Multiplayer.PeerConnected += PeerConnected;
 		Multiplayer.PeerDisconnected += PeerDisconnected;
 		Multiplayer.ConnectedToServer += ConnectedToServer;
@@ -21,8 +22,8 @@ public partial class MultiplayerController : CanvasLayer
 
 	private void QueryAdress()
 	{
-		var queryField = GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/RemoteAddress");
-		GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/RemoteAddress").Show();
+		var queryField = GetNode<LineEdit>("MenuVBoxContainer/ButtonContainer/RemoteAddress");
+		GetNode<LineEdit>("MenuVBoxContainer/ButtonContainer/RemoteAddress").Show();
 	}
 
 	/// <summary>
@@ -41,7 +42,7 @@ public partial class MultiplayerController : CanvasLayer
 	private void ConnectedToServer()
 	{
 		GD.Print("Connected to server");
-		RpcId(1, "sendPlayerInformation", GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text, Multiplayer.GetUniqueId());
+		RpcId(1, "sendPlayerInformation", GetNode<LineEdit>("MenuVBoxContainer/ButtonContainer/Username").Text, Multiplayer.GetUniqueId());
 	}
 
 	/// <summary>
@@ -63,11 +64,11 @@ public partial class MultiplayerController : CanvasLayer
 	{
 		GD.Print("PlayerInfo connected: " + id);
 		GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton")
+				"MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton")
 			.Disabled = false;
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton").Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton").Hide();
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton").Hide();
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton").Hide();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -87,16 +88,16 @@ public partial class MultiplayerController : CanvasLayer
 			GD.Print("error cannot host!" + error);
 			return;
 		}
-		var joinButton = GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
+		var joinButton = GetNode<Button>("MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
 		joinButton.Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Disabled = true;
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Disabled = true;
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
+			"MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
 
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
 		GD.Print("Waiting for Players!");
-		sendPlayerInformation(GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").Text, 1);
+		sendPlayerInformation(GetNode<LineEdit>("MenuVBoxContainer/ButtonContainer/Username").Text, 1);
 	}
 
 	/// <summary>
@@ -106,20 +107,21 @@ public partial class MultiplayerController : CanvasLayer
 	{
 		QueryAdress();
 
-		var hostButton = GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton");
-		var joinButton = GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
+		var hostButton = GetNode<Button>("MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton");
+		var joinButton = GetNode<Button>("MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton");
 
 		hostButton.Hide();
 
 		//joinButton.SetPosition(new Vector2(joinButton.Position.X - 210, joinButton.Position.Y));
 		//joinButton.Text = "Start";
 		joinButton.Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Show();
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").GrabFocus();
 	}
 
 	private void _on_connect_button_down()
 	{
-		var addressInput = GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/RemoteAddress").Text;
+		var addressInput = GetNode<LineEdit>("MenuVBoxContainer/ButtonContainer/RemoteAddress").Text;
 		if (addressInput != "") address = addressInput;
 		peer = new ENetMultiplayerPeer();
 		peer.CreateClient(address, port);
@@ -128,9 +130,9 @@ public partial class MultiplayerController : CanvasLayer
 		GD.Print("Joining Game!");
 		GD.Print(address);
 
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
-
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/ConnectButton").Hide();
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
+		GetNode<Button>("MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").GrabFocus();
 		//GetNode<Button>("ConnectButton").Connect("button_down", Callable.From(_on_start_game_button_button_down));
 	}
 
@@ -180,6 +182,6 @@ public partial class MultiplayerController : CanvasLayer
 	
 	private void _on_return_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/menus/MainMenu.tscn");
+		GetTree().ChangeSceneToFile("res://src/menus/Menu.tscn");
 	}
 }

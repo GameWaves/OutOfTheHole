@@ -1,0 +1,138 @@
+[gd_scene load_steps=9 format=3 uid="uid://cpbydq0wn8np2"]
+
+[ext_resource type="Script" path="res://src/menus/menu.cs" id="1_yhqgb"]
+[ext_resource type="Texture2D" uid="uid://bv2da5400qboy" path="res://assets/backgrounds/Background_000.png" id="2_dxcu8"]
+[ext_resource type="Theme" uid="uid://c5ucyskhud1l2" path="res://assets/MenuTheme.tres" id="3_h5r0h"]
+[ext_resource type="Texture2D" uid="uid://dkodlrtwq7353" path="res://assets/gui/container.png" id="4_a1jdg"]
+[ext_resource type="Texture2D" uid="uid://dfqf7srws71wf" path="res://assets/gui/gui_OOTH.png" id="4_wm0wt"]
+
+[sub_resource type="Theme" id="Theme_fen7x"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wbfik"]
+texture = ExtResource("4_wm0wt")
+region_rect = Rect2(78, 90, 12, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dmwgp"]
+texture = ExtResource("4_wm0wt")
+region_rect = Rect2(78, 75, 12, 12)
+
+[node name="Menu" type="Control"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yhqgb")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+show_behind_parent = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_fen7x")
+texture = ExtResource("2_dxcu8")
+expand_mode = 3
+
+[node name="OpContainerTexture" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 560.0
+offset_top = 220.0
+offset_right = 1360.0
+offset_bottom = 860.0
+texture = ExtResource("4_a1jdg")
+
+[node name="OpButtons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(48, 13)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.996
+offset_left = 638.0
+offset_top = 393.0
+offset_right = -1218.0
+offset_bottom = -611.679
+scale = Vector2(10, 10)
+mouse_default_cursor_shape = 13
+theme = ExtResource("3_h5r0h")
+
+[node name="Volume" type="Button" parent="OpButtons"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_bottom = NodePath("../Keymaps")
+theme = ExtResource("3_h5r0h")
+button_mask = 0
+text = "Volume
+"
+alignment = 0
+
+[node name="Keymaps" type="Button" parent="OpButtons"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Volume")
+focus_neighbor_bottom = NodePath("../Back")
+theme = ExtResource("3_h5r0h")
+text = "Keympas
+"
+alignment = 0
+
+[node name="Back" type="Button" parent="OpButtons"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.19
+focus_neighbor_top = NodePath("../Keymaps")
+focus_neighbor_bottom = NodePath("../Volume")
+theme = ExtResource("3_h5r0h")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wbfik")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_dmwgp")
+text = "  "
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(48, 13)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.996
+offset_left = 20.0
+offset_top = 571.0
+offset_right = -1831.0
+offset_bottom = -454.68
+scale = Vector2(10, 10)
+auto_translate = false
+localize_numeral_system = false
+mouse_default_cursor_shape = 13
+theme = ExtResource("3_h5r0h")
+
+[node name="Play" type="Button" parent="Buttons"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Options")
+theme = ExtResource("3_h5r0h")
+button_mask = 0
+text = "Play"
+alignment = 0
+
+[node name="Options" type="Button" parent="Buttons"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Play")
+focus_neighbor_bottom = NodePath("../Quit")
+theme = ExtResource("3_h5r0h")
+text = "Options
+"
+alignment = 0
+
+[node name="Quit" type="Button" parent="Buttons"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Options")
+focus_neighbor_bottom = NodePath("../Play")
+theme = ExtResource("3_h5r0h")
+text = "Quit
+"
+alignment = 0
+
+[connection signal="hidden" from="OpButtons" to="." method="_on_op_buttons_hidden"]
+[connection signal="pressed" from="OpButtons/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Buttons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Buttons/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Buttons/Quit" to="." method="_on_quit_pressed"]
