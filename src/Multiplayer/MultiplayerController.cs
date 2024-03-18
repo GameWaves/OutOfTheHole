@@ -15,6 +15,7 @@ public partial class MultiplayerController : CanvasLayer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		GetNode<LineEdit>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/Username").GrabFocus();
 		Multiplayer.PeerConnected += PeerConnected;
 		Multiplayer.PeerDisconnected += PeerDisconnected;
 		Multiplayer.ConnectedToServer += ConnectedToServer;

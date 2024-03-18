@@ -7,6 +7,9 @@ public partial class MainMenu : CanvasLayer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		GetNode<VBoxContainer>("OptionsButtons").Visible = false;
+		GetNode<TextureRect>("OptionsTexture").Visible = false;
+		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/PlayButton").GrabFocus();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,11 +28,15 @@ public partial class MainMenu : CanvasLayer
 	/// <summary>
 	/// Function called when the option button is pressed (show the option menu)
 	/// </summary>
+	
 	private void _on_option_button_button_down()
 	{
-		GetTree().ChangeSceneToFile("res://src/Menus/OptionMenu.tscn");
+		GetNode<MarginContainer>("MenuMarginContainer").Visible = false;
+		GetNode<VBoxContainer>("OptionsButtons").Visible = true;
+		GetNode<TextureRect>("OptionsTexture").Visible = true;
+		GetNode<Button>("OptionsButtons/Volume").GrabFocus();
 	}
-
+	
 	/// <summary>
 	/// Function called when the credits button is pressed (show the credits)
 	/// </summary>
@@ -44,5 +51,11 @@ public partial class MainMenu : CanvasLayer
 	private void _on_exit_button_button_down()
 	{
 		GetTree().Quit();
+	}
+
+	private void _on_back_button_down()
+	{
+		GetNode<MarginContainer>("MenuMarginContainer").Visible = true;
+		_Ready();
 	}
 }
