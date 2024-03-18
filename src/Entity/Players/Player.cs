@@ -1,10 +1,10 @@
 using System;
 using Godot;
-using OutofTheHole.Gun;
 
-using OutofTheHole.Entity;
 
 namespace OutofTheHole.Entity.Players;
+
+using OutofTheHole.Helpers;
 
 public partial class Player : Entity
 {
@@ -109,8 +109,11 @@ public partial class Player : Entity
 				if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
 					velocity.Y += JumpVelocity;
 			}
+
+			Vector2 pos = CoordsHelper.ConvertCoords(new Vector2(1920, 1080), new Vector2(320, 180),
+				GetViewport().GetMousePosition());
 			
-			GetNode<Node2D>("Gun").LookAt(GetViewport().GetMousePosition());
+			GetNode<Node2D>("Gun").LookAt(pos);
 
 			//set movement (currenty arrow)
 			if (Input.IsKeyPressed(Key.Right))
