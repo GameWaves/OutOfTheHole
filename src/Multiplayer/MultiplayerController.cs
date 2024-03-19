@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using Godot;
+using Godot.Collections;
 
 namespace OutofTheHole.Multiplayer;
 
@@ -13,6 +18,10 @@ public partial class MultiplayerController : CanvasLayer
 
 	[Export] private int _port = 4242;
 
+	private int _currentAddrIdx = 0;
+
+	private List<string> _addrArray = new List<string>();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -21,6 +30,19 @@ public partial class MultiplayerController : CanvasLayer
 		Multiplayer.PeerDisconnected += PeerDisconnected;
 		Multiplayer.ConnectedToServer += ConnectedToServer;
 		Multiplayer.ConnectionFailed += ConnectionFailed;
+		// GD.Print($"Local IP: {IP.ResolveHostname("bastien")}, {IP.GetLocalInterfaces()[0]["addresses"].AsStringArray()[0]}");
+
+		foreach (var localInterface in IP.GetLocalInterfaces())
+		{
+			string[] addrList = localInterface["addresses"].AsStringArray();
+			foreach (var ip in addrList)	
+			{
+				if (!(ip.Contains(':')))
+				{
+					_addrArray.Add(ip);
+				}
+			}
+		}
 	}
 
 	private void QueryAdress()
@@ -71,13 +93,13 @@ public partial class MultiplayerController : CanvasLayer
 	{
 		GD.Print("PlayerInfo connected: " + id);
 		GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton")
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButton")
 			.Disabled = false;
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton")
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButton").Show();
+		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButton")
 			.Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton")
+		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButton")
 			.Hide();
 	}
 
@@ -109,6 +131,13 @@ public partial class MultiplayerController : CanvasLayer
 			true;
 		GetNode<Button>(
 			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ConnectButton").Show();
+
+		Button ipAddrButton = GetNode<Button>("IPAddrButton");
+		//ipAddrButton.Text = $"IP ADDRESS: {IP.GetLocalInterfaces()[_currentAddrIdx]["addresses"].AsStringArray()[0]}";
+		GD.Print(_addrArray);		
+		
+		ipAddrButton.Text = $"IP ADDRESS: {_addrArray[0]}";
+		ipAddrButton.Show();
 
 		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = _peer;
@@ -204,8 +233,39 @@ public partial class MultiplayerController : CanvasLayer
 				Rpc("SendPlayerInformation", item.Name, item.Id);
 	}
 
+	private void _on_ip_addr_button_pressed()
+	{
+		Button ipAddrButton = GetNode<Button>("IPAddrButton");
+		_currentAddrIdx++;
+		_currentAddrIdx %= _addrArray.Count();
+		
+		
+		ipAddrButton.Text = $"IP ADDRESS: {_addrArray[_currentAddrIdx]}";
+	}
+	
 	private void _on_return_button_button_down()
 	{
 		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
+	}
+
+	/// <summary>
+	/// Function that gets the local IP address
+	/// </summary>
+	/// <returns>
+	/// The local IP address
+	/// </returns>
+	private static string _get_ip()
+	{
+		var host = Dns.GetHostEntry(Dns.GetHostName());
+		GD.Print("-- DEBUG ALL IP --");
+		foreach (var ip in host.AddressList)
+		{
+			GD.Print(ip);
+			if (ip.AddressFamily == AddressFamily.InterNetwork)
+			{
+				return ip.ToString();
+			}
+		}
+		throw new Exception("No network adapters with an IPv4 address in the system!");
 	}
 }
