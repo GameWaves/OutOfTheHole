@@ -93,13 +93,13 @@ public partial class MultiplayerController : CanvasLayer
 	{
 		GD.Print("PlayerInfo connected: " + id);
 		GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton")
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButton")
 			.Disabled = false;
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButtonMarginContainer/StartGameButton").Show();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButtonMarginContainer/JoinButton")
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButton").Show();
+		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButton")
 			.Hide();
-		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButtonMarginContainer/HostButton")
+		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButton")
 			.Hide();
 	}
 
