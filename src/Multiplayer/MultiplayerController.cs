@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Godot.Collections;
 
 namespace OutofTheHole.Multiplayer;
 
@@ -13,6 +14,8 @@ public partial class MultiplayerController : CanvasLayer
 
 	[Export] private int _port = 4242;
 
+	private int _currentAddrIdx = 0;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -21,6 +24,7 @@ public partial class MultiplayerController : CanvasLayer
 		Multiplayer.PeerDisconnected += PeerDisconnected;
 		Multiplayer.ConnectedToServer += ConnectedToServer;
 		Multiplayer.ConnectionFailed += ConnectionFailed;
+		GD.Print($"Local IP: {IP.ResolveHostname("bastien")}, {IP.GetLocalInterfaces()[0]["addresses"].AsStringArray()[0]}");
 	}
 
 	private void QueryAdress()
@@ -109,6 +113,10 @@ public partial class MultiplayerController : CanvasLayer
 			true;
 		GetNode<Button>(
 			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ConnectButton").Show();
+
+		Button ipAddrButton = GetNode<Button>("IPAddrButton");
+		ipAddrButton.Text = $"IP ADDRESS: {IP.GetLocalInterfaces()[_currentAddrIdx]["addresses"].AsStringArray()[0]}";
+		ipAddrButton.Show();
 
 		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = _peer;
@@ -204,6 +212,14 @@ public partial class MultiplayerController : CanvasLayer
 				Rpc("SendPlayerInformation", item.Name, item.Id);
 	}
 
+	private void _on_ip_addr_button_pressed()
+	{
+		Button ipAddrButton = GetNode<Button>("IPAddrButton");
+		_currentAddrIdx++;
+		_currentAddrIdx %= IP.GetLocalInterfaces().Count;
+		ipAddrButton.Text = $"IP ADDRESS: {IP.GetLocalInterfaces()[_currentAddrIdx]["addresses"].AsStringArray()[0]}";
+	}
+	
 	private void _on_return_button_button_down()
 	{
 		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
