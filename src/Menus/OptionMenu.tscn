@@ -1,0 +1,119 @@
+[gd_scene load_steps=7 format=3 uid="uid://b6sbprucu0f81"]
+
+[ext_resource type="Script" path="res://src/Menus/OptionMenu.cs" id="1_dqv10"]
+[ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="1_smmng"]
+[ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="2_il8dg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_433r2"]
+bg_color = Color(0.184314, 0.219608, 0.235294, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 15.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_472qa"]
+bg_color = Color(0.109804, 0.133333, 0.145098, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 15.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kykp6"]
+bg_color = Color(0.0352941, 0.0470588, 0.054902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 15.0
+
+[node name="OptionMenu" type="CanvasLayer"]
+script = ExtResource("1_dqv10")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.454902, 0.329412, 0.317647, 1)
+
+[node name="MenuMarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 50
+
+[node name="MenuVBoxContainer" type="VBoxContainer" parent="MenuMarginContainer"]
+layout_mode = 2
+
+[node name="WelcomeTitle" type="Label" parent="MenuMarginContainer/MenuVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_smmng")
+theme_override_font_sizes/font_size = 44
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="ButtonContainer" type="VBoxContainer" parent="MenuMarginContainer/MenuVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="KeymapButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="KeymapButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/KeymapButtonMarginContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_il8dg")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_433r2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_472qa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kykp6")
+text = "KEYMAP"
+
+[node name="VolumesButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="VolumesButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/VolumesButtonMarginContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_il8dg")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_433r2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_472qa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kykp6")
+text = "VOLUMES"
+
+[node name="ExitButtonMarginContainer" type="MarginContainer" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="ExitButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ExitButtonMarginContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_il8dg")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_433r2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_472qa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kykp6")
+text = "EXIT"
+
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/KeymapButtonMarginContainer/KeymapButton" to="." method="_on_keymap_button_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/VolumesButtonMarginContainer/VolumesButton" to="." method="_on_volumes_button_button_down"]
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ExitButtonMarginContainer/ExitButton" to="." method="_on_exit_button_button_down"]

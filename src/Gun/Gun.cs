@@ -1,59 +1,49 @@
 using Godot;
-using System;
+using OutOfTheHole.Bullet;
+
+namespace OutofTheHole.Gun;
 
 public partial class Gun : Node2D
 {
+	public int Id;
+
+	private float _timeUntilFire;
+
 	//arbitrary values for the ability to shoot
-	[Export] private PackedScene bullet_scn;
-	[Export] private CharacterBody2D CharacterBody;
-	[Export] private float bullet_speed = 800f;
-	[Export] private float bps = 5f;
-	[Export] private float bullet_damage = 30f;
+
+	[Export] private PackedScene _bulletScene;
 	
-	private float fire_rate;
-
-	private float time_until_fire = 300f;
-
+	public float FireRate;
+	
 	/// <summary>
 	/// Initiate the fire_rate value when the player spawn;
 	/// </summary>
 	public override void _Ready()
 	{
-		fire_rate = 1 / bps;
+		GD.Print(Name);
+		GetParent().GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(Id);
+		GD.Print(GetParent().GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer"));
 	}
 
 	/// <summary>
-	/// Test when the left_click is pressed and create the bullet as a new node with initial values (also verify if the player is able to shoot)
+	/// The function manages all the bullet shooting. It creates the bullet, sets the rotation and position and adds it to
+	/// the scene.
+	/// The velocity management has been offloaded to the bullet.
 	/// </summary>
-	/// <param name="delta">seconds</param>
-	public override void _Process(double delta)
+	/// <param name="gunNode">The node corresponding to the gun</param>
+	/// <param name="shootPoint">The shoot point Node included int the Gun</param>
+	/// <param name="sceneTree">The global scene tree so the bullet can be added.</param>
+	public void FireBullet(Node2D gunNode, Node2D shootPoint, SceneTree sceneTree,string type,Entity.Entity source)
 	{
-		float maxdistance = 20f;
-		if (Input.IsActionPressed("click") && fire_rate < time_until_fire)
+		if (type == "Basic")
 		{
-			Vector2 playerPosition = CharacterBody.GlobalPosition;
-			
-			RigidBody2D bullet = bullet_scn.Instantiate<RigidBody2D>(); // create the bullet
-			Vector2 mousePostion = GetGlobalMousePosition() - playerPosition;
-			
-			bullet.GlobalPosition = playerPosition + maxdistance*(mousePostion.Normalized()); //change the position according to the mouse
-			
-			if (mousePostion.X < 0)
-			{
-				bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X) + Mathf.Pi;
-			}
-			else
-			{
-				bullet.Rotation = (float)Math.Atan(mousePostion.Y / mousePostion.X);
-			}
-			
-			GetTree().Root.AddChild(bullet);
-			bullet.LinearVelocity = (bullet.GlobalPosition-playerPosition).Normalized() * bullet_speed;
-			time_until_fire = 0f;
+			//arbitrary value for Basic gun
+			FireRate = 1 / 5f;
 		}
-		else
-		{
-			time_until_fire += (float)delta; //timer until ability to shoot again
-		}
+		var bullet = _bulletScene.Instantiate<BasicBullet>(); // create the bullet
+		bullet.Rotation = gunNode.Rotation;
+		bullet.GlobalPosition = shootPoint.GlobalPosition;
+		bullet.source = source;
+		sceneTree.Root.AddChild(bullet);
 	}
 }

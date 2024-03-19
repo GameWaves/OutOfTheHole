@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8nh16frhokyw"]
+
+[ext_resource type="Script" path="res://src/Bullets/BulletType/BasicBullet.cs" id="1_ch1hp"]
+[ext_resource type="Texture2D" uid="uid://dd1tiflkj3wrh" path="res://assets/sprites/bullet.png" id="1_hvb24"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vnxhh"]
+radius = 3.0
+
+[node name="bullet" type="RigidBody2D"]
+gravity_scale = 2.66454e-15
+script = ExtResource("1_ch1hp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("1_hvb24")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(5, 0)
+disable_mode = 2
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(5, 0)
+shape = SubResource("CircleShape2D_vnxhh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(10, 0)
+shape = SubResource("CircleShape2D_vnxhh")
+disabled = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

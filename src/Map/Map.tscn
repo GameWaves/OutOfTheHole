@@ -1,0 +1,238 @@
+[gd_scene load_steps=23 format=3 uid="uid://c2em77lmsto1a"]
+
+[ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_yw8ut"]
+[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_lptt6"]
+[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_x5212"]
+[ext_resource type="PackedScene" uid="uid://jiaef84oed5c" path="res://src/Entity/Enemies/Enemy1.tscn" id="4_0snh7"]
+[ext_resource type="StyleBox" uid="uid://5ldwkxfugrym" path="res://assets/ui/new_style_box_texture.tres" id="4_ns4c3"]
+[ext_resource type="Texture2D" uid="uid://ckmioauc8qfgp" path="res://assets/tiles/Corner_left.png" id="4_tc6ew"]
+[ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_8w7nm"]
+[ext_resource type="Texture2D" uid="uid://c7o04rqefjxf6" path="res://assets/tiles/Corner_right.png" id="5_l41sn"]
+[ext_resource type="Texture2D" uid="uid://drpl4tto1fckc" path="res://assets/tiles/Core_planet.png" id="6_d2of0"]
+[ext_resource type="Texture2D" uid="uid://uf6i3t62a0y3" path="res://assets/ui/button.png" id="9_6s6l0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_muvmw"]
+size = Vector2(1163.64, 229.091)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j0yw3"]
+size = Vector2(91.5057, 480.182)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wxjti"]
+size = Vector2(65.4545, 21.8182)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8mjdx"]
+size = Vector2(1163.64, 65.5454)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bh5vn"]
+texture = ExtResource("4_tc6ew")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_157v8"]
+texture = ExtResource("5_l41sn")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_86088"]
+texture = ExtResource("6_d2of0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_byud6"]
+texture = ExtResource("9_6s6l0")
+region_rect = Rect2(7.99898, 26.6477, 47.2957, 12.2167)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8mbf4"]
+texture = ExtResource("9_6s6l0")
+region_rect = Rect2(7.99898, 26.6477, 47.2957, 12.2167)
+modulate_color = Color(0.32549, 0.32549, 0.32549, 1)
+
+[sub_resource type="Image" id="Image_2b2ai"]
+data = {
+"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 68, 68, 183, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 68, 68, 180, 255, 255, 255, 0, 255, 255, 255, 0, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 69, 255, 128, 255, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 69, 255, 128, 255, 69, 255, 128, 255, 68, 179, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 68, 176, 128, 255, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 69, 255, 128, 255, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 69, 255, 128, 255, 69, 255, 128, 255, 69, 255, 128, 255, 68, 209, 128, 255, 64, 8, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 64, 8, 128, 255, 68, 214, 255, 255, 255, 0, 255, 255, 255, 0, 69, 255, 162, 255, 69, 255, 162, 255, 255, 255, 255, 0, 255, 255, 255, 0, 69, 255, 162, 255, 69, 255, 162, 255, 69, 255, 162, 255, 68, 255, 162, 243, 70, 255, 160, 40, 255, 255, 255, 0, 67, 255, 163, 91, 68, 255, 163, 86, 255, 255, 255, 0, 67, 255, 161, 49, 255, 255, 255, 0, 255, 255, 255, 0, 69, 255, 162, 255, 69, 255, 162, 255, 255, 255, 255, 0, 69, 255, 162, 255, 69, 255, 162, 255, 69, 255, 162, 255, 69, 255, 162, 255, 68, 255, 163, 94, 255, 255, 255, 0, 69, 255, 162, 33, 69, 255, 162, 241, 68, 255, 161, 239, 68, 255, 162, 30, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 69, 215, 255, 255, 69, 215, 255, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 0, 255, 255, 1, 68, 215, 255, 194, 69, 215, 255, 255, 69, 215, 255, 255, 68, 215, 255, 191, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 69, 215, 255, 255, 69, 215, 255, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 67, 215, 255, 114, 69, 215, 255, 255, 69, 215, 255, 255, 69, 215, 255, 255, 69, 215, 255, 255, 68, 215, 255, 108, 255, 255, 255, 0, 255, 255, 255, 0, 128, 69, 255, 255, 128, 69, 255, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 128, 68, 255, 227, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 255, 128, 68, 255, 224, 255, 255, 255, 0, 255, 255, 255, 0, 128, 69, 255, 255, 128, 69, 255, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 128, 69, 255, 233, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 230, 255, 255, 255, 0, 255, 255, 255, 0, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 68, 152, 64, 255, 255, 255, 0, 255, 68, 151, 139, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 68, 150, 134, 255, 255, 255, 0, 255, 255, 255, 0, 255, 68, 150, 180, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 68, 150, 191, 255, 255, 255, 0, 255, 85, 170, 3, 255, 68, 150, 138, 255, 69, 150, 233, 255, 69, 150, 233, 255, 68, 149, 135, 255, 0, 128, 2, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_inxwy"]
+image = SubResource("Image_2b2ai")
+
+[sub_resource type="Theme" id="Theme_6q6sw"]
+Button/styles/focus = SubResource("StyleBoxTexture_byud6")
+Button/styles/hover = SubResource("StyleBoxTexture_byud6")
+Button/styles/normal = SubResource("StyleBoxTexture_byud6")
+Button/styles/pressed = SubResource("StyleBoxTexture_8mbf4")
+EditorIcons/icons/StyleBoxTexture = SubResource("ImageTexture_inxwy")
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_yw8ut")
+_player1Scene = ExtResource("2_lptt6")
+_player2Scene = ExtResource("3_x5212")
+_enemy1Scene = ExtResource("4_0snh7")
+_enemy1ReversedScene = ExtResource("5_8w7nm")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(1, 4)
+scale = Vector2(0.275, 0.275)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(578.182, 525.454)
+shape = SubResource("RectangleShape2D_muvmw")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1114.25, 225.545)
+shape = SubResource("RectangleShape2D_j0yw3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(42.0171, 225.636)
+shape = SubResource("RectangleShape2D_j0yw3")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(957, 340)
+shape = SubResource("RectangleShape2D_wxjti")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(578.182, 18.2273)
+shape = SubResource("RectangleShape2D_8mjdx")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(822, 297)
+shape = SubResource("RectangleShape2D_wxjti")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(684, 256)
+shape = SubResource("RectangleShape2D_wxjti")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(552.727, 194.545)
+shape = SubResource("RectangleShape2D_wxjti")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(414.545, 149.091)
+shape = SubResource("RectangleShape2D_wxjti")
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(298.182, 101.818)
+shape = SubResource("RectangleShape2D_wxjti")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(24, 0)
+
+[node name="2" type="Node2D" parent="Node2D" groups=["Enemy_1_spawn"]]
+position = Vector2(46, 72)
+
+[node name="3" type="Node2D" parent="Node2D" groups=["Enemy_1_spawn"]]
+position = Vector2(56, 136)
+
+[node name="0" type="Node2D" parent="Node2D" groups=["SpawnPoints"]]
+position = Vector2(33, 100)
+
+[node name="1" type="Node2D" parent="Node2D" groups=["SpawnPoints"]]
+position = Vector2(23, 36)
+
+[node name="Panel3" type="Panel" parent="."]
+offset_left = 218.0
+offset_top = 82.0
+offset_right = 236.0
+offset_bottom = 89.0
+theme_override_styles/panel = ExtResource("4_ns4c3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel6" type="Panel" parent="."]
+offset_left = 74.0
+offset_top = 29.0
+offset_right = 92.0
+offset_bottom = 35.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_bh5vn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel5" type="Panel" parent="."]
+offset_left = 106.0
+offset_top = 42.0
+offset_right = 124.0
+offset_bottom = 48.0
+theme_override_styles/panel = ExtResource("4_ns4c3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel4" type="Panel" parent="."]
+offset_left = 144.0
+offset_top = 54.0
+offset_right = 162.0
+offset_bottom = 61.0
+theme_override_styles/panel = ExtResource("4_ns4c3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel7" type="Panel" parent="."]
+offset_left = 180.0
+offset_top = 71.0
+offset_right = 198.0
+offset_bottom = 78.0
+theme_override_styles/panel = ExtResource("4_ns4c3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel8" type="Panel" parent="."]
+offset_left = 255.0
+offset_top = 94.0
+offset_right = 273.0
+offset_bottom = 101.0
+theme_override_styles/panel = ExtResource("4_ns4c3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel9" type="Panel" parent="."]
+offset_left = 295.0
+offset_right = 320.0
+offset_bottom = 132.0
+theme_override_styles/panel = ExtResource("4_ns4c3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel10" type="Panel" parent="."]
+offset_right = 25.0
+offset_bottom = 117.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_157v8")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel2" type="Panel" parent="."]
+offset_top = 117.0
+offset_right = 320.0
+offset_bottom = 180.0
+theme_override_styles/panel = ExtResource("4_ns4c3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 320.0
+offset_bottom = 18.0
+theme_override_styles/panel = ExtResource("4_ns4c3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel11" type="Panel" parent="."]
+show_behind_parent = true
+z_index = -1
+offset_right = 320.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_86088")
+metadata/_edit_use_anchors_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(160, 90)
+zoom = Vector2(6.025, 6.025)
+
+[node name="PauseMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 124.0
+offset_top = 46.0
+offset_right = 193.0
+offset_bottom = 95.0
+
+[node name="Button" type="Button" parent="PauseMenu"]
+layout_mode = 0
+offset_left = -7.0
+offset_top = 14.0
+offset_right = 63.0
+offset_bottom = 30.0
+theme = SubResource("Theme_6q6sw")
+theme_override_font_sizes/font_size = 11
+text = "Exit"
+
+[connection signal="pressed" from="PauseMenu/Button" to="." method="_on_disconnect_button_pressed"]

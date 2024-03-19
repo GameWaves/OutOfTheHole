@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://byexr753no7oj"]
+
+[ext_resource type="Script" path="res://src/Gun/Gun.cs" id="1_klk6k"]
+[ext_resource type="Texture2D" uid="uid://c4ey7j8om4fr8" path="res://assets/sprites/famas.png" id="1_wvxv2"]
+[ext_resource type="PackedScene" uid="uid://b8nh16frhokyw" path="res://src/Bullets/BulletType/BasicBullet.tscn" id="2_6lydr"]
+
+[node name="Gun" type="Node2D"]
+scale = Vector2(0.275, 0.275)
+script = ExtResource("1_klk6k")
+_bulletScene = ExtResource("2_6lydr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 3.63636)
+scale = Vector2(0.443, 0.443)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.13687e-13, 3.63636)
+scale = Vector2(0.083, 0.083)
+texture = ExtResource("1_wvxv2")
+
+[node name="ShootPoint" type="Node2D" parent="."]
+position = Vector2(3, 0)
