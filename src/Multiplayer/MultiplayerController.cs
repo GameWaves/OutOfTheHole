@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using Godot;
 using Godot.Collections;
 
@@ -16,6 +20,8 @@ public partial class MultiplayerController : CanvasLayer
 
 	private int _currentAddrIdx = 0;
 
+	private List<string> _addrArray = new List<string>();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -24,7 +30,19 @@ public partial class MultiplayerController : CanvasLayer
 		Multiplayer.PeerDisconnected += PeerDisconnected;
 		Multiplayer.ConnectedToServer += ConnectedToServer;
 		Multiplayer.ConnectionFailed += ConnectionFailed;
-		GD.Print($"Local IP: {IP.ResolveHostname("bastien")}, {IP.GetLocalInterfaces()[0]["addresses"].AsStringArray()[0]}");
+		// GD.Print($"Local IP: {IP.ResolveHostname("bastien")}, {IP.GetLocalInterfaces()[0]["addresses"].AsStringArray()[0]}");
+
+		foreach (var localInterface in IP.GetLocalInterfaces())
+		{
+			string[] addrList = localInterface["addresses"].AsStringArray();
+			foreach (var ip in addrList)	
+			{
+				if (!(ip.Contains(':')))
+				{
+					_addrArray.Add(ip);
+				}
+			}
+		}
 	}
 
 	private void QueryAdress()
@@ -115,7 +133,10 @@ public partial class MultiplayerController : CanvasLayer
 			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/ConnectButton").Show();
 
 		Button ipAddrButton = GetNode<Button>("IPAddrButton");
-		ipAddrButton.Text = $"IP ADDRESS: {IP.GetLocalInterfaces()[_currentAddrIdx]["addresses"].AsStringArray()[0]}";
+		//ipAddrButton.Text = $"IP ADDRESS: {IP.GetLocalInterfaces()[_currentAddrIdx]["addresses"].AsStringArray()[0]}";
+		GD.Print(_addrArray);		
+		
+		ipAddrButton.Text = $"IP ADDRESS: {_addrArray[0]}";
 		ipAddrButton.Show();
 
 		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
@@ -216,12 +237,35 @@ public partial class MultiplayerController : CanvasLayer
 	{
 		Button ipAddrButton = GetNode<Button>("IPAddrButton");
 		_currentAddrIdx++;
-		_currentAddrIdx %= IP.GetLocalInterfaces().Count;
-		ipAddrButton.Text = $"IP ADDRESS: {IP.GetLocalInterfaces()[_currentAddrIdx]["addresses"].AsStringArray()[0]}";
+		_currentAddrIdx %= _addrArray.Count();
+		
+		
+		ipAddrButton.Text = $"IP ADDRESS: {_addrArray[_currentAddrIdx]}";
 	}
 	
 	private void _on_return_button_button_down()
 	{
 		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
+	}
+
+	/// <summary>
+	/// Function that gets the local IP address
+	/// </summary>
+	/// <returns>
+	/// The local IP address
+	/// </returns>
+	private static string _get_ip()
+	{
+		var host = Dns.GetHostEntry(Dns.GetHostName());
+		GD.Print("-- DEBUG ALL IP --");
+		foreach (var ip in host.AddressList)
+		{
+			GD.Print(ip);
+			if (ip.AddressFamily == AddressFamily.InterNetwork)
+			{
+				return ip.ToString();
+			}
+		}
+		throw new Exception("No network adapters with an IPv4 address in the system!");
 	}
 }
