@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bj8r0766uo6ap"]
+[gd_scene load_steps=11 format=3 uid="uid://bj8r0766uo6ap"]
 
 [ext_resource type="Script" path="res://src/Menus/MainMenu.cs" id="1_ee6e6"]
 [ext_resource type="Texture2D" uid="uid://cv4qb088la36g" path="res://assets/background/Background_000.png" id="2_8up6o"]
+[ext_resource type="PackedScene" uid="uid://b5g0e4eaqeurh" path="res://src/Menus/InputSettings/InputSettings.tscn" id="2_jnx0k"]
 [ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="2_rah62"]
 [ext_resource type="Theme" uid="uid://c5ucyskhud1l2" path="res://assets/ui/MenuTheme.tres" id="3_apybp"]
 [ext_resource type="Texture2D" uid="uid://dba4vh6q4f5es" path="res://assets/ui/container.png" id="5_3e2fx"]
@@ -21,6 +22,7 @@ region_rect = Rect2(78, 75, 12, 12)
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_ee6e6")
+_keymapScene = ExtResource("2_jnx0k")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1920.0
@@ -104,9 +106,15 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_cogrj")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_06b4n")
 text = " "
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InputSettings" parent="CanvasLayer" instance=ExtResource("2_jnx0k")]
+visible = false
+
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/PlayButton" to="." method="_on_play_button_button_down"]
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/OptionButton" to="." method="_on_option_button_button_down"]
 [connection signal="pressed" from="MenuMarginContainer/MenuVBoxContainer/OptionButton" to="." method="_on_option_button_pressed"]
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/CreditsButton" to="." method="_on_credits_button_button_down"]
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
+[connection signal="button_down" from="OptionsButtons/Keymaps" to="." method="_on_keymaps_button_down"]
 [connection signal="button_down" from="OptionsButtons/Back" to="." method="_on_back_button_down"]
