@@ -22,7 +22,6 @@ region_rect = Rect2(78, 75, 12, 12)
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_ee6e6")
-_keymapScene = ExtResource("2_jnx0k")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1920.0

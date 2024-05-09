@@ -4,15 +4,12 @@ namespace OutofTheHole.Menus;
 
 public partial class MainMenu : CanvasLayer
 {
-	[Export] private PackedScene _keymapScene;
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		GetNode<VBoxContainer>("OptionsButtons").Visible = false;
 		GetNode<TextureRect>("OptionsTexture").Visible = false;
 		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/PlayButton").GrabFocus();
-		GetNode<Control>("CanvasLayer/InputSettings").Visible = false;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -64,9 +61,6 @@ public partial class MainMenu : CanvasLayer
 
 	private void _on_keymaps_button_down()
 	{
-		// _keymapScene.Instantiate();
 		GetNode<Control>("CanvasLayer/InputSettings").Visible = true;
-		GD.Print("Button Keymap pressed!");
 	}
-		
 }
