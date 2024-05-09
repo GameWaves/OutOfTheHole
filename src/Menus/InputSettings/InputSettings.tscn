@@ -58,3 +58,5 @@ layout_mode = 2
 
 [node name="InputButton4" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList" instance=ExtResource("1_f1uhe")]
 layout_mode = 2
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList/InputButton" to="." method="_on_input_button_pressed"]
