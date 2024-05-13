@@ -190,17 +190,41 @@ public partial class Player : Entity
 				Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
 		}
 	}
-
+	/// <summary>
+	/// Wrapper for Death() Method that also includes a game quit. 
+	/// </summary>
+	/// <param name="target"></param>
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void KillPlayer(Entity target)
+	{
+		Death();
+		GetTree().Quit();
+	}
+	
+	/// <summary>
+	/// Sends the message to both instances that player should be Hurt, with intensity n and from the source. 
+	/// </summary>
+	/// <param name="n"> the amount of damage taken</param>
+	/// <param name="source">Entity That Hurt the player</param>
+	public override void Hurt(int n, Entity source)
+	{
+		Rpc("HurtPlayer", n, source);
+	}
+	
 	/// <summary>
 	/// Set the damage, and death
 	/// </summary>
 	/// <param name="n"> the amount of damage taken</param>
-	public override void Hurt(int n,Entity source)
+	/// <param name="source">Entity That Hurt the player</param>
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void HurtPlayer(int n, Entity source)
 	{
 		Hp = Hp - n;
+		// GD.Print($"Player {Name} Hurted by {source.Name}, Hp = {Hp}, Managed by {Multiplayer.GetUniqueId()}");
 		if (Hp <= 0)
 		{
-			Death();
+			// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
+			Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
 		}
 	}
 	
@@ -210,9 +234,9 @@ public partial class Player : Entity
 	/// </summary>
 	
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	
 	private void FireBulletRpc()
 	{
+		// GD.Print($"{Name} shot, Managed by {Multiplayer.GetUniqueId()}");
 		var gunNode = GetNode<Node2D>("Gun");
 		var shootPoint = GetNode<Node2D>("Gun/ShootPoint");
 		_gunObject.FireBullet(gunNode, shootPoint, GetTree(),GunType,this);
