@@ -37,13 +37,13 @@ public partial class Gun : Node2D
 	{
 		if (type == "Basic")
 		{
-			//arbitrary value for Basic gun
+			//arbitrary value fors Basic gun
 			FireRate = 1 / 5f;
 		}
-		var bullet = _bulletScene.Instantiate<BasicBullet>(); // create the bullet
+		BasicBullet bullet = _bulletScene.Instantiate<BasicBullet>(); // create the bullet
 		bullet.Rotation = gunNode.Rotation;
 		bullet.GlobalPosition = shootPoint.GlobalPosition;
-		bullet.source = source;
+		bullet.Source = source;
 		sceneTree.Root.AddChild(bullet);
 	}
 }

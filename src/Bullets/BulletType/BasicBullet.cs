@@ -21,9 +21,10 @@ public partial class BasicBullet : Bullets
 	{
 		if (target is OutofTheHole.Entity.Entity entity)
 		{
-			if (entity != source)
+			// GD.Print($"Hit from {source.Name} to {entity.Name}");
+			if (entity != Source)
 			{
-				entity.Hurt(Damage,source);
+				entity.Hurt(Damage,Source);
 			}
 		}
 

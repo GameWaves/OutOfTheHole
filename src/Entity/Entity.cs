@@ -32,7 +32,7 @@ public abstract partial class Entity : CharacterBody2D
 	//hpLoss is the amount of damage 
 	public abstract void Hurt(int hpLoss,Entity source);
 
-	public void Death()
+	public virtual void Death()
 	{
 		Alive = false;
 		//hide the entity 
