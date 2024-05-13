@@ -7,8 +7,7 @@ public partial class MainMenu : CanvasLayer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GetNode<VBoxContainer>("OptionsButtons").Visible = false;
-		GetNode<TextureRect>("OptionsTexture").Visible = false;
+		GetNode<CanvasLayer>("OptionsMenu").Visible = false;
 		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/PlayButton").GrabFocus();
 	}
 
@@ -32,9 +31,8 @@ public partial class MainMenu : CanvasLayer
 	private void _on_option_button_button_down()
 	{
 		GetNode<MarginContainer>("MenuMarginContainer").Visible = false;
-		GetNode<VBoxContainer>("OptionsButtons").Visible = true;
-		GetNode<TextureRect>("OptionsTexture").Visible = true;
-		GetNode<Button>("OptionsButtons/Volume").GrabFocus();
+		GetNode<CanvasLayer>("OptionsMenu").Visible = true;
+		GetNode<Button>("OptionsMenu/OptionsButtons/Volume").GrabFocus();
 	}
 	
 	/// <summary>
@@ -61,6 +59,6 @@ public partial class MainMenu : CanvasLayer
 
 	private void _on_keymaps_button_down()
 	{
-		GetNode<Control>("CanvasLayer/InputSettings").Visible = true;
+		GetNode<Control>("KeymapMenu/InputSettings").Visible = true;
 	}
 }

@@ -60,23 +60,57 @@ public partial class InputSettings : Control
 			}
 
 			_actionList.AddChild(button);
-			//TODO: Connect the button to the input_button_pressed signal
-			button.Connect("pressed", new Callable(this, "_on_input_button_pressed"));
-
 			var exitButton = _inputButtonScene.Instantiate<Node>();
 			var exitActionLabel = exitButton.FindChild("LabelAction");
 			exitActionLabel.Set("text", "Exit");
+			((Button)button).Pressed += () => _on_input_button_pressed(button, action);
 		}
 	}
 
 	private void _on_input_button_pressed(Node button, String action)
+	{
+		//TODO: Add focus to the button
+		((Button)button).GrabFocus();
+		if (!_isRemapping)
 		{
-			if (!_isRemapping)
+			_isRemapping = true;
+			_actionToRemap = action;
+			remappingButton = button;
+			button.FindChild("LabelInput").Set("text", "Press key to bind...");
+		}
+	}
+
+	private void _input(object eventKey)
+	{
+		if (_isRemapping)
+		{
+			Console.WriteLine("I'm Here");
+			if (eventKey is InputEventKey key)
 			{
-				_isRemapping = true;
-				_actionToRemap = action;
-				remappingButton = button;
-				button.FindChild("LabelInput").Set("text", "Press key to bind...");
+				Console.WriteLine("Remapping action: " + _actionToRemap + " to key: " + eventKey);
+				InputMap.ActionEraseEvents((Godot.StringName)_actionToRemap);
+				InputMap.ActionAddEvent((Godot.StringName)_actionToRemap, (InputEventKey) eventKey);
+				_updateActionList((Node) remappingButton, eventKey.ToString());
+				_isRemapping = false;
+				_actionToRemap = null;
+				remappingButton = null;
+			}
+			else if (eventKey is InputEventMouseButton mouseButton && mouseButton.Pressed)
+			{
+				Console.WriteLine("Remapping action: " + _actionToRemap + " to key: " + eventKey);
+				InputMap.ActionEraseEvents((Godot.StringName)_actionToRemap);
+				InputMap.ActionAddEvent((Godot.StringName)_actionToRemap, (InputEventMouseButton) eventKey);
+				_updateActionList((Node) remappingButton, eventKey.ToString());
+				_isRemapping = false;
+				_actionToRemap = null;
+				remappingButton = null;
 			}
 		}
+	}
+
+	private void _updateActionList(Node button, String eventKey)
+	{
+		button.FindChild("LabelInput").Set("text", eventKey.TrimSuffix(" (Physical)"));
+	}
+	
 }

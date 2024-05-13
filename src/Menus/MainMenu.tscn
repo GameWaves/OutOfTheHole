@@ -67,14 +67,16 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rah62")
 text = "exit"
 
-[node name="OptionsTexture" type="TextureRect" parent="."]
+[node name="OptionsMenu" type="CanvasLayer" parent="."]
+
+[node name="OptionsTexture" type="TextureRect" parent="OptionsMenu"]
 offset_left = 700.0
 offset_top = 300.0
 offset_right = 1220.0
 offset_bottom = 780.0
 texture = ExtResource("5_3e2fx")
 
-[node name="OptionsButtons" type="VBoxContainer" parent="."]
+[node name="OptionsButtons" type="VBoxContainer" parent="OptionsMenu"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -89,25 +91,25 @@ grow_vertical = 2
 size_flags_horizontal = 5
 theme = ExtResource("3_apybp")
 
-[node name="Volume" type="Button" parent="OptionsButtons"]
+[node name="Volume" type="Button" parent="OptionsMenu/OptionsButtons"]
 layout_mode = 2
 text = "Volume
 "
 
-[node name="Keymaps" type="Button" parent="OptionsButtons"]
+[node name="Keymaps" type="Button" parent="OptionsMenu/OptionsButtons"]
 layout_mode = 2
 text = "Keymap"
 
-[node name="Back" type="Button" parent="OptionsButtons"]
+[node name="Back" type="Button" parent="OptionsMenu/OptionsButtons"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_yumbm")
 theme_override_styles/hover = SubResource("StyleBoxTexture_cogrj")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_06b4n")
 text = " "
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="KeymapMenu" type="CanvasLayer" parent="."]
 
-[node name="InputSettings" parent="CanvasLayer" instance=ExtResource("2_jnx0k")]
+[node name="InputSettings" parent="KeymapMenu" instance=ExtResource("2_jnx0k")]
 visible = false
 
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/PlayButton" to="." method="_on_play_button_button_down"]
@@ -115,5 +117,5 @@ visible = false
 [connection signal="pressed" from="MenuMarginContainer/MenuVBoxContainer/OptionButton" to="." method="_on_option_button_pressed"]
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/CreditsButton" to="." method="_on_credits_button_button_down"]
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
-[connection signal="button_down" from="OptionsButtons/Keymaps" to="." method="_on_keymaps_button_down"]
-[connection signal="button_down" from="OptionsButtons/Back" to="." method="_on_back_button_down"]
+[connection signal="button_down" from="OptionsMenu/OptionsButtons/Keymaps" to="." method="_on_keymaps_button_down"]
+[connection signal="button_down" from="OptionsMenu/OptionsButtons/Back" to="." method="_on_back_button_down"]
