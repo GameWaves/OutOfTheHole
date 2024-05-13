@@ -13,6 +13,9 @@
 size = Vector2(18, 26)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_bpwht"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s8ldg"]
 animations = [{
