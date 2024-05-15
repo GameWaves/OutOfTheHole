@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5g0e4eaqeurh"]
+[gd_scene load_steps=4 format=3 uid="uid://b5g0e4eaqeurh"]
 
 [ext_resource type="Script" path="res://src/Menus/InputSettings/InputSettings.cs" id="1_13ox5"]
 [ext_resource type="PackedScene" uid="uid://b3gvcxp15noya" path="res://src/Menus/InputSettings/InputButton.tscn" id="1_f1uhe"]
+[ext_resource type="PackedScene" uid="uid://bj8r0766uo6ap" path="res://src/Menus/MainMenu.tscn" id="3_oht21"]
 
 [node name="InputSettings" type="Control"]
 layout_mode = 3
@@ -12,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_13ox5")
 _inputButtonScene = ExtResource("1_f1uhe")
+_mainMenuScene = ExtResource("3_oht21")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -58,3 +60,9 @@ layout_mode = 2
 
 [node name="InputButton4" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList" instance=ExtResource("1_f1uhe")]
 layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="button_down" from="PanelContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]

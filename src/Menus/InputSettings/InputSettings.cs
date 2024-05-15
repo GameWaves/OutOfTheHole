@@ -1,13 +1,15 @@
 using Godot;
 using System;
+using System.Diagnostics;
 using Godot.Collections;
 
 public partial class InputSettings : Control
 {
 	[Export] private PackedScene _inputButtonScene;
+	[Export] private PackedScene _mainMenuScene;
 	private VBoxContainer _actionList;
 	private bool _isRemapping = false;
-	private object _actionToRemap = null;
+	private StringName _actionToRemap = null;
 
 	private object remappingButton = null;
 
@@ -70,6 +72,7 @@ public partial class InputSettings : Control
 	private void _on_input_button_pressed(Node button, String action)
 	{
 		//TODO: Add focus to the button
+		((Button)button).FocusMode = FocusModeEnum.All;
 		((Button)button).GrabFocus();
 		if (!_isRemapping)
 		{
@@ -80,17 +83,16 @@ public partial class InputSettings : Control
 		}
 	}
 
-	private void _input(object eventKey)
+	public override void _Input(InputEvent eventKey)
 	{
 		if (_isRemapping)
 		{
-			Console.WriteLine("I'm Here");
 			if (eventKey is InputEventKey key)
 			{
-				Console.WriteLine("Remapping action: " + _actionToRemap + " to key: " + eventKey);
-				InputMap.ActionEraseEvents((Godot.StringName)_actionToRemap);
-				InputMap.ActionAddEvent((Godot.StringName)_actionToRemap, (InputEventKey) eventKey);
-				_updateActionList((Node) remappingButton, eventKey.ToString());
+				Debug.Print("Remapping action: " + _actionToRemap + " to key: " + eventKey);
+				InputMap.ActionEraseEvents(_actionToRemap);
+				InputMap.ActionAddEvent(_actionToRemap, (InputEventKey) eventKey);
+				_updateActionList((Node) remappingButton, key.KeyLabel.ToString());
 				_isRemapping = false;
 				_actionToRemap = null;
 				remappingButton = null;
@@ -98,19 +100,30 @@ public partial class InputSettings : Control
 			else if (eventKey is InputEventMouseButton mouseButton && mouseButton.Pressed)
 			{
 				Console.WriteLine("Remapping action: " + _actionToRemap + " to key: " + eventKey);
-				InputMap.ActionEraseEvents((Godot.StringName)_actionToRemap);
-				InputMap.ActionAddEvent((Godot.StringName)_actionToRemap, (InputEventMouseButton) eventKey);
-				_updateActionList((Node) remappingButton, eventKey.ToString());
+				InputMap.ActionEraseEvents(_actionToRemap);
+				InputMap.ActionAddEvent(_actionToRemap, (InputEventMouseButton) eventKey);
+				_updateActionList((Node)remappingButton, "Mouse " + mouseButton.ButtonIndex);
 				_isRemapping = false;
 				_actionToRemap = null;
 				remappingButton = null;
+			}
+			else
+			{
+				Console.WriteLine("Invalid input event type: " + eventKey);
 			}
 		}
 	}
 
 	private void _updateActionList(Node button, String eventKey)
 	{
+		
 		button.FindChild("LabelInput").Set("text", eventKey.TrimSuffix(" (Physical)"));
+	}
+
+
+	private void _on_exit_button_button_down()
+	{
+		GetParent().GetNode<Control>("KeymapMenu/InputSettings").Visible = false;
 	}
 	
 }
