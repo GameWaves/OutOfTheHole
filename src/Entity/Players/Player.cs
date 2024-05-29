@@ -80,7 +80,6 @@ public partial class Player : Entity
 	/// <returns> void </returns>
 	public override void _PhysicsProcess(double delta)
 	{
-
 		// Check if the player is allowed to control this player according to the authority set at initialization. 
 		if (Alive && GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() ==
 			Multiplayer.GetUniqueId())

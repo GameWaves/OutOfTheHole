@@ -64,7 +64,6 @@ public partial class SceneManager : Node2D
 			CouldownSumon -= 1;
 			if (CouldownSumon < 0)
 			{
-				GD.Print($"Enemy Spawned by {Multiplayer.GetUniqueId()}");
 				InitEnemy();
 				CouldownSumon = 500;
 			}
@@ -90,8 +89,12 @@ public partial class SceneManager : Node2D
 		
 		enemy.Reversed = reversed;
 		enemy.Name = name;
-		AddChild(enemy);
-		enemy.GlobalPosition = ((Node2D)enemySpawnNodes[cycle]).GlobalPosition;
+		if (enemy.Name != "Enemy_0") // I don't why but enemy 0 wasn't delivered to the two players, so we don't spawn it @ all
+		{
+			AddChild(enemy);
+			enemy.GlobalPosition = ((Node2D)enemySpawnNodes[cycle]).GlobalPosition;
+			// GD.Print($"Enemy Spawned by {Multiplayer.GetUniqueId()} Rpc : {rpc} Name: {enemy.Name}");
+		}
 	}
 	/// <summary>
 	/// Function called by the host's _Process() function to spawn an enemy.
@@ -105,7 +108,8 @@ public partial class SceneManager : Node2D
 
 		StringName name = new StringName($"Enemy_{_enemyCount}"); //unique identifier for each enemy (could be replaced by UUID)
 		_enemyCount++;
-		
+		// GD.Print($"Enemy Init : {Multiplayer.GetUniqueId()}");
+
 		SpawnEnemy(_cyclespawn%2, reversed, name); //Spawn Call for the host
 		Rpc("SpawnEnemy", _cyclespawn%2, reversed, name); //Spawn Call for the Player 2
 		_cyclespawn++;

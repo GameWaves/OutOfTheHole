@@ -163,7 +163,7 @@ namespace OutOfTheHole.Entity.Enemies
 			Hp -= hpLoss;
 			if (Hp <= 0)
 			{
-				// GD.Print("Killed: ",Name);
+				GD.Print("Killed: ",Name, " ", Multiplayer.GetUniqueId());
 				Death();
 			}
 		}
