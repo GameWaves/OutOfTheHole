@@ -80,6 +80,8 @@ public partial class MultiplayerController : CanvasLayer
 	private void PeerDisconnected(long id)
 	{
 		GD.Print("PlayerInfo disconnected: " + id);
+		GetNode<Node2D>("/root/Map").Free();
+		GameManager.Players = new List<PlayerInfo>();
 		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
 
 	}

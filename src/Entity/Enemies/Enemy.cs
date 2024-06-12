@@ -66,96 +66,104 @@ namespace OutOfTheHole.Entity.Enemies
 
 		public override void _PhysicsProcess(double delta)
 		{
-			//TODO: not sure of the concept of this method
 			
-			
-			Vector2 velocity = Velocity;
-			
-			if (Reversed)
+			if (Multiplayer.GetUniqueId() == 1) //Only the host will manage this
 			{
-				if (!IsOnCeiling()) velocity.Y += Gravity * (float)delta;
-			}
-			else
-			{
-				if (!IsOnFloor()) velocity.Y += Gravity * (float)delta;
-			}
-
-			if (IsOnWall()) {
-				if (Movements == Movements.LEFT)
-					Movements = Movements.RIGHT;
-				else if (Movements == Movements.RIGHT)
-					Movements = Movements.LEFT;
-			}
-
-			if (aggrosource == null)
-			{
-				// Show the right sprite based on the movements of the enemy
-				if (Movements == Movements.RIGHT)
-				{
-					velocity.X += Speed;
+				// TODO: not sure of the concept of this method
+							
+				Vector2 velocity = Velocity;
 				
-					_walkright.Visible = true;
-					_walkleft.Visible = false;
-					_idleSprite.Visible = false;
-				}
-				else if (Movements == Movements.LEFT)
+				if (Reversed)
 				{
-					velocity.X -= Speed;
-
-					_walkright.Visible = false;
-					_walkleft.Visible = true;
-					_idleSprite.Visible = false;
+					if (!IsOnCeiling()) velocity.Y += Gravity * (float)delta;
 				}
 				else
 				{
-					_walkright.Visible = false;
-					_walkleft.Visible = false;
-					_idleSprite.Visible = true;
+					if (!IsOnFloor()) velocity.Y += Gravity * (float)delta;
 				}
-			}
-			else
-			{
-				if (aggrosource.Position.X < this.Position.X)
-				{
-					Movements = Movements.LEFT;
-					velocity.X -= Speed * 2;
+	
+				if (IsOnWall()) {
+					if (Movements == Movements.LEFT)
+						Movements = Movements.RIGHT;
+					else if (Movements == Movements.RIGHT)
+						Movements = Movements.LEFT;
 				}
-				if (aggrosource.Position.X > this.Position.X)
+	
+				if (aggrosource == null)
 				{
-					Movements = Movements.RIGHT;
-					velocity.X += Speed * 2;
-				}
-
-				if (Math.Abs(aggrosource.Position.X - this.Position.X) < 20)
-				{
-					if (Math.Abs(aggrosource.Position.Y - this.Position.Y) < 60)
+					// Show the right sprite based on the movements of the enemy
+					if (Movements == Movements.RIGHT)
 					{
-						aggrosource.Hurt(Damage,this);
-						Death();
-					}				
+						velocity.X += Speed;
+					
+						_walkright.Visible = true;
+						_walkleft.Visible = false;
+						_idleSprite.Visible = false;
+					}
+					else if (Movements == Movements.LEFT)
+					{
+						velocity.X -= Speed;
+	
+						_walkright.Visible = false;
+						_walkleft.Visible = true;
+						_idleSprite.Visible = false;
+					}
+					else
+					{
+						_walkright.Visible = false;
+						_walkleft.Visible = false;
+						_idleSprite.Visible = true;
+					}
 				}
+				else
+				{
+					// GD.Print($"AGGRO {aggrosource.Name}");
+					if (aggrosource.Position.X < this.Position.X)
+					{
+						Movements = Movements.LEFT;
+						velocity.X -= Speed * 2;
+					}
+					else if (aggrosource.Position.X > this.Position.X)
+					{
+						Movements = Movements.RIGHT;
+						velocity.X += Speed * 2;
+					}
+	
+					
+					// GD.Print($"Proximity : {(Math.Abs(aggrosource.Position.X - this.Position.X))}");
+					if (Math.Abs(aggrosource.Position.X - this.Position.X) < 20)
+					{
+						if (Math.Abs(aggrosource.Position.Y - this.Position.Y) < 60)
+						{
+							// GD.Print($"Hurt : Managed by {Name}");
+							aggrosource.Hurt(Damage,this);
+						}
+					}
+				}
+	
+	
+				//play the sprite
+				if (_idleSprite.Visible) _idleSprite.Play();
+	
+				if (_walkleft.Visible) _walkleft.Play();
+	
+				if (_walkright.Visible) _walkright.Play();
+	
+				Velocity = velocity;
+				MoveAndSlide();	
 			}
-
-
-			//play the sprite
-			if (_idleSprite.Visible) _idleSprite.Play();
-
-			if (_walkleft.Visible) _walkleft.Play();
-
-			if (_walkright.Visible) _walkright.Play();
-
-			Velocity = velocity;
-			MoveAndSlide();
 
 		}
 
 		//death
 		public override void Hurt(int hpLoss,OutofTheHole.Entity.Entity source)
 		{
+			// GD.Print("Agro Source: ",source.Name);
 			aggrosource = source;
 			Hp -= hpLoss;
 			if (Hp <= 0)
 			{
+				GD.Print("Killed: ",Name, " ", Multiplayer.GetUniqueId());
 				Death();
 			}
 		}
