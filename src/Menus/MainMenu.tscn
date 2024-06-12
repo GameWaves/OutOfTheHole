@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/Menus/MainMenu.cs" id="1_ee6e6"]
 [ext_resource type="Texture2D" uid="uid://cv4qb088la36g" path="res://assets/background/Background_000.png" id="2_8up6o"]
-[ext_resource type="PackedScene" uid="uid://b5g0e4eaqeurh" path="res://src/Menus/InputSettings/InputSettings.tscn" id="2_jnx0k"]
+[ext_resource type="PackedScene" uid="uid://dep5hldcbeksn" path="res://src/Menus/InputSettings/InputSettings.tscn" id="2_jnx0k"]
 [ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="2_rah62"]
 [ext_resource type="Theme" uid="uid://c5ucyskhud1l2" path="res://assets/ui/MenuTheme.tres" id="3_apybp"]
 [ext_resource type="Texture2D" uid="uid://dba4vh6q4f5es" path="res://assets/ui/container.png" id="5_3e2fx"]
