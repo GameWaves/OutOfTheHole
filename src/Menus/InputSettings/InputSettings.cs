@@ -6,7 +6,6 @@ using Godot.Collections;
 public partial class InputSettings : Control
 {
 	[Export] private PackedScene _inputButtonScene;
-	[Export] private PackedScene _mainMenuScene;
 	private VBoxContainer _actionList;
 	private bool _isRemapping = false;
 	private StringName _actionToRemap = null;
@@ -91,7 +90,7 @@ public partial class InputSettings : Control
 			{
 				Debug.Print("Remapping action: " + _actionToRemap + " to key: " + eventKey);
 				InputMap.ActionEraseEvents(_actionToRemap);
-				InputMap.ActionAddEvent(_actionToRemap, (InputEventKey) eventKey);
+				InputMap.ActionAddEvent(_actionToRemap, eventKey);
 				_updateActionList((Node) remappingButton, key.KeyLabel.ToString());
 				_isRemapping = false;
 				_actionToRemap = null;
@@ -123,7 +122,7 @@ public partial class InputSettings : Control
 
 	private void _on_exit_button_button_down()
 	{
-		GetParent().GetNode<Control>("KeymapMenu/InputSettings").Visible = false;
+		GetParent<CanvasLayer>().Visible = false;
 	}
 	
 }

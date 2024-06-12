@@ -95,7 +95,7 @@ public partial class Player : Entity
 				if (!IsOnCeiling()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
+				if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
 					velocity.Y -= JumpVelocity;
 			}
 			else
@@ -104,7 +104,7 @@ public partial class Player : Entity
 				if (!IsOnFloor()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
+				if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
 					velocity.Y += JumpVelocity;
 			}
 
@@ -114,7 +114,7 @@ public partial class Player : Entity
 			GetNode<Node2D>("Gun").LookAt(pos);
 
 			//set movement (currenty arrow)
-			if (Input.IsKeyPressed(Key.Right))
+			if (Input.IsActionPressed("move_right"))
 			{
 				//show (or not) each sprite
 				_idleSprite.Visible = false;
@@ -128,7 +128,7 @@ public partial class Player : Entity
 					velocity.X = Speed;
 			}
 
-			if (Input.IsKeyPressed(Key.Left))
+			if (Input.IsActionPressed("move_left"))
 			{
 				//show (or not) each sprite
 				_idleSprite.Visible = false;
@@ -143,8 +143,8 @@ public partial class Player : Entity
 			}
 
 			//adding a litlle momentum
-			if ((!Input.IsKeyPressed(Key.Left) && !Input.IsKeyPressed(Key.Right)) ||
-				(Input.IsKeyPressed(Key.Left) && Input.IsKeyPressed(Key.Right)))
+			if ((!Input.IsActionPressed("move_left") && !Input.IsActionPressed("move_right")) ||
+				(Input.IsActionPressed("move_left") && Input.IsActionPressed("move_right")))
 			{
 				//show (or not) each sprite
 				_idleSprite.Visible = true;
