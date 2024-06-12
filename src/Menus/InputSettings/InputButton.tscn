@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3gvcxp15noya"]
+
+[ext_resource type="Theme" uid="uid://c5ucyskhud1l2" path="res://assets/ui/MenuTheme.tres" id="1_ktp76"]
+[ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="1_vgbry"]
+
+[node name="InputButton" type="Button"]
+custom_minimum_size = Vector2(50, 70)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+focus_mode = 0
+theme = ExtResource("1_ktp76")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="LabelAction" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("1_vgbry")
+theme_override_font_sizes/font_size = 40
+text = "Action name"
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="LabelInput" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("1_vgbry")
+theme_override_font_sizes/font_size = 40
+text = "INPUT KEY"
+vertical_alignment = 1
