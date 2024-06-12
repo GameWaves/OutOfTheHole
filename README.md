@@ -10,7 +10,6 @@ Out of the Hole is a 2D multiplayer video game in which the aim is for the two p
 * Bastien Pinaud (bastien.pinaud@epita.fr)
 * Hugo Cohen (hugo.cohen@epita.fr)
 * Louis Gallet (louis.gallet@epita.fr)
-* Louise Fussien (louise.fussien@epita.fr)
 * Titouan Lamy (titouan.lamy@epita.fr)
 
 ## Contribution
