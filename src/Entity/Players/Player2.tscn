@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bqpos4qxnmqij" path="res://assets/sprites/Player2-Sheet.png" id="3_cupid"]
 [ext_resource type="PackedScene" uid="uid://byexr753no7oj" path="res://src/Gun/Gun.tscn" id="10_ljwmm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0b83x"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fj4y"]
 size = Vector2(47.2727, 69.0909)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5h1fq"]
@@ -21,8 +21,8 @@ properties/3/path = NodePath(".:Alive")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[sub_resource type="Animation" id="Animation_ppc46"]
-resource_name = "WalkRight"
+[sub_resource type="Animation" id="Animation_oujr7"]
+resource_name = "IdleLeft"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -33,7 +33,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [12, 13, 14, 15]
 }
 
 [sub_resource type="Animation" id="Animation_wt0wr"]
@@ -66,8 +66,8 @@ tracks/0/keys = {
 "values": [8, 9, 10, 11]
 }
 
-[sub_resource type="Animation" id="Animation_oujr7"]
-resource_name = "IdleLeft"
+[sub_resource type="Animation" id="Animation_ppc46"]
+resource_name = "WalkRight"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -78,7 +78,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [12, 13, 14, 15]
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ttfhr"]
@@ -98,7 +98,7 @@ Cam = NodePath("Cam2")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.5, 9.5)
 scale = Vector2(0.275, 0.275)
-shape = SubResource("RectangleShape2D_0b83x")
+shape = SubResource("RectangleShape2D_1fj4y")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_5h1fq")
@@ -116,6 +116,7 @@ zoom = Vector2(6, 6)
 position = Vector2(-1, 12)
 texture = ExtResource("3_cupid")
 hframes = 16
+frame = 12
 
 [node name="Animations" type="AnimationPlayer" parent="."]
 libraries = {
