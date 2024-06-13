@@ -27,6 +27,8 @@ public partial class Player : Entity
 
 	[Export] private PackedScene _gunScene;
 
+	[Export] public Camera2D Cam;
+
 	/// <summary>
 	/// All value are in pixel
 	/// </summary>
@@ -70,6 +72,12 @@ public partial class Player : Entity
 		// Allows this player to be played only by the player that is assigned to player 1
 		GD.Print(Name);
 		GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse((string)Name));
+		
+		// Instantiate the personal camera for each player
+		if (Multiplayer.GetUniqueId() == GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority())
+		{
+			Cam.MakeCurrent();
+		}
 	}
 
 

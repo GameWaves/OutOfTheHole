@@ -72,10 +72,11 @@ properties/3/path = NodePath(".:Alive")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Cam")]
 position = Vector2(1, 0)
 script = ExtResource("1_77yes")
 _gunScene = ExtResource("10_ljwmm")
+Cam = NodePath("Cam2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
@@ -105,3 +106,6 @@ position = Vector2(0.1562, 0)
 
 [node name="Gun" parent="." instance=ExtResource("10_ljwmm")]
 position = Vector2(0, 0.125)
+
+[node name="Cam2" type="Camera2D" parent="."]
+zoom = Vector2(6, 6)
