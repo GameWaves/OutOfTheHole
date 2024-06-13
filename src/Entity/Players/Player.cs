@@ -38,11 +38,10 @@ public partial class Player : Entity
 
 	public new float Speed = 200.0f;
 	
-
-	
 	public bool Reversed;
 	public override void _Ready()
 	{
+		GD.Print(_gunScene);
 		// instantiate the gun of the player 
 		_gunObject = _gunScene.Instantiate<Gun.Gun>();
 		_gunObject.Id = int.Parse(Name);
@@ -201,13 +200,18 @@ public partial class Player : Entity
 	}
 	
 	/// <summary>
-	/// Sends the message to both instances that player should be Hurt, with intensity n and from the source. 
+	/// Sends the message to both instances that player should be Hurt, with intensity n and from the source.
+	/// If the player is invicible, nothing append
 	/// </summary>
 	/// <param name="n"> the amount of damage taken</param>
 	/// <param name="source">Entity That Hurt the player</param>
 	public override void Hurt(int n, Entity source)
 	{
-		Rpc("HurtPlayer", n, source);
+		if (IsInvicible != true)
+		{ 
+			Rpc("HurtPlayer", n, source);	
+		}
+		
 	}
 	
 	/// <summary>
@@ -218,12 +222,15 @@ public partial class Player : Entity
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void HurtPlayer(int n, Entity source)
 	{
-		Hp = Hp - n;
-		// GD.Print($"Player {Name} Hurted by {source.Name}, Hp = {Hp}, Managed by {Multiplayer.GetUniqueId()}");
-		if (Hp <= 0)
+		if (IsInvicible != true)
 		{
-			// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
-			Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
+			Hp = Hp - n;
+			GD.Print($"Player {Name} Hurted by {source.Name}, Hp = {Hp}, Managed by {Multiplayer.GetUniqueId()}");
+			if (Hp <= 0)
+			{
+				// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
+				Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
+			}
 		}
 	}
 	

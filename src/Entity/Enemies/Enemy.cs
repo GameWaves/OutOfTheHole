@@ -158,13 +158,16 @@ namespace OutOfTheHole.Entity.Enemies
 		//death
 		public override void Hurt(int hpLoss,OutofTheHole.Entity.Entity source)
 		{
-			// GD.Print("Agro Source: ",source.Name);
-			aggrosource = source;
-			Hp -= hpLoss;
-			if (Hp <= 0)
+			if (IsInvicible != true)
 			{
-				GD.Print("Killed: ",Name, " ", Multiplayer.GetUniqueId());
-				Death();
+				// GD.Print("Agro Source: ",source.Name);
+				aggrosource = source;
+				Hp -= hpLoss;
+				if (Hp <= 0)
+				{
+					GD.Print("Killed: ",Name, " ", Multiplayer.GetUniqueId());
+					Death();
+				}	
 			}
 		}
 

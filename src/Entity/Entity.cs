@@ -32,6 +32,8 @@ public abstract partial class Entity : CharacterBody2D
 	//hpLoss is the amount of damage 
 	public abstract void Hurt(int hpLoss,Entity source);
 
+	public bool IsInvicible = false;
+
 	public virtual void Death()
 	{
 		Alive = false;
