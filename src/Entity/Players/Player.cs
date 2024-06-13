@@ -11,7 +11,7 @@ public partial class Player : Entity
 	public string GunType = "Basic";
 	
 	//Set a Jump Height / Jump speed
-	public const float JumpVelocity = -400.0f;
+	public const float JumpVelocity = -250.0f;
 
 	public new static bool Alive;
 
@@ -36,7 +36,7 @@ public partial class Player : Entity
 
 	public new int MaxHp = 100;
 
-	public new float Speed = 200.0f;
+	public new float Speed = 100.0f;
 	
 	public bool Reversed;
 	public override void _Ready()
