@@ -25,6 +25,10 @@ public partial class Player : Entity
  
 	private float GunRotation;
 
+	private AnimationPlayer _spirtePlayer;
+
+	private string _lastInput;
+
 	[Export] private PackedScene _gunScene;
 
 	[Export] public Camera2D Cam;
@@ -53,18 +57,15 @@ public partial class Player : Entity
 		if (Reversed)
 		{
 			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			_idleSprite = GetNode<AnimatedSprite2D>("Idle2");
-			_walkleft = GetNode<AnimatedSprite2D>("WalkLeft2");
-			_walkright = GetNode<AnimatedSprite2D>("WalkRight2");
+			_spirtePlayer = GetNode<AnimationPlayer>("Animations");
 		}
 		else
 		{
 			this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			_idleSprite = GetNode<AnimatedSprite2D>("Idle");
-			_walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-			_walkright = GetNode<AnimatedSprite2D>("Walkright");
+			_spirtePlayer = GetNode<AnimationPlayer>("Animations");
 		}
-
+		if (_spirtePlayer is null)
+			GD.Print("Sprite is null");
 		//set player hp
 		Hp = MaxHp;
 		Alive = true;
@@ -78,6 +79,8 @@ public partial class Player : Entity
 		{
 			Cam.MakeCurrent();
 		}
+
+		_idleSprite.Play("IdleRight");
 	}
 
 
@@ -123,30 +126,28 @@ public partial class Player : Entity
 			//set movement (currenty arrow)
 			if (Input.IsActionPressed("move_right"))
 			{
-				//show (or not) each sprite
-				_idleSprite.Visible = false;
-				_walkleft.Visible = false;
-				_walkright.Visible = true;
 				if (velocity.X >= 300)
 					velocity.X -= Speed;
 				else if (velocity.X < 0)
 					velocity.X -= Acceleration;
 				else
 					velocity.X = Speed;
+				//show the animation going right
+				_spirtePlayer.Play("WalkRight");
+				_lastInput = " ";
 			}
 
 			if (Input.IsActionPressed("move_left"))
 			{
-				//show (or not) each sprite
-				_idleSprite.Visible = false;
-				_walkleft.Visible = true;
-				_walkright.Visible = false;
 				if (velocity.X <= -300)
 					velocity.X += Speed;
 				else if (velocity.X > 0)
 					velocity.X += Acceleration;
 				else
 					velocity.X = -Speed;
+				//show the animation going left
+				_spirtePlayer.Play("WalkLeft");
+				_lastInput = "left";
 			}
 
 			//adding a litlle momentum
@@ -154,9 +155,10 @@ public partial class Player : Entity
 				(Input.IsActionPressed("move_left") && Input.IsActionPressed("move_right")))
 			{
 				//show (or not) each sprite
-				_idleSprite.Visible = true;
-				_walkleft.Visible = false;
-				_walkright.Visible = false;
+				if (_lastInput == "left")
+					_spirtePlayer.Play("IdleLeft");
+				else
+					_spirtePlayer.Play("IdleRight");
 				if (velocity.X <= 8 * Acceleration && velocity.X >= -8 * Acceleration) velocity.X = 0;
 
 				if (velocity.X > 0) velocity.X -= 8 * Acceleration;
@@ -165,14 +167,7 @@ public partial class Player : Entity
 			}
 
 			Velocity = velocity;
-
-			//play the sprite
-			if (_idleSprite.Visible) _idleSprite.Play();
-
-			if (_walkleft.Visible) _walkleft.Play();
-
-			if (_walkright.Visible) _walkright.Play();
-
+			
 			if (Input.IsActionPressed("click") && _gunObject.FireRate < _timeUntilFire)
 			{
 				_timeUntilFire = 0f;
