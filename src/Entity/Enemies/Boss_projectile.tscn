@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dusljabgdhwp4"]
 
-[ext_resource type="Script" path="res://src/Entity/Enemies/Boss_projectile.cs" id="1_2cj4f"]
+[ext_resource type="Script" path="res://src/Entity/Enemies/BossProjectile.cs" id="1_oq4er"]
 [ext_resource type="Texture2D" uid="uid://bn3q6lxuxo762" path="res://assets/sprites/Boss_projectile.png" id="2_hqcjw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qn15r"]
@@ -8,7 +8,7 @@ radius = 8.0
 
 [node name="BossProjectile" type="CharacterBody2D"]
 floor_constant_speed = true
-script = ExtResource("1_2cj4f")
+script = ExtResource("1_oq4er")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
