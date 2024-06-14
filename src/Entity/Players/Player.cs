@@ -57,15 +57,13 @@ public partial class Player : Entity
 		if (Reversed)
 		{
 			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			_spirtePlayer = GetNode<AnimationPlayer>("Animations");
 		}
 		else
 		{
 			this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			_spirtePlayer = GetNode<AnimationPlayer>("Animations");
 		}
-		if (_spirtePlayer is null)
-			GD.Print("Sprite is null");
+		_spirtePlayer = GetNode<AnimationPlayer>("Animations");
+		
 		//set player hp
 		Hp = MaxHp;
 		Alive = true;
@@ -80,7 +78,7 @@ public partial class Player : Entity
 			Cam.MakeCurrent();
 		}
 
-		_idleSprite.Play("IdleRight");
+		_spirtePlayer.Play("WalkRight");
 	}
 
 

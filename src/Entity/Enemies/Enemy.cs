@@ -24,6 +24,10 @@ namespace OutOfTheHole.Entity.Enemies
 		public Vector2 Oldvector;
 
 		private int cycledir = 0;
+
+		private AnimationPlayer _spriteEnemy;
+
+		private string _lastMovement;
 		
 		private OutofTheHole.Entity.Entity aggrosource;
 		
@@ -40,18 +44,12 @@ namespace OutOfTheHole.Entity.Enemies
 			if (Reversed)
 			{
 				this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-				_idleSprite = GetNode<AnimatedSprite2D>("Idle");
-				_walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-				_walkright = GetNode<AnimatedSprite2D>("Walkright");
 			}
 			else
 			{
 				this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-				_idleSprite = GetNode<AnimatedSprite2D>("Idle");
-				_walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-				_walkright = GetNode<AnimatedSprite2D>("Walkright");
 			}
-			
+			_spriteEnemy = GetNode<AnimationPlayer>("Animations");
 			if (cycledir%2 == 0)
 			{
 				Movements = Movements.RIGHT;
@@ -95,24 +93,19 @@ namespace OutOfTheHole.Entity.Enemies
 					if (Movements == Movements.RIGHT)
 					{
 						velocity.X += Speed;
-					
-						_walkright.Visible = true;
-						_walkleft.Visible = false;
-						_idleSprite.Visible = false;
+						_spriteEnemy.Play("RunRight");
 					}
 					else if (Movements == Movements.LEFT)
 					{
 						velocity.X -= Speed;
-	
-						_walkright.Visible = false;
-						_walkleft.Visible = true;
-						_idleSprite.Visible = false;
+						_spriteEnemy.Play("RunRight");
 					}
 					else
 					{
-						_walkright.Visible = false;
-						_walkleft.Visible = false;
-						_idleSprite.Visible = true;
+						if (_lastMovement == "left")
+							_spriteEnemy.Play("WalkLeft");
+						else 
+							_spriteEnemy.Play("WalkRight");
 					}
 				}
 				else
@@ -140,15 +133,6 @@ namespace OutOfTheHole.Entity.Enemies
 						}
 					}
 				}
-	
-	
-				//play the sprite
-				if (_idleSprite.Visible) _idleSprite.Play();
-	
-				if (_walkleft.Visible) _walkleft.Play();
-	
-				if (_walkright.Visible) _walkright.Play();
-	
 				Velocity = velocity;
 				MoveAndSlide();	
 			}
