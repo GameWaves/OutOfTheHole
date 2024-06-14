@@ -33,6 +33,7 @@ public abstract partial class Entity : CharacterBody2D
 	public abstract void Hurt(int hpLoss,Entity source);
 
 	public bool IsInvicible { get; set; } = false;
+	public int invicibleTime { get; protected set; } = 0;
 
 	public virtual void Death()
 	{

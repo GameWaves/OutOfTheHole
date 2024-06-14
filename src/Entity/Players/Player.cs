@@ -71,6 +71,14 @@ public partial class Player : Entity
 		GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse((string)Name));
 	}
 
+	/// <summary>
+	/// Will be called every frame
+	/// </summary>
+	/// <param name="delta"></param>
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+	}
 
 	/// <summary>
 	/// Main loop, will update every 60 frame
@@ -180,6 +188,14 @@ public partial class Player : Entity
 
 			//Prepare the gun rotation for the sync and the "Mathf.Lerp".
 			GunRotation = GetNode<Node2D>("Gun").RotationDegrees;
+			if (invicibleTime != 0)
+			{
+				invicibleTime -= 1;
+			}
+			else
+			{
+				IsInvicible = false;
+			}
 		}
 		else
 		{
@@ -232,6 +248,10 @@ public partial class Player : Entity
 				Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
 			}
 		}
+
+		IsInvicible = true;
+		invicibleTime = 50;
+
 	}
 	
 	/// <summary>
@@ -247,4 +267,5 @@ public partial class Player : Entity
 		var shootPoint = GetNode<Node2D>("Gun/ShootPoint");
 		_gunObject.FireBullet(gunNode, shootPoint, GetTree(),GunType,this);
 	}
+	
 }
