@@ -26,8 +26,6 @@ namespace OutOfTheHole.Entity.Enemies
 		private int cycledir = 0;
 
 		private AnimationPlayer _spriteEnemy;
-
-		private string _lastMovement;
 		
 		private OutofTheHole.Entity.Entity aggrosource;
 		
@@ -50,6 +48,7 @@ namespace OutOfTheHole.Entity.Enemies
 				this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 			}
 			_spriteEnemy = GetNode<AnimationPlayer>("Animations");
+			
 			if (cycledir%2 == 0)
 			{
 				Movements = Movements.RIGHT;
@@ -58,8 +57,11 @@ namespace OutOfTheHole.Entity.Enemies
 			{
 				Movements = Movements.LEFT;
 			}
-
+			if (_spriteEnemy is null)
+				GD.Print("Sprite is null");
 			cycledir = cycledir + 1;
+			_spriteEnemy.Play("WalkLeft");
+			
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -93,19 +95,16 @@ namespace OutOfTheHole.Entity.Enemies
 					if (Movements == Movements.RIGHT)
 					{
 						velocity.X += Speed;
-						_spriteEnemy.Play("RunRight");
+						_spriteEnemy.Play("WalkRight");
 					}
 					else if (Movements == Movements.LEFT)
 					{
 						velocity.X -= Speed;
-						_spriteEnemy.Play("RunRight");
+						_spriteEnemy.Play("WalkRight");
 					}
 					else
 					{
-						if (_lastMovement == "left")
-							_spriteEnemy.Play("WalkLeft");
-						else 
-							_spriteEnemy.Play("WalkRight");
+						_spriteEnemy.Play("WalkLeft");
 					}
 				}
 				else
@@ -115,11 +114,13 @@ namespace OutOfTheHole.Entity.Enemies
 					{
 						Movements = Movements.LEFT;
 						velocity.X -= Speed * 2;
+						_spriteEnemy.Play("RunLeft");
 					}
 					else if (aggrosource.Position.X > this.Position.X)
 					{
 						Movements = Movements.RIGHT;
 						velocity.X += Speed * 2;
+						_spriteEnemy.Play("RunRight");
 					}
 	
 					
