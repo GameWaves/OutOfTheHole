@@ -15,6 +15,7 @@ public partial class SceneManager : Node2D
 	[Export] private PackedScene _player2Scene;
 	[Export] private PackedScene _enemy1Scene;
 	[Export] private PackedScene _enemy1ReversedScene;
+	[Export] private PackedScene _bossScene;
 
 	public int CouldownSumon = 0;
 	private int _cyclespawn = 0;
@@ -33,12 +34,14 @@ public partial class SceneManager : Node2D
 				currentPlayer = _player1Scene.Instantiate<Player>();
 				currentPlayer.Name = item.Id.ToString();
 				currentPlayer.Reversed = false;
+				item.Player = currentPlayer;
 			}
 			else if (item.Role == 2)
 			{
 				currentPlayer = _player2Scene.Instantiate<Player>();
 				currentPlayer.Gravity = -currentPlayer.Gravity;
 				currentPlayer.Reversed = true;
+				item.Player = currentPlayer;
 			}
 			else
 			{
@@ -52,7 +55,15 @@ public partial class SceneManager : Node2D
 					currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
 			index++;
 		}
-		
+
+		Boss boss;
+		boss = _bossScene.Instantiate<Boss>();
+		boss.tier = 2;
+		AddChild(boss);
+		boss.GlobalPosition = ((Node2D)GetNode("EnemySpawns/4")).GlobalPosition;
+
+
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
