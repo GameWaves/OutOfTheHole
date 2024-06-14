@@ -80,8 +80,6 @@ public partial class MultiplayerController : CanvasLayer
 	private void PeerDisconnected(long id)
 	{
 		GD.Print("PlayerInfo disconnected: " + id);
-		GetNode<Node2D>("/root/Map").Free();
-		GameManager.Players = new List<PlayerInfo>();
 		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
 
 	}
@@ -95,10 +93,10 @@ public partial class MultiplayerController : CanvasLayer
 	{
 		GD.Print("PlayerInfo connected: " + id);
 		GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButton")
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartGameButton")
 			.Disabled = false;
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButton").Show();
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartGameButton").Show();
 		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButton")
 			.Hide();
 		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButton")

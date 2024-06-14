@@ -58,15 +58,22 @@ public partial class SceneManager : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (Multiplayer.GetUniqueId() == 1)
+		try
 		{
-			//temporary feature : summon ennemy
-			CouldownSumon -= 1;
-			if (CouldownSumon < 0)
+			if (Multiplayer.GetUniqueId() == 1)
 			{
-				InitEnemy();
-				CouldownSumon = 500;
+				//temporary feature : summon ennemy
+				CouldownSumon -= 1;
+				if (CouldownSumon < 0)
+				{
+					InitEnemy();
+					CouldownSumon = 500;
+				}
 			}
+		}
+		catch 
+		{
+			GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
 		}
 	}
 
@@ -119,7 +126,15 @@ public partial class SceneManager : Node2D
 	{
 		if (@event is InputEventKey eventKey)
 			if (eventKey.Pressed && eventKey.Keycode == Key.Escape)
-				GetNode<Control>("PauseMenu").Visible = !GetNode<Control>("PauseMenu").Visible;
+				Rpc("_pauseGame");
+				
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void _pauseGame()
+	{
+		GD.Print("Execution of the function");
+		GetNode<Control>("PauseMenu").Visible = !GetNode<Control>("PauseMenu").Visible;
 	}
 
 	private void _on_disconnect_button_pressed()
