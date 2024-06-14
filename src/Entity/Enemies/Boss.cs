@@ -51,18 +51,17 @@ public partial class Boss : Entity
 				{
 					if (tier <= 1)
 					{
-						Boss_projectile bossProjectile;
-						bossProjectile = _bossProjectileScene.Instantiate<Boss_projectile>();
+						bool reversed;
 						if (P1.IsOnFloor())
 						{
-							bossProjectile.Reversed = true; 
+							reversed = true; 
 						}
 						else
-						{
-							bossProjectile.Reversed = false;
+						{ 
+							reversed = false;
 						}
 						
-						AddChild(bossProjectile);
+						SpawnProjectile(reversed);
 					}
 
 					if (tier == 2)
@@ -71,28 +70,20 @@ public partial class Boss : Entity
 						{
 							if (P1.Hp < P2.Hp)
 							{
-								Boss_projectile boss_projectile = _bossProjectileScene.Instantiate<Boss_projectile>();
-								boss_projectile.Reversed = false;
-								AddChild(boss_projectile);
+								SpawnProjectile(false);
 							}
 							else
 							{
-								Boss_projectile boss_projectile = _bossProjectileScene.Instantiate<Boss_projectile>();
-								boss_projectile.Reversed = true;
-								AddChild(boss_projectile);
+								SpawnProjectile(true);
 							}
 						}
 						else if (P1.IsOnFloor())
 						{
-							Boss_projectile boss_projectile = _bossProjectileScene.Instantiate<Boss_projectile>();
-							boss_projectile.Reversed = false;
-							AddChild(boss_projectile);
+							SpawnProjectile(false);
 						}
 						else
 						{
-							Boss_projectile boss_projectile = _bossProjectileScene.Instantiate<Boss_projectile>();
-							boss_projectile.Reversed = true;
-							AddChild(boss_projectile);
+							SpawnProjectile(true);
 						}
 
 					}
@@ -102,33 +93,37 @@ public partial class Boss : Entity
 						if (P1.IsOnFloor() && P2.IsOnCeiling())
 						{
 
-								Boss_projectile boss_projectile1 = _bossProjectileScene.Instantiate<Boss_projectile>();
-								boss_projectile1.Reversed = false;
-								AddChild(boss_projectile1);
+							SpawnProjectile(false);
 
-								Boss_projectile boss_projectile2 = _bossProjectileScene.Instantiate<Boss_projectile>();
-								boss_projectile2.Reversed = true;
-								AddChild(boss_projectile2);
+							SpawnProjectile(true);
 						}
 						if (P1.IsOnFloor())
 						{
-							Boss_projectile boss_projectile = _bossProjectileScene.Instantiate<Boss_projectile>();
-							boss_projectile.Reversed = false;
-							AddChild(boss_projectile);
+							SpawnProjectile(false);
 						}
 						else
 						{
-							Boss_projectile boss_projectile = _bossProjectileScene.Instantiate<Boss_projectile>();
-							boss_projectile.Reversed = true;
-							AddChild(boss_projectile);
+							SpawnProjectile(true);
 						}
 					}
-
 					cowldown = 50;
 				}
 			}
-
 		}
 	}
-
+	
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void SpawnProjectile(bool reversed)
+	{
+		
+		//GD.Print($"Spawned BossProjectile for {Multiplayer.GetUniqueId()} Peer : {(Multiplayer.GetPeers()[0])}");
+		BossProjectile bossProjectile = _bossProjectileScene.Instantiate<BossProjectile>();
+		bossProjectile.Reversed = reversed;
+		AddChild(bossProjectile);
+		
+		// Here we pass the message to the other peer (Player 2) that it should instantiate the Projectile.
+		if (Multiplayer.GetUniqueId() == 1)
+			RpcId(Multiplayer.GetPeers()[0], "SpawnProjectile", reversed);
+	}
 }
