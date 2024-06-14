@@ -116,8 +116,7 @@ public partial class Player : Entity
 					velocity.Y += JumpVelocity;
 			}
 
-			Vector2 pos = CoordsHelper.ConvertCoords(new Vector2(1920, 1080), new Vector2(320, 180),
-				GetViewport().GetMousePosition());
+			Vector2 pos = GetGlobalMousePosition();
 			
 			GetNode<Node2D>("Gun").LookAt(pos);
 
