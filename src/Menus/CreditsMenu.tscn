@@ -1,53 +1,75 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvo3xth7fpxec"]
+[gd_scene load_steps=7 format=3 uid="uid://cvo3xth7fpxec"]
 
 [ext_resource type="Script" path="res://src/Menus/CreditsMenu.cs" id="1_hgy71"]
-[ext_resource type="FontFile" uid="uid://c8kf523s5o80w" path="res://assets/fonts/BrokenConsole/Broken Console Bold.ttf" id="2_q4vec"]
+[ext_resource type="Texture2D" uid="uid://cv4qb088la36g" path="res://assets/background/Background_000.png" id="2_chy3a"]
 [ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="3_6v4ji"]
+[ext_resource type="Texture2D" uid="uid://dba4vh6q4f5es" path="res://assets/ui/container.png" id="3_h0vj1"]
+[ext_resource type="Theme" uid="uid://c5ucyskhud1l2" path="res://assets/ui/MenuTheme.tres" id="4_i65sp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nbt1l"]
 
 [node name="CreditsMenu" type="CanvasLayer"]
 script = ExtResource("1_hgy71")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_chy3a")
+
+[node name="OptionsTexture" type="TextureRect" parent="."]
+offset_left = 411.0
+offset_top = 61.0
+offset_right = 1527.0
+offset_bottom = 923.0
+texture = ExtResource("3_h0vj1")
+
+[node name="MenuMarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 489.0
+offset_top = 329.0
+offset_right = -471.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.454902, 0.329412, 0.317647, 1)
-
-[node name="MenuMarginContainer" type="MarginContainer" parent="."]
-offset_right = 1152.0
-offset_bottom = 640.0
-theme_override_constants/margin_left = 200
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 200
+theme = ExtResource("4_i65sp")
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 630
+theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
 [node name="MenuVBoxContainer" type="VBoxContainer" parent="MenuMarginContainer"]
 layout_mode = 2
+theme = ExtResource("4_i65sp")
+alignment = 2
 
-[node name="WelcomeTitle" type="Label" parent="MenuMarginContainer/MenuVBoxContainer"]
+[node name="ExitButton" type="Button" parent="MenuMarginContainer/MenuVBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_q4vec")
-theme_override_font_sizes/font_size = 87
-text = "Credits
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="Text" type="VBoxContainer" parent="MenuMarginContainer/MenuVBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 30
-
-[node name="ExitButton" type="Button" parent="."]
-offset_right = 192.0
-offset_bottom = 64.0
 theme_override_fonts/font = ExtResource("3_6v4ji")
-theme_override_font_sizes/font_size = 35
-text = "EXIT"
+text = "exit"
 
-[connection signal="button_down" from="ExitButton" to="." method="_on_exit_button_button_down"]
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_left = 500.0
+offset_top = 298.0
+offset_right = 1464.0
+offset_bottom = 924.0
+theme_override_fonts/font = ExtResource("3_6v4ji")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxEmpty_nbt1l")
+text = "This is a game designed by our team of:
+
+Titouan Lamy (titouan.lamy@epita.fr)
+Bastien Pinaud (bastien.pinaud@epita.fr)
+Louis Gallet (louis.gallet@epita.fr)
+Hugo Cohen (hugo.cohen@epita.fr)
+
+Our website is:
+https://outofthehole.louisgallet.fr/
+
+This was a school project by EPITA
+
+Thanks for playing "
+wrap_mode = 1
+
+[connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]

@@ -13,9 +13,11 @@ public partial class CreditsMenu : CanvasLayer
 	public override void _Process(double delta)
 	{
 	}
-
-	private void _on_exit_button_button_down()
-	{
+private void _on_exit_button_button_down()
+{
 		GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
-	}
 }
+}
+
+
+
