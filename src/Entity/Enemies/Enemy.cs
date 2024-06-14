@@ -52,16 +52,14 @@ namespace OutOfTheHole.Entity.Enemies
 			if (cycledir%2 == 0)
 			{
 				Movements = Movements.RIGHT;
+				_spriteEnemy.Play("WalkRight");
 			}
 			else
 			{
 				Movements = Movements.LEFT;
+				_spriteEnemy.Play("WalkLeft");
 			}
-			if (_spriteEnemy is null)
-				GD.Print("Sprite is null");
 			cycledir = cycledir + 1;
-			_spriteEnemy.Play("WalkLeft");
-			
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -100,10 +98,6 @@ namespace OutOfTheHole.Entity.Enemies
 					else if (Movements == Movements.LEFT)
 					{
 						velocity.X -= Speed;
-						_spriteEnemy.Play("WalkRight");
-					}
-					else
-					{
 						_spriteEnemy.Play("WalkLeft");
 					}
 				}

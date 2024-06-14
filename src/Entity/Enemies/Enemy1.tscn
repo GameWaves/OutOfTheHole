@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dnvfgmwx6a660" path="res://assets/sprites/Enemy1-Sheet.png" id="2_qfvmw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ug518"]
-size = Vector2(18, 26)
+size = Vector2(58.1818, 42.0909)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ahiw4"]
 properties/0/path = NodePath(".:position")
@@ -92,6 +92,7 @@ scale = Vector2(0.275, 0.275)
 script = ExtResource("1_wdqg0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.73395e-06, -21.8182)
 shape = SubResource("RectangleShape2D_ug518")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -103,6 +104,8 @@ libraries = {
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, -37)
+scale = Vector2(3, 3)
 texture = ExtResource("2_qfvmw")
 hframes = 16
 frame = 8
