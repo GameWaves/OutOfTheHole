@@ -18,7 +18,7 @@ namespace OutOfTheHole.Entity.Enemies
 		public bool Reversed;
 		public float Gravity;
 		
-		public int Damage = 30;
+		public int Damage = 10;
 
 		
 		public Vector2 Oldvector;

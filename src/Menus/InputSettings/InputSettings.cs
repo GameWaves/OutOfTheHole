@@ -17,7 +17,6 @@ public partial class InputSettings : Control
 		{ "click", "Shoot" },
 		{ "move_left", "Left" },
 		{ "move_right", "Right" },
-		{ "jump", "Jump" },
 	};
 
 	// Called when the node enters the scene tree for the first time.
@@ -119,10 +118,14 @@ public partial class InputSettings : Control
 		button.FindChild("LabelInput").Set("text", eventKey.TrimSuffix(" (Physical)"));
 	}
 
-
-	private void _on_exit_button_button_down()
-	{
+private void _on_exit_button_pressed()
+{
 		GetParent<CanvasLayer>().Visible = false;
-	}
-	
 }
+}
+
+
+
+
+
+
