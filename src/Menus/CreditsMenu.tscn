@@ -51,25 +51,26 @@ text = "exit"
 
 [node name="TextEdit" type="TextEdit" parent="."]
 offset_left = 500.0
-offset_top = 298.0
+offset_top = 249.0
 offset_right = 1464.0
-offset_bottom = 924.0
+offset_bottom = 875.0
 theme_override_fonts/font = ExtResource("3_6v4ji")
 theme_override_font_sizes/font_size = 36
 theme_override_styles/normal = SubResource("StyleBoxEmpty_nbt1l")
-text = "This is a game designed by our team of:
+text = "Gamewaves - OutOfTheHole
 
+Made as part of this year's EPITA S2 project
+
+Authors :
 Titouan Lamy (titouan.lamy@epita.fr)
 Bastien Pinaud (bastien.pinaud@epita.fr)
 Louis Gallet (louis.gallet@epita.fr)
 Hugo Cohen (hugo.cohen@epita.fr)
 
-Our website is:
+Check out our website at: 
 https://outofthehole.louisgallet.fr/
 
-This was a school project by EPITA
-
-Thanks for playing "
+Thanks for playing!"
 wrap_mode = 1
 
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
