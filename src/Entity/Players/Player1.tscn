@@ -115,7 +115,8 @@ replication_config = SubResource("SceneReplicationConfig_5h1fq")
 position = Vector2(3.1562, 1)
 
 [node name="Gun" parent="." instance=ExtResource("2_klm4n")]
-top_level = true
+light_mask = 0
+visibility_layer = 4
 position = Vector2(-1, -6)
 
 [node name="Cam1" type="Camera2D" parent="."]

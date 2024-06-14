@@ -43,3 +43,11 @@ position = Vector2(160, 88)
 zoom = Vector2(6, 6)
 limit_left = 0
 limit_top = 0
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="00" type="Node2D" parent="Checkpoints"]
+position = Vector2(64, 24)
+
+[node name="01" type="Node2D" parent="Checkpoints"]
+position = Vector2(64, 152)
