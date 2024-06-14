@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c13btmnbey1tq"]
+[gd_scene load_steps=12 format=3 uid="uid://c13btmnbey1tq"]
 
 [ext_resource type="Script" path="res://src/Entity/Players/Player.cs" id="1_77yes"]
 [ext_resource type="PackedScene" uid="uid://byexr753no7oj" path="res://src/Gun/Gun.tscn" id="2_klm4n"]
@@ -97,6 +97,9 @@ _data = {
 "WalkRight": SubResource("Animation_qqki6")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ta0xx"]
+size = Vector2(10, 17)
+
 [node name="Player2" type="CharacterBody2D"]
 script = ExtResource("1_77yes")
 _gunScene = ExtResource("2_klm4n")
@@ -112,6 +115,7 @@ replication_config = SubResource("SceneReplicationConfig_5h1fq")
 position = Vector2(3.1562, 1)
 
 [node name="Gun" parent="." instance=ExtResource("2_klm4n")]
+top_level = true
 position = Vector2(-1, -6)
 
 [node name="Cam1" type="Camera2D" parent="."]
@@ -128,3 +132,13 @@ frame = 8
 libraries = {
 "": SubResource("AnimationLibrary_r44g6")
 }
+
+[node name="HitBoxMap" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxMap"]
+position = Vector2(0, -10.5)
+shape = SubResource("RectangleShape2D_ta0xx")
+debug_color = Color(0.9973, 0, 0.168968, 0.42)
+
+[connection signal="body_entered" from="HitBoxMap" to="." method="_on_hit_box_map_body_entered"]

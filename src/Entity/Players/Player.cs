@@ -29,6 +29,8 @@ public partial class Player : Entity
 
 	private string _lastInput;
 
+	private bool _gotPicked;
+
 	[Export] private PackedScene _gunScene;
 
 	[Export] public Camera2D Cam;
@@ -188,6 +190,11 @@ public partial class Player : Entity
 			GetNode<Node2D>("Gun").RotationDegrees =
 				Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
 		}
+
+		if (_gotPicked)
+		{
+			KillPlayer(this);
+		}
 	}
 	/// <summary>
 	/// Wrapper for Death() Method that also includes a game quit. 
@@ -239,5 +246,11 @@ public partial class Player : Entity
 		var gunNode = GetNode<Node2D>("Gun");
 		var shootPoint = GetNode<Node2D>("Gun/ShootPoint");
 		_gunObject.FireBullet(gunNode, shootPoint, GetTree(),GunType,this);
+	}
+
+	private void _on_hit_box_map_body_entered(Node2D body)
+	{
+		GD.Print("got picked by body");
+		_gotPicked = true;
 	}
 }
