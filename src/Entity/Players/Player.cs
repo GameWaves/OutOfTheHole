@@ -37,6 +37,8 @@ public partial class Player : Entity
 	public new int MaxHp = 100;
 
 	public new float Speed = 100.0f;
+
+	public bool jump;
 	
 	public bool Reversed;
 	public override void _Ready()
@@ -101,8 +103,13 @@ public partial class Player : Entity
 				if (!IsOnCeiling()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
+				//if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
+
+				if (jump && IsOnCeiling())
+				{
 					velocity.Y -= JumpVelocity;
+					jump = false;
+				}
 			}
 			else
 			{
@@ -110,8 +117,12 @@ public partial class Player : Entity
 				if (!IsOnFloor()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
+				//if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
+				if (jump && IsOnFloor())
+				{
 					velocity.Y += JumpVelocity;
+					jump = false;
+				}
 			}
 
 			Vector2 pos = CoordsHelper.ConvertCoords(new Vector2(1920, 1080), new Vector2(320, 180),
@@ -224,7 +235,12 @@ public partial class Player : Entity
 	public override void Hurt(int n, Entity source)
 	{
 		if (IsInvicible != true)
-		{ 
+		{
+			if (source is Player)
+			{
+				n = 1;
+				jump = true;
+			}
 			Rpc("HurtPlayer", n, source);	
 		}
 		

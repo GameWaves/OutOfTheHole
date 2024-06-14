@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dep5hldcbeksn"]
+[gd_scene load_steps=5 format=3 uid="uid://dep5hldcbeksn"]
 
 [ext_resource type="Script" path="res://src/Menus/InputSettings/InputSettings.cs" id="1_13ox5"]
 [ext_resource type="PackedScene" uid="uid://b3gvcxp15noya" path="res://src/Menus/InputSettings/InputButton.tscn" id="1_f1uhe"]
+[ext_resource type="Theme" uid="uid://c5ucyskhud1l2" path="res://assets/ui/MenuTheme.tres" id="3_xq686"]
+[ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="4_pja6e"]
 
 [node name="InputSettings" type="Control"]
 layout_mode = 3
@@ -59,8 +61,14 @@ layout_mode = 2
 [node name="InputButton4" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList" instance=ExtResource("1_f1uhe")]
 layout_mode = 2
 
-[node name="ExitButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MenuVBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Exit"
+theme = ExtResource("3_xq686")
+alignment = 2
 
-[connection signal="button_down" from="PanelContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
+[node name="ExitButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MenuVBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_pja6e")
+text = "exit"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MenuVBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
