@@ -31,6 +31,8 @@ public partial class Player : Entity
 
 	private bool _gotPicked;
 
+	public Vector2 Spawn;
+
 	[Export] private PackedScene _gunScene;
 
 	[Export] public Camera2D Cam;
@@ -60,6 +62,7 @@ public partial class Player : Entity
 		if (Reversed)
 		{
 			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+			
 		}
 		else
 		{
@@ -226,8 +229,9 @@ public partial class Player : Entity
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void KillPlayer(Entity target)
 	{
-		Death();
-		GetTree().Quit();
+		Position = Spawn;
+		//Death();
+		//GetTree().Quit();
 	}
 	
 	/// <summary>
