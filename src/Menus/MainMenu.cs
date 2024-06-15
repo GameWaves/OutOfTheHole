@@ -32,7 +32,6 @@ public partial class MainMenu : CanvasLayer
 	{
 		GetNode<MarginContainer>("MenuMarginContainer").Visible = false;
 		GetNode<CanvasLayer>("OptionsMenu").Visible = true;
-		GetNode<Button>("OptionsMenu/OptionsButtons/Volume").GrabFocus();
 	}
 	
 	/// <summary>
