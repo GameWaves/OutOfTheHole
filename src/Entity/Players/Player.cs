@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using OutOfTheHole.Entity.Enemies;
 
 
 namespace OutofTheHole.Entity.Players;
@@ -28,9 +29,7 @@ public partial class Player : Entity
 	private AnimationPlayer _spirtePlayer;
 
 	private string _lastInput;
-
-	private bool _gotPicked;
-
+	
 	public Vector2 Spawn;
 
 	[Export] private PackedScene _gunScene;
@@ -220,10 +219,6 @@ public partial class Player : Entity
 				Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
 		}
 
-		if (_gotPicked)
-		{
-			KillPlayer(this);
-		}
 	}
 	/// <summary>
 	/// Wrapper for Death() Method that also includes a game quit. 
@@ -235,6 +230,7 @@ public partial class Player : Entity
 		
 		Position = Spawn;
 		Hp = MaxHp;
+		Alive = true;
 		//Death();
 		//GetTree().Quit();
 	}
@@ -274,9 +270,11 @@ public partial class Player : Entity
 			if (Hp <= 0)
 			{
 				// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
+				GD.Print("tp1");
 				Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
-				Hp = MaxHp;
-				Position = Spawn;
+				//Hp = MaxHp;
+				//Position = Spawn;
+				//Alive = true;
 			}
 		}
 
@@ -302,7 +300,7 @@ public partial class Player : Entity
 	private void _on_hit_box_map_body_entered(Node2D body)
 	{
 		GD.Print("got picked by body");
-		_gotPicked = true;
+		HurtPlayer(MaxHp,new Enemy());
 	}
 	
 }

@@ -18,16 +18,17 @@ public partial class Checkpoints : Node2D
     }
     private void _on_checkpoints_entered(Node2D player)
     {
+        GD.Print("entered checkpoint");
         if (player is Player)
         {
             if (int.Parse(player.Name) == 1 && int.Parse(Name) % 2 != 0)
             {
-                //GD.Print($"player {player.Name} pass the checkpoint");
+                GD.Print($"player {player.Name} pass the checkpoint");
                 ((Player)player).Spawn = this.Position;
             }
             else if (int.Parse(player.Name) != 1 && int.Parse(Name) % 2 == 0)
             {
-                //GD.Print($"player {player.Name} pass the checkpoint");
+                GD.Print($"player {player.Name} pass the checkpoint");
                 ((Player)player).Spawn = this.Position;
             }
         }

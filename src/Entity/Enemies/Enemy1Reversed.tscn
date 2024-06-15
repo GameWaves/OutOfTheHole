@@ -11,8 +11,8 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[sub_resource type="Animation" id="Animation_q1are"]
-resource_name = "WalkRight"
+[sub_resource type="Animation" id="Animation_enfnb"]
+resource_name = "RunLeft"
 length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
@@ -25,24 +25,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_3hkkn"]
-resource_name = "WalkLeft"
-length = 0.6
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [4, 5, 6, 7]
+"values": [8, 9, 10, 11]
 }
 
 [sub_resource type="Animation" id="Animation_lawbe"]
@@ -62,8 +45,8 @@ tracks/0/keys = {
 "values": [12, 13, 14, 15]
 }
 
-[sub_resource type="Animation" id="Animation_enfnb"]
-resource_name = "RunLeft"
+[sub_resource type="Animation" id="Animation_3hkkn"]
+resource_name = "WalkLeft"
 length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
@@ -76,7 +59,24 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [8, 9, 10, 11]
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_q1are"]
+resource_name = "WalkRight"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7x6cx"]
