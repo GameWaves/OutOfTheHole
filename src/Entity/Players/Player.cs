@@ -25,7 +25,15 @@ public partial class Player : Entity
  
 	private float GunRotation;
 
+	private AnimationPlayer _spirtePlayer;
+
+	private string _lastInput;
+
+	private bool _gotPicked;
+
 	[Export] private PackedScene _gunScene;
+
+	[Export] public Camera2D Cam;
 
 	/// <summary>
 	/// All value are in pixel
@@ -52,18 +60,13 @@ public partial class Player : Entity
 		if (Reversed)
 		{
 			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			_idleSprite = GetNode<AnimatedSprite2D>("Idle2");
-			_walkleft = GetNode<AnimatedSprite2D>("WalkLeft2");
-			_walkright = GetNode<AnimatedSprite2D>("WalkRight2");
 		}
 		else
 		{
 			this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			_idleSprite = GetNode<AnimatedSprite2D>("Idle");
-			_walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-			_walkright = GetNode<AnimatedSprite2D>("Walkright");
 		}
-
+		_spirtePlayer = GetNode<AnimationPlayer>("Animations");
+		
 		//set player hp
 		Hp = MaxHp;
 		Alive = true;
@@ -71,6 +74,14 @@ public partial class Player : Entity
 		// Allows this player to be played only by the player that is assigned to player 1
 		GD.Print(Name);
 		GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse((string)Name));
+		
+		// Instantiate the personal camera for each player
+		if (Multiplayer.GetUniqueId() == GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority())
+		{
+			Cam.MakeCurrent();
+		}
+
+		_spirtePlayer.Play("WalkRight");
 	}
 
 	/// <summary>
@@ -122,38 +133,35 @@ public partial class Player : Entity
 				}
 			}
 
-			Vector2 pos = CoordsHelper.ConvertCoords(new Vector2(1920, 1080), new Vector2(320, 180),
-				GetViewport().GetMousePosition());
+			Vector2 pos = GetGlobalMousePosition();
 			
 			GetNode<Node2D>("Gun").LookAt(pos);
 
 			//set movement (currenty arrow)
 			if (Input.IsActionPressed("move_right"))
 			{
-				//show (or not) each sprite
-				_idleSprite.Visible = false;
-				_walkleft.Visible = false;
-				_walkright.Visible = true;
 				if (velocity.X >= 300)
 					velocity.X -= Speed;
 				else if (velocity.X < 0)
 					velocity.X -= Acceleration;
 				else
 					velocity.X = Speed;
+				//show the animation going right
+				_spirtePlayer.Play("WalkRight");
+				_lastInput = " ";
 			}
 
 			if (Input.IsActionPressed("move_left"))
 			{
-				//show (or not) each sprite
-				_idleSprite.Visible = false;
-				_walkleft.Visible = true;
-				_walkright.Visible = false;
 				if (velocity.X <= -300)
 					velocity.X += Speed;
 				else if (velocity.X > 0)
 					velocity.X += Acceleration;
 				else
 					velocity.X = -Speed;
+				//show the animation going left
+				_spirtePlayer.Play("WalkLeft");
+				_lastInput = "left";
 			}
 
 			//adding a litlle momentum
@@ -161,9 +169,10 @@ public partial class Player : Entity
 				(Input.IsActionPressed("move_left") && Input.IsActionPressed("move_right")))
 			{
 				//show (or not) each sprite
-				_idleSprite.Visible = true;
-				_walkleft.Visible = false;
-				_walkright.Visible = false;
+				if (_lastInput == "left")
+					_spirtePlayer.Play("IdleLeft");
+				else
+					_spirtePlayer.Play("IdleRight");
 				if (velocity.X <= 8 * Acceleration && velocity.X >= -8 * Acceleration) velocity.X = 0;
 
 				if (velocity.X > 0) velocity.X -= 8 * Acceleration;
@@ -172,14 +181,7 @@ public partial class Player : Entity
 			}
 
 			Velocity = velocity;
-
-			//play the sprite
-			if (_idleSprite.Visible) _idleSprite.Play();
-
-			if (_walkleft.Visible) _walkleft.Play();
-
-			if (_walkright.Visible) _walkright.Play();
-
+			
 			if (Input.IsActionPressed("click") && _gunObject.FireRate < _timeUntilFire)
 			{
 				_timeUntilFire = 0f;
@@ -210,6 +212,11 @@ public partial class Player : Entity
 			//Always sync the Gun rotation
 			GetNode<Node2D>("Gun").RotationDegrees =
 				Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
+		}
+
+		if (_gotPicked)
+		{
+			KillPlayer(this);
 		}
 	}
 	/// <summary>
@@ -279,6 +286,12 @@ public partial class Player : Entity
 		var gunNode = GetNode<Node2D>("Gun");
 		var shootPoint = GetNode<Node2D>("Gun/ShootPoint");
 		_gunObject.FireBullet(gunNode, shootPoint, GetTree(),GunType,this);
+	}
+
+	private void _on_hit_box_map_body_entered(Node2D body)
+	{
+		GD.Print("got picked by body");
+		_gotPicked = true;
 	}
 	
 }

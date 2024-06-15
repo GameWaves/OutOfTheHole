@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deawxkwaf53ng"
-path="res://.godot/imported/Corner_right.png-6b0c53c2bd372852a108962e7b7e6a0b.ctex"
+uid="uid://dnvfgmwx6a660"
+path="res://.godot/imported/Enemy1-Sheet.png-47121229ed6379683ad9b24aa5e5d37b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/Corner_right.png"
-dest_files=["res://.godot/imported/Corner_right.png-6b0c53c2bd372852a108962e7b7e6a0b.ctex"]
+source_file="res://assets/sprites/Enemy1-Sheet.png"
+dest_files=["res://.godot/imported/Enemy1-Sheet.png-47121229ed6379683ad9b24aa5e5d37b.ctex"]
 
 [params]
 

@@ -38,10 +38,6 @@ public abstract partial class Entity : CharacterBody2D
 	public virtual void Death()
 	{
 		Alive = false;
-		//hide the entity 
-		_idleSprite.Visible = false;
-		_walkright.Visible = false;
-		_walkleft.Visible = false;
 		QueueFree();
 		if (IsQueuedForDeletion()) Free();
 	}

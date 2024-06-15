@@ -24,6 +24,8 @@ namespace OutOfTheHole.Entity.Enemies
 		public Vector2 Oldvector;
 
 		private int cycledir = 0;
+
+		private AnimationPlayer _spriteEnemy;
 		
 		private OutofTheHole.Entity.Entity aggrosource;
 		
@@ -40,27 +42,23 @@ namespace OutOfTheHole.Entity.Enemies
 			if (Reversed)
 			{
 				this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-				_idleSprite = GetNode<AnimatedSprite2D>("Idle");
-				_walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-				_walkright = GetNode<AnimatedSprite2D>("Walkright");
 			}
 			else
 			{
 				this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-				_idleSprite = GetNode<AnimatedSprite2D>("Idle");
-				_walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-				_walkright = GetNode<AnimatedSprite2D>("Walkright");
 			}
+			_spriteEnemy = GetNode<AnimationPlayer>("Animations");
 			
 			if (cycledir%2 == 0)
 			{
 				Movements = Movements.RIGHT;
+				_spriteEnemy.Play("WalkRight");
 			}
 			else
 			{
 				Movements = Movements.LEFT;
+				_spriteEnemy.Play("WalkLeft");
 			}
-
 			cycledir = cycledir + 1;
 		}
 
@@ -95,24 +93,12 @@ namespace OutOfTheHole.Entity.Enemies
 					if (Movements == Movements.RIGHT)
 					{
 						velocity.X += Speed;
-					
-						_walkright.Visible = true;
-						_walkleft.Visible = false;
-						_idleSprite.Visible = false;
+						_spriteEnemy.Play("WalkRight");
 					}
 					else if (Movements == Movements.LEFT)
 					{
 						velocity.X -= Speed;
-	
-						_walkright.Visible = false;
-						_walkleft.Visible = true;
-						_idleSprite.Visible = false;
-					}
-					else
-					{
-						_walkright.Visible = false;
-						_walkleft.Visible = false;
-						_idleSprite.Visible = true;
+						_spriteEnemy.Play("WalkLeft");
 					}
 				}
 				else
@@ -122,11 +108,13 @@ namespace OutOfTheHole.Entity.Enemies
 					{
 						Movements = Movements.LEFT;
 						velocity.X -= Speed * 2;
+						_spriteEnemy.Play("RunLeft");
 					}
 					else if (aggrosource.Position.X > this.Position.X)
 					{
 						Movements = Movements.RIGHT;
 						velocity.X += Speed * 2;
+						_spriteEnemy.Play("RunRight");
 					}
 	
 					
@@ -140,15 +128,6 @@ namespace OutOfTheHole.Entity.Enemies
 						}
 					}
 				}
-	
-	
-				//play the sprite
-				if (_idleSprite.Visible) _idleSprite.Play();
-	
-				if (_walkleft.Visible) _walkleft.Play();
-	
-				if (_walkright.Visible) _walkright.Play();
-	
 				Velocity = velocity;
 				MoveAndSlide();	
 			}

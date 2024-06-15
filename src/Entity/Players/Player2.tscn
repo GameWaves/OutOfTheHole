@@ -1,62 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://b8s0e4hxebqpn"]
+[gd_scene load_steps=12 format=3 uid="uid://b8s0e4hxebqpn"]
 
 [ext_resource type="Script" path="res://src/Entity/Players/Player.cs" id="1_77yes"]
-[ext_resource type="Texture2D" uid="uid://dg1o6ufxb2642" path="res://assets/sprites/Placeholder-idle1-P2.png" id="2_tdcb3"]
-[ext_resource type="Texture2D" uid="uid://bqfb66kny8bwn" path="res://assets/sprites/Placeholder-idle2-P2.png" id="3_1uk6x"]
-[ext_resource type="Texture2D" uid="uid://ce0sqq11fixcv" path="res://assets/sprites/Placeholder-idle3-P2.png" id="4_2cw7e"]
-[ext_resource type="Texture2D" uid="uid://xhe06x0ig816" path="res://assets/sprites/Placeholder-Left1-P2.png" id="5_py6xj"]
-[ext_resource type="Texture2D" uid="uid://bd5hjeiw1llw5" path="res://assets/sprites/Placeholder-Left2-P2.png" id="6_5lsqq"]
-[ext_resource type="Texture2D" uid="uid://c1ri0ont8vrco" path="res://assets/sprites/Placeholder-Right1-P2.png" id="7_kxxcu"]
-[ext_resource type="Texture2D" uid="uid://kgfokhwxwhvk" path="res://assets/sprites/Placeholder-Right2-P2.png" id="8_ltcha"]
+[ext_resource type="Texture2D" uid="uid://bqpos4qxnmqij" path="res://assets/sprites/Player2-Sheet.png" id="3_cupid"]
 [ext_resource type="PackedScene" uid="uid://byexr753no7oj" path="res://src/Gun/Gun.tscn" id="10_ljwmm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0b83x"]
-size = Vector2(19, 25)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_t412b"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_tdcb3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_1uk6x")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_2cw7e")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_cykqo"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_py6xj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_5lsqq")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_bugts"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_kxxcu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_ltcha")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fj4y"]
+size = Vector2(47.2727, 69.0909)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5h1fq"]
 properties/0/path = NodePath(".:position")
@@ -72,30 +21,87 @@ properties/3/path = NodePath(".:Alive")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="Animation" id="Animation_oujr7"]
+resource_name = "IdleLeft"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_wt0wr"]
+resource_name = "IdleRight"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_8rxgh"]
+resource_name = "WalkLeft"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_ppc46"]
+resource_name = "WalkRight"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ttfhr"]
+_data = {
+"IdleLeft": SubResource("Animation_oujr7"),
+"IdleRight": SubResource("Animation_wt0wr"),
+"WalkLeft": SubResource("Animation_8rxgh"),
+"WalkRight": SubResource("Animation_ppc46")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r5u4d"]
+size = Vector2(11, 17)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Cam")]
 position = Vector2(1, 0)
 script = ExtResource("1_77yes")
 _gunScene = ExtResource("10_ljwmm")
+Cam = NodePath("Cam2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(1.5, 9.5)
 scale = Vector2(0.275, 0.275)
-shape = SubResource("RectangleShape2D_0b83x")
-
-[node name="Idle2" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, 1)
-scale = Vector2(0.275, 0.275)
-sprite_frames = SubResource("SpriteFrames_t412b")
-
-[node name="WalkLeft2" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, 1)
-scale = Vector2(0.275, 0.275)
-sprite_frames = SubResource("SpriteFrames_cykqo")
-
-[node name="WalkRight2" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, 1)
-scale = Vector2(0.275, 0.275)
-sprite_frames = SubResource("SpriteFrames_bugts")
+shape = SubResource("RectangleShape2D_1fj4y")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_5h1fq")
@@ -104,4 +110,30 @@ replication_config = SubResource("SceneReplicationConfig_5h1fq")
 position = Vector2(0.1562, 0)
 
 [node name="Gun" parent="." instance=ExtResource("10_ljwmm")]
-position = Vector2(0, 0.125)
+light_mask = 0
+visibility_layer = 4
+position = Vector2(2, 9)
+
+[node name="Cam2" type="Camera2D" parent="."]
+zoom = Vector2(6, 6)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 12)
+texture = ExtResource("3_cupid")
+hframes = 16
+frame = 12
+
+[node name="Animations" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ttfhr")
+}
+
+[node name="HitBoxMap" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxMap"]
+position = Vector2(1.5, 9.5)
+shape = SubResource("RectangleShape2D_r5u4d")
+debug_color = Color(1, 0.0137799, 0.00544604, 0.42)
+
+[connection signal="body_entered" from="HitBoxMap" to="." method="_on_hit_box_map_body_entered"]
