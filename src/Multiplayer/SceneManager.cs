@@ -16,10 +16,13 @@ public partial class SceneManager : Node2D
 	[Export] private PackedScene _enemy1Scene;
 	[Export] private PackedScene _enemy1ReversedScene;
 	[Export] private PackedScene _bossScene;
-
+	
+	
 	public int CouldownSumon = 0;
 	private int _cyclespawn = 0;
 
+	public static int lvl;
+	
 	private int _enemyCount = 0; // counts the number of enemies that have been spawned in the game.
 
 	// Called when the node enters the scene tree for the first time.
@@ -81,9 +84,11 @@ public partial class SceneManager : Node2D
 			AddChild(enemy);
 			enemy.GlobalPosition = VARIABLE.GlobalPosition;
 		}
-		
-		
-		
+
+		lvl = 1;
+
+
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -139,5 +144,9 @@ public partial class SceneManager : Node2D
 	private void _on_disconnect_button_pressed()
 	{
 		GetTree().Quit();
+	}
+
+	public void NextLevel()
+	{
 	}
 }

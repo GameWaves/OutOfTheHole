@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://pon8jmgidg3t"]
+[gd_scene load_steps=10 format=3 uid="uid://pon8jmgidg3t"]
 
 [ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_sltxc"]
 [ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_rpwrp"]
@@ -8,6 +8,7 @@
 [ext_resource type="TileSet" uid="uid://m7ypucnbnhgl" path="res://assets/tiles/TileSet.tres" id="6_1nsat"]
 [ext_resource type="PackedScene" uid="uid://bigqxjmh6xaow" path="res://src/Entity/Enemies/Boss.tscn" id="6_iskit"]
 [ext_resource type="PackedScene" uid="uid://dh7fcdk5ryxrp" path="res://src/Map/Checkpoints.tscn" id="7_3xeek"]
+[ext_resource type="PackedScene" uid="uid://bq2s6eqymgd4s" path="res://src/Map/EndLvl.tscn" id="9_p8ead"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_sltxc")
@@ -59,10 +60,10 @@ spawn_path = NodePath("..")
 [node name="Checkpoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="Checkpoints"]
-position = Vector2(64, 24)
+position = Vector2(1862, 66)
 
 [node name="1" type="Node2D" parent="Checkpoints"]
-position = Vector2(64, 152)
+position = Vector2(1880, 90)
 
 [node name="2" parent="Checkpoints" instance=ExtResource("7_3xeek")]
 position = Vector2(265, 70)
@@ -81,3 +82,9 @@ position = Vector2(1225, 54)
 
 [node name="7" parent="Checkpoints" instance=ExtResource("7_3xeek")]
 position = Vector2(1224, 121)
+
+[node name="100" parent="." instance=ExtResource("9_p8ead")]
+position = Vector2(1909, 57)
+
+[node name="101" parent="." instance=ExtResource("9_p8ead")]
+position = Vector2(1909, 121)
