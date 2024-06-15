@@ -62,11 +62,14 @@ public partial class Player : Entity
 		if (Reversed)
 		{
 			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			
+			Spawn = GetParent().GetNode("Checkpoints").GetNode<Node2D>("0").Position;
+			Position = Spawn;
 		}
 		else
 		{
 			this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+			Spawn = GetParent().GetNode("Checkpoints").GetNode<Node2D>("1").Position;
+			Position = Spawn;
 		}
 		_spirtePlayer = GetNode<AnimationPlayer>("Animations");
 		
@@ -229,7 +232,9 @@ public partial class Player : Entity
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void KillPlayer(Entity target)
 	{
+		
 		Position = Spawn;
+		Hp = MaxHp;
 		//Death();
 		//GetTree().Quit();
 	}

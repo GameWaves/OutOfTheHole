@@ -47,13 +47,13 @@ limit_top = 0
 
 [node name="Checkpoints" type="Node2D" parent="."]
 
-[node name="2" type="Node2D" parent="Checkpoints"]
+[node name="0" type="Node2D" parent="Checkpoints"]
 position = Vector2(64, 24)
 
 [node name="1" type="Node2D" parent="Checkpoints"]
 position = Vector2(64, 152)
 
-[node name="4" parent="Checkpoints" instance=ExtResource("7_3xeek")]
+[node name="2" parent="Checkpoints" instance=ExtResource("7_3xeek")]
 position = Vector2(265, 70)
 
 [node name="3" parent="Checkpoints" instance=ExtResource("7_3xeek")]

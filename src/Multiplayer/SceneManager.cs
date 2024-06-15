@@ -50,9 +50,6 @@ public partial class SceneManager : Node2D
 
 			currentPlayer.Name = item.Id.ToString();
 			AddChild(currentPlayer);
-			foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
-				if (int.Parse(spawnPoint.Name) == index)
-					currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
 			index++;
 		}
 
@@ -61,9 +58,6 @@ public partial class SceneManager : Node2D
 		boss.tier = 2;
 		AddChild(boss);
 		boss.GlobalPosition = ((Node2D)GetNode("EnemySpawns/4")).GlobalPosition;
-
-
-
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
