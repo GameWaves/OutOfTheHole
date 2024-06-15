@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using OutOfTheHole.Entity.Enemies;
 
 
 namespace OutofTheHole.Entity.Players;
@@ -28,8 +29,8 @@ public partial class Player : Entity
 	private AnimationPlayer _spirtePlayer;
 
 	private string _lastInput;
-
-	private bool _gotPicked;
+	
+	public Vector2 Spawn;
 
 	[Export] private PackedScene _gunScene;
 
@@ -44,7 +45,7 @@ public partial class Player : Entity
 
 	public new int MaxHp = 100;
 
-	public new float Speed = 100.0f;
+	public new float Speed = 110.0f;
 
 	public bool jump;
 	
@@ -59,11 +60,15 @@ public partial class Player : Entity
 		//set the sprite
 		if (Reversed)
 		{
-			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+			this.Gravity = (float)(0.9 * -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle());
+			Spawn = GetParent().GetNode("Checkpoints").GetNode<Node2D>("0").Position;
+			Position = Spawn;
 		}
 		else
 		{
-			this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+			this.Gravity = (float)(0.9 * ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle());
+			Spawn = GetParent().GetNode("Checkpoints").GetNode<Node2D>("1").Position;
+			Position = Spawn;
 		}
 		_spirtePlayer = GetNode<AnimationPlayer>("Animations");
 		
@@ -214,10 +219,6 @@ public partial class Player : Entity
 				Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
 		}
 
-		if (_gotPicked)
-		{
-			KillPlayer(this);
-		}
 	}
 	/// <summary>
 	/// Wrapper for Death() Method that also includes a game quit. 
@@ -226,8 +227,12 @@ public partial class Player : Entity
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void KillPlayer(Entity target)
 	{
-		Death();
-		GetTree().Quit();
+		
+		Position = Spawn;
+		Hp = MaxHp;
+		Alive = true;
+		//Death();
+		//GetTree().Quit();
 	}
 	
 	/// <summary>
@@ -245,7 +250,7 @@ public partial class Player : Entity
 				n = 1;
 				jump = true;
 			}
-			Rpc("HurtPlayer", n, source);	
+			Rpc("HurtPlayer", n, source);
 		}
 		
 	}
@@ -265,7 +270,11 @@ public partial class Player : Entity
 			if (Hp <= 0)
 			{
 				// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
+				GD.Print("tp1");
 				Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
+				//Hp = MaxHp;
+				//Position = Spawn;
+				//Alive = true;
 			}
 		}
 
@@ -291,7 +300,7 @@ public partial class Player : Entity
 	private void _on_hit_box_map_body_entered(Node2D body)
 	{
 		GD.Print("got picked by body");
-		_gotPicked = true;
+		HurtPlayer(MaxHp,new Enemy());
 	}
 	
 }

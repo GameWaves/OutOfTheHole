@@ -65,7 +65,7 @@ namespace OutOfTheHole.Entity.Enemies
 		public override void _PhysicsProcess(double delta)
 		{
 			
-			if (Multiplayer.GetUniqueId() == 1) //Only the host will manage this
+			//if (Multiplayer.GetUniqueId() == 1) //Only the host will manage this
 			{
 				// TODO: not sure of the concept of this method
 							
@@ -103,7 +103,6 @@ namespace OutOfTheHole.Entity.Enemies
 				}
 				else
 				{
-					// GD.Print($"AGGRO {aggrosource.Name}");
 					if (aggrosource.Position.X < this.Position.X)
 					{
 						Movements = Movements.LEFT;
