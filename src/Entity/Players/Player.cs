@@ -46,7 +46,7 @@ public partial class Player : Entity
 
 	public new int MaxHp = 100;
 
-	public new float Speed = 100.0f;
+	public new float Speed = 110.0f;
 
 	public bool jump;
 	
@@ -61,13 +61,13 @@ public partial class Player : Entity
 		//set the sprite
 		if (Reversed)
 		{
-			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+			this.Gravity = (float)(0.9 * -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle());
 			Spawn = GetParent().GetNode("Checkpoints").GetNode<Node2D>("0").Position;
 			Position = Spawn;
 		}
 		else
 		{
-			this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+			this.Gravity = (float)(0.9 * ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle());
 			Spawn = GetParent().GetNode("Checkpoints").GetNode<Node2D>("1").Position;
 			Position = Spawn;
 		}
@@ -254,7 +254,7 @@ public partial class Player : Entity
 				n = 1;
 				jump = true;
 			}
-			Rpc("HurtPlayer", n, source);	
+			Rpc("HurtPlayer", n, source);
 		}
 		
 	}
@@ -275,6 +275,8 @@ public partial class Player : Entity
 			{
 				// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
 				Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
+				Hp = MaxHp;
+				Position = Spawn;
 			}
 		}
 
