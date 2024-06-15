@@ -63,28 +63,32 @@ public partial class SceneManager : Node2D
 			AddChild(boss);
 			boss.GlobalPosition = VARIABLE.GlobalPosition;
 		}
+		
+		Array<Node> eNodes = GetTree().GetNodesInGroup("EnemySpawnPoints");
+		foreach (Node2D VARIABLE in eNodes)
+		{
+			Enemy enemy;
+			if (int.Parse(VARIABLE.Name) % 2 == 0)
+			{
+				enemy = _enemy1ReversedScene.Instantiate<Enemy>();
+				enemy.Reversed = true;
+			}
+			else
+			{
+				enemy = _enemy1Scene.Instantiate<Enemy>();
+				enemy.Reversed = false;
+			}
+			AddChild(enemy);
+			enemy.GlobalPosition = VARIABLE.GlobalPosition;
+		}
+		
+		
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		try
-		{
-			if (Multiplayer.GetUniqueId() == 1)
-			{
-				//temporary feature : summon ennemy
-				CouldownSumon -= 1;
-				if (CouldownSumon < 0)
-				{
-					InitEnemy();
-					CouldownSumon = 500;
-				}
-			}
-		}
-		catch 
-		{
-			GetTree().ChangeSceneToFile("res://src/Menus/MainMenu.tscn");
-		}
 	}
 
 	/// <summary>
@@ -96,22 +100,7 @@ public partial class SceneManager : Node2D
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void SpawnEnemy(int cycle, bool reversed, StringName name)
 	{
-		Array<Node> enemySpawnNodes = GetTree().GetNodesInGroup("EnemySpawnPoints");
-		
-		Enemy enemy;
-		if (reversed)
-			enemy = _enemy1ReversedScene.Instantiate<Enemy>();
-		else
-			enemy = _enemy1Scene.Instantiate<Enemy>();
-		
-		enemy.Reversed = reversed;
-		enemy.Name = name;
-		if (enemy.Name != "Enemy_0") // I don't why but enemy 0 wasn't delivered to the two players, so we don't spawn it @ all
-		{
-			AddChild(enemy);
-			enemy.GlobalPosition = ((Node2D)enemySpawnNodes[cycle]).GlobalPosition;
-			// GD.Print($"Enemy Spawned by {Multiplayer.GetUniqueId()} Rpc : {rpc} Name: {enemy.Name}");
-		}
+
 	}
 	/// <summary>
 	/// Function called by the host's _Process() function to spawn an enemy.

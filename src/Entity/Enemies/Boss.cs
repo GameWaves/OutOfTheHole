@@ -14,7 +14,7 @@ public partial class Boss : Entity
 	public Player P2 = GameManager.Players[1].Player;
 	public int cowldown = 50;
 	public int tier;
-	public int MaxHp = 1000;
+	public int MaxHp = 2000;
 
 	public override void Hurt(int hpLoss, Entity source)
 	{
@@ -40,6 +40,14 @@ public partial class Boss : Entity
 	{
 		if (awaken)
 		{
+			if (MaxHp > Hp*2 )
+			{
+				tier = 3;
+			}
+			else if (MaxHp*3 > Hp*4)
+			{
+				tier = 2;
+			}
 			if (Multiplayer.GetUniqueId() == 1)
 			{
 				if (P1.IsOnFloor() || P2.IsOnCeiling())
@@ -51,8 +59,10 @@ public partial class Boss : Entity
 				{
 					if (tier <= 1)
 					{
+						var rdm = new Random();
+						
 						bool reversed;
-						if (P1.IsOnFloor())
+						if (rdm.Next() % 2 == 0)
 						{
 							reversed = true; 
 						}
@@ -66,45 +76,36 @@ public partial class Boss : Entity
 
 					if (tier == 2)
 					{
-						if (P1.IsOnFloor() && P2.IsOnCeiling())
-						{
-							if (P1.Hp < P2.Hp)
-							{
-								SpawnProjectile(false);
-							}
-							else
-							{
-								SpawnProjectile(true);
-							}
-						}
-						else if (P1.IsOnFloor())
+						var rdm1 = new Random();
+						if (rdm1.Next() %2 == 0)
 						{
 							SpawnProjectile(false);
+							SpawnProjectile(true);
 						}
 						else
 						{
-							SpawnProjectile(true);
+							bool reversed;
+
+							var rdm2 = new Random();
+							if (rdm2.Next() % 2 == 0)
+							{
+								reversed = true; 
+							}
+							else
+							{ 
+								reversed = false;
+							}
+							SpawnProjectile(reversed);
 						}
+
 
 					}
 
 					else
 					{
-						if (P1.IsOnFloor() && P2.IsOnCeiling())
-						{
+						SpawnProjectile(false);
+						SpawnProjectile(true);
 
-							SpawnProjectile(false);
-
-							SpawnProjectile(true);
-						}
-						if (P1.IsOnFloor())
-						{
-							SpawnProjectile(false);
-						}
-						else
-						{
-							SpawnProjectile(true);
-						}
 					}
 					cowldown = 50;
 				}

@@ -54,8 +54,9 @@ public partial class BossProjectile : OutofTheHole.Entity.Entity
 						if (c is Player)
 						{
 							candamage = false;
-							Hurt(10,c as Entity);
-							Remove();
+							Player p = c as Player;
+							p.Hurt(10,this);
+							Visible = false;
 						}
 
 						if (c is Enemy)
