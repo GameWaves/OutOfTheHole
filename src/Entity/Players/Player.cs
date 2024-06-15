@@ -114,9 +114,7 @@ public partial class Player : Entity
 				if (!IsOnCeiling()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				//if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
-
-				if (jump && IsOnCeiling())
+				if (jump)
 				{
 					velocity.Y -= JumpVelocity;
 					jump = false;
@@ -128,8 +126,7 @@ public partial class Player : Entity
 				if (!IsOnFloor()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				//if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
-				if (jump && IsOnFloor())
+				if (jump)
 				{
 					velocity.Y += JumpVelocity;
 					jump = false;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c2em77lmsto1a"]
+[gd_scene load_steps=24 format=3 uid="uid://c2em77lmsto1a"]
 
 [ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_yw8ut"]
 [ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_lptt6"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_8w7nm"]
 [ext_resource type="Texture2D" uid="uid://deawxkwaf53ng" path="res://assets/tiles/Corner_right.png" id="5_l41sn"]
 [ext_resource type="Texture2D" uid="uid://drpl4tto1fckc" path="res://assets/tiles/Core_planet.png" id="6_d2of0"]
+[ext_resource type="PackedScene" uid="uid://bigqxjmh6xaow" path="res://src/Entity/Enemies/Boss.tscn" id="6_e7b15"]
 [ext_resource type="Texture2D" uid="uid://uf6i3t62a0y3" path="res://assets/ui/button.png" id="9_6s6l0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_muvmw"]
@@ -55,9 +56,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_inxwy"]
-
 image = SubResource("Image_iu8a1")
-
 
 [sub_resource type="Theme" id="Theme_6q6sw"]
 Button/styles/focus = SubResource("StyleBoxTexture_byud6")
@@ -72,6 +71,7 @@ _player1Scene = ExtResource("2_lptt6")
 _player2Scene = ExtResource("3_x5212")
 _enemy1Scene = ExtResource("4_0snh7")
 _enemy1ReversedScene = ExtResource("5_8w7nm")
+_bossScene = ExtResource("6_e7b15")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(1, 4)
