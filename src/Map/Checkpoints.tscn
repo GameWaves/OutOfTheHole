@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cgb4whcmsxvo5"]
+[gd_scene load_steps=4 format=3 uid="uid://dh7fcdk5ryxrp"]
 
 [ext_resource type="Script" path="res://src/Map/Checkpoints.cs" id="1_1n0ke"]
 [ext_resource type="Texture2D" uid="uid://mry71w7yfaqf" path="res://assets/tiles/TIileset.png" id="2_dp4gg"]
