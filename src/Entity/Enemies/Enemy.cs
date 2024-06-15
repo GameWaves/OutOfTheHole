@@ -18,7 +18,7 @@ namespace OutOfTheHole.Entity.Enemies
 		public bool Reversed;
 		public float Gravity;
 		
-		public int Damage = 30;
+		public int Damage = 10;
 
 		
 		public Vector2 Oldvector;
@@ -137,13 +137,16 @@ namespace OutOfTheHole.Entity.Enemies
 		//death
 		public override void Hurt(int hpLoss,OutofTheHole.Entity.Entity source)
 		{
-			// GD.Print("Agro Source: ",source.Name);
-			aggrosource = source;
-			Hp -= hpLoss;
-			if (Hp <= 0)
+			if (IsInvicible != true)
 			{
-				GD.Print("Killed: ",Name, " ", Multiplayer.GetUniqueId());
-				Death();
+				// GD.Print("Agro Source: ",source.Name);
+				aggrosource = source;
+				Hp -= hpLoss;
+				if (Hp <= 0)
+				{
+					GD.Print("Killed: ",Name, " ", Multiplayer.GetUniqueId());
+					Death();
+				}	
 			}
 		}
 

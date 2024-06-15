@@ -11,7 +11,7 @@ public partial class Player : Entity
 	public string GunType = "Basic";
 	
 	//Set a Jump Height / Jump speed
-	public const float JumpVelocity = -400.0f;
+	public const float JumpVelocity = -250.0f;
 
 	public new static bool Alive;
 
@@ -44,13 +44,14 @@ public partial class Player : Entity
 
 	public new int MaxHp = 100;
 
-	public new float Speed = 200.0f;
-	
+	public new float Speed = 100.0f;
 
+	public bool jump;
 	
 	public bool Reversed;
 	public override void _Ready()
 	{
+		GD.Print(_gunScene);
 		// instantiate the gun of the player 
 		_gunObject = _gunScene.Instantiate<Gun.Gun>();
 		_gunObject.Id = int.Parse(Name);
@@ -83,6 +84,14 @@ public partial class Player : Entity
 		_spirtePlayer.Play("WalkRight");
 	}
 
+	/// <summary>
+	/// Will be called every frame
+	/// </summary>
+	/// <param name="delta"></param>
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+	}
 
 	/// <summary>
 	/// Main loop, will update every 60 frame
@@ -105,8 +114,13 @@ public partial class Player : Entity
 				if (!IsOnCeiling()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
+				//if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
+
+				if (jump && IsOnCeiling())
+				{
 					velocity.Y -= JumpVelocity;
+					jump = false;
+				}
 			}
 			else
 			{
@@ -114,8 +128,12 @@ public partial class Player : Entity
 				if (!IsOnFloor()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
+				//if ((Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
+				if (jump && IsOnFloor())
+				{
 					velocity.Y += JumpVelocity;
+					jump = false;
+				}
 			}
 
 			Vector2 pos = GetGlobalMousePosition();
@@ -183,6 +201,14 @@ public partial class Player : Entity
 
 			//Prepare the gun rotation for the sync and the "Mathf.Lerp".
 			GunRotation = GetNode<Node2D>("Gun").RotationDegrees;
+			if (invicibleTime != 0)
+			{
+				invicibleTime -= 1;
+			}
+			else
+			{
+				IsInvicible = false;
+			}
 		}
 		else
 		{
@@ -208,13 +234,23 @@ public partial class Player : Entity
 	}
 	
 	/// <summary>
-	/// Sends the message to both instances that player should be Hurt, with intensity n and from the source. 
+	/// Sends the message to both instances that player should be Hurt, with intensity n and from the source.
+	/// If the player is invicible, nothing append
 	/// </summary>
 	/// <param name="n"> the amount of damage taken</param>
 	/// <param name="source">Entity That Hurt the player</param>
 	public override void Hurt(int n, Entity source)
 	{
-		Rpc("HurtPlayer", n, source);
+		if (IsInvicible != true)
+		{
+			if (source is Player)
+			{
+				n = 1;
+				jump = true;
+			}
+			Rpc("HurtPlayer", n, source);	
+		}
+		
 	}
 	
 	/// <summary>
@@ -225,13 +261,20 @@ public partial class Player : Entity
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void HurtPlayer(int n, Entity source)
 	{
-		Hp = Hp - n;
-		// GD.Print($"Player {Name} Hurted by {source.Name}, Hp = {Hp}, Managed by {Multiplayer.GetUniqueId()}");
-		if (Hp <= 0)
+		if (IsInvicible != true)
 		{
-			// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
-			Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
+			Hp = Hp - n;
+			GD.Print($"Player {Name} Hurted by {source.Name}, Hp = {Hp}, Managed by {Multiplayer.GetUniqueId()}");
+			if (Hp <= 0)
+			{
+				// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
+				Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
+			}
 		}
+
+		IsInvicible = true;
+		invicibleTime = 50;
+
 	}
 	
 	/// <summary>
@@ -253,4 +296,5 @@ public partial class Player : Entity
 		GD.Print("got picked by body");
 		_gotPicked = true;
 	}
+	
 }

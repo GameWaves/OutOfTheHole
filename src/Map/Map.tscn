@@ -55,7 +55,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_inxwy"]
+
 image = SubResource("Image_iu8a1")
+
 
 [sub_resource type="Theme" id="Theme_6q6sw"]
 Button/styles/focus = SubResource("StyleBoxTexture_byud6")
@@ -129,6 +131,9 @@ position = Vector2(33, 100)
 
 [node name="1" type="Node2D" parent="EnemySpawns" groups=["SpawnPoints"]]
 position = Vector2(23, 36)
+
+[node name="4" type="Node2D" parent="EnemySpawns" groups=["Boss Spawn"]]
+position = Vector2(235, 52)
 
 [node name="Panel3" type="Panel" parent="."]
 offset_left = 218.0
