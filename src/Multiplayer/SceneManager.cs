@@ -53,11 +53,16 @@ public partial class SceneManager : Node2D
 			index++;
 		}
 
-		Boss boss;
-		boss = _bossScene.Instantiate<Boss>();
-		boss.tier = 2;
-		AddChild(boss);
-		boss.GlobalPosition = ((Node2D)GetNode("EnemySpawns/4")).GlobalPosition;
+
+		Array<Node> bossNodes = GetTree().GetNodesInGroup("Boss");
+		foreach (Node2D VARIABLE in bossNodes)
+		{
+			Boss boss;
+			boss = _bossScene.Instantiate<Boss>();
+			boss.tier = 2;
+			AddChild(boss);
+			boss.GlobalPosition = VARIABLE.GlobalPosition;
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
