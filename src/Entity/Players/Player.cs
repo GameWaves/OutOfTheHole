@@ -225,7 +225,7 @@ public partial class Player : Entity
 	/// </summary>
 	/// <param name="target"></param>
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void KillPlayer(Entity target)
+	public void KillPlayer()
 	{
 		
 		Position = Spawn;
@@ -299,8 +299,8 @@ public partial class Player : Entity
 
 	private void _on_hit_box_map_body_entered(Node2D body)
 	{
-		GD.Print("got picked by body");
-		HurtPlayer(MaxHp,new Enemy());
+		GD.Print("got spiked by body");
+		KillPlayer();
 	}
 	
 }

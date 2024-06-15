@@ -90,7 +90,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r5u4d"]
-size = Vector2(11, 17)
+size = Vector2(13, 19)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Cam")]
 position = Vector2(1, 0)
