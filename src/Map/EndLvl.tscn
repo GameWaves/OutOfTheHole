@@ -4,20 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://b1iayqk2tclgd" path="res://assets/tiles/TIileset.png" id="1_vgjbc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hcho5"]
-size = Vector2(24, 20)
+size = Vector2(17, 18)
 
 [node name="EndLvl" type="Node2D"]
 script = ExtResource("1_2l1fx")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_vgjbc")
-hframes = 10
-vframes = 6
-frame = 39
-
-[node name="SpriteReversed" type="Sprite2D" parent="."]
-rotation = 3.14159
-scale = Vector2(1, 0.9375)
+rotation = -1.5708
 texture = ExtResource("1_vgjbc")
 hframes = 10
 vframes = 6
@@ -26,7 +19,7 @@ frame = 39
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -1)
+position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_hcho5")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
