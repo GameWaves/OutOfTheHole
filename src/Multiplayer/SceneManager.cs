@@ -90,12 +90,40 @@ public partial class SceneManager : Node2D
 
 
 	}
-	
-
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	/// <summary>
+	/// Handles all the enemy spawning logic
+	/// </summary>
+	/// <param name="cycle">Spawn Position cycle</param>
+	/// <param name="reversed">Whether the enemy should be a reversed or a normal one</param>
+	/// <param name="name">The name of the enemy (Enemy_X)</param>
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void SpawnEnemy(int cycle, bool reversed, StringName name)
+	{
+
+	}
+	/// <summary>
+	/// Function called by the host's _Process() function to spawn an enemy.
+	/// It alternates between reversed and normal enemies.
+	/// It makes a rpc call in TCP mode for the "secondary player" and directly calls the SpawnEnemy function for the Host.
+	/// This Method consists of "The Host is the server and a client at the same time"
+	/// </summary>
+	public void InitEnemy()
+	{
+		bool reversed = _cyclespawn%3 == 0;
+
+		StringName name = new StringName($"Enemy_{_enemyCount}"); //unique identifier for each enemy (could be replaced by UUID)
+		_enemyCount++;
+		// GD.Print($"Enemy Init : {Multiplayer.GetUniqueId()}");
+
+		SpawnEnemy(_cyclespawn%2, reversed, name); //Spawn Call for the host
+		Rpc("SpawnEnemy", _cyclespawn%2, reversed, name); //Spawn Call for the Player 2
+		_cyclespawn++;
 	}
 	
 	public override void _UnhandledInput(InputEvent @event)

@@ -1,20 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b5k5cgdn0wovh"]
+[gd_scene load_steps=2 format=3 uid="uid://b5k5cgdn0wovh"]
 
-[ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_fpykl"]
 [ext_resource type="TileSet" uid="uid://m7ypucnbnhgl" path="res://assets/tiles/TileSet.tres" id="1_qwsjo"]
-[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_8yu7i"]
-[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_ta6bv"]
-[ext_resource type="PackedScene" uid="uid://jiaef84oed5c" path="res://src/Entity/Enemies/Enemy1.tscn" id="4_t71qa"]
-[ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_krfw6"]
-[ext_resource type="PackedScene" uid="uid://bigqxjmh6xaow" path="res://src/Entity/Enemies/Boss.tscn" id="6_3b26o"]
 
 [node name="Map4" type="Node2D"]
-script = ExtResource("1_fpykl")
-_player1Scene = ExtResource("2_8yu7i")
-_player2Scene = ExtResource("3_ta6bv")
-_enemy1Scene = ExtResource("4_t71qa")
-_enemy1ReversedScene = ExtResource("5_krfw6")
-_bossScene = ExtResource("6_3b26o")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(143, 0)

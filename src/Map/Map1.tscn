@@ -60,10 +60,10 @@ spawn_path = NodePath("..")
 [node name="Checkpoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="Checkpoints"]
-position = Vector2(1908, 120)
+position = Vector2(1862, 66)
 
 [node name="1" type="Node2D" parent="Checkpoints"]
-position = Vector2(64, 151)
+position = Vector2(1880, 90)
 
 [node name="2" parent="Checkpoints" instance=ExtResource("7_3xeek")]
 position = Vector2(265, 70)
@@ -83,5 +83,8 @@ position = Vector2(1225, 54)
 [node name="7" parent="Checkpoints" instance=ExtResource("7_3xeek")]
 position = Vector2(1224, 121)
 
-[node name="EndLvl" parent="." instance=ExtResource("9_p8ead")]
-position = Vector2(1913, 94)
+[node name="100" parent="." instance=ExtResource("9_p8ead")]
+position = Vector2(1909, 57)
+
+[node name="101" parent="." instance=ExtResource("9_p8ead")]
+position = Vector2(1909, 121)
