@@ -24,12 +24,12 @@ public partial class Checkpoints : Node2D
 			if (int.Parse(player.Name) == 1 && int.Parse(Name) % 2 != 0)
 			{
 				GD.Print($"player {player.Name} pass the checkpoint");
-				((Player)player).Spawn = this.Position;
+				((Player)player).Spawn = this.GlobalPosition;
 			}
 			else if (int.Parse(player.Name) != 1 && int.Parse(Name) % 2 == 0)
 			{
 				GD.Print($"player {player.Name} pass the checkpoint");
-				((Player)player).Spawn = this.Position;
+				((Player)player).Spawn = this.GlobalPosition;
 			}
 		}
 	}

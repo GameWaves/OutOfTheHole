@@ -231,7 +231,7 @@ public partial class Player : Entity
 	public void KillPlayer()
 	{
 		
-		Position = Spawn;
+		GlobalPosition = Spawn;
 		Hp = MaxHp;
 		Alive = true;
 		//Death();
@@ -290,10 +290,10 @@ public partial class Player : Entity
 	public void Teleport(float X, float Y, bool rpc)
 	{
 		GD.Print("HEY ", Multiplayer.GetUniqueId()," " , Multiplayer.GetPeers()[0]);
-		Vector2 temp = Position;
-		temp.X += 400;
+		// Vector2 temp = Position;
+		// temp.X += 400;
 
-		Position = temp;
+		Position = new Vector2(X, Y);
 		
 		if (rpc == false)
 		{

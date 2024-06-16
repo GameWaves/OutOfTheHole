@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2scipkfpf3m1"]
+[gd_scene load_steps=4 format=3 uid="uid://k2hxcnswlefa"]
 
 [ext_resource type="TileSet" uid="uid://m7ypucnbnhgl" path="res://assets/tiles/TileSet.tres" id="1_ldlh7"]
 [ext_resource type="PackedScene" uid="uid://dh7fcdk5ryxrp" path="res://src/Map/Checkpoints.tscn" id="2_doltx"]
@@ -29,10 +29,16 @@ position = Vector2(869, 118)
 [node name="Checkpoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="Checkpoints"]
-position = Vector2(86, 47)
+position = Vector2(56, 47)
 
 [node name="1" type="Node2D" parent="Checkpoints"]
 position = Vector2(86, 204)
+
+[node name="7" parent="Checkpoints" instance=ExtResource("2_doltx")]
+position = Vector2(86, 216)
+
+[node name="6" parent="Checkpoints" instance=ExtResource("2_doltx")]
+position = Vector2(57, 22)
 
 [node name="2" parent="Checkpoints" instance=ExtResource("2_doltx")]
 position = Vector2(235, 151)

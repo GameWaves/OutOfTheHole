@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cckh2mis25ged"]
+[gd_scene load_steps=11 format=3 uid="uid://c8abu8jhyca8c"]
 
 [ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_os2sk"]
 [ext_resource type="PackedScene" uid="uid://pon8jmgidg3t" path="res://src/Map/Map1.tscn" id="2_plr7r"]
 [ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_a1mgh"]
-[ext_resource type="PackedScene" uid="uid://b2scipkfpf3m1" path="res://src/Map/Map2.tscn" id="3_s7jfs"]
-[ext_resource type="PackedScene" uid="uid://k2hxcnswlefa" path="res://src/Map/Map3.tscn" id="4_fs85y"]
+[ext_resource type="PackedScene" uid="uid://k2hxcnswlefa" path="res://src/Map/Map2.tscn" id="4_fs85y"]
 [ext_resource type="PackedScene" uid="uid://jiaef84oed5c" path="res://src/Entity/Enemies/Enemy1.tscn" id="4_g6dma"]
 [ext_resource type="PackedScene" uid="uid://b5k5cgdn0wovh" path="res://src/Map/Map4.tscn" id="5_o6vk3"]
 [ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_xnio6"]
@@ -23,7 +22,7 @@ _firstMap = NodePath("Map")
 
 [node name="Map" parent="." instance=ExtResource("2_plr7r")]
 
-[node name="Map2" parent="." instance=ExtResource("3_s7jfs")]
+[node name="Map2" parent="." instance=ExtResource("4_fs85y")]
 position = Vector2(2238, 0)
 
 [node name="Map3" parent="." instance=ExtResource("4_fs85y")]

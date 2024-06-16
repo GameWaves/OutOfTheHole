@@ -7,7 +7,7 @@ public partial class EndLvl : Node2D
 {
 
 	[Export] private string _dest;
-	private string _origin = "Map";
+	[Export] private string _origin;
 	
 	public Player P1 = GameManager.Players[0].Player;
 	public Player P2 = GameManager.Players[1].Player;
@@ -39,11 +39,27 @@ public partial class EndLvl : Node2D
 				if (child.GetNode(_origin) != null)
 					Origin = child.GetNode(_origin);
 			}
+			
+			Vector2 Spawn1 = Dest.GetNode("Checkpoints").GetNode<Node2D>("1").GlobalPosition;
+			Vector2 Spawn2 = Dest.GetNode("Checkpoints").GetNode<Node2D>("0").GlobalPosition;
 
+			
+			bool authHasSpawned = false;
+
+			int i = 0;
+			
 			foreach (var child in Origin.GetChildren())
 			{
 				if (child is Player)
-					((Player)child).Teleport(0,0, false);
+					if (i == 0)
+					{
+						((Player)child).Teleport(Spawn1.X,Spawn1.Y, false);
+						i++;
+					}
+					else
+					{
+						((Player)child).Teleport(Spawn2.X,Spawn2.Y, false);
+					}
 			}
 			
 			

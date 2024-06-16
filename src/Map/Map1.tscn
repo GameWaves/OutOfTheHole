@@ -72,5 +72,6 @@ position = Vector2(1225, 54)
 position = Vector2(1224, 121)
 
 [node name="101" parent="." instance=ExtResource("9_p8ead")]
-position = Vector2(1896, 89)
+position = Vector2(1905, 91)
 _dest = "Map2"
+_origin = "Map"
