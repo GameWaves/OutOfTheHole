@@ -36,10 +36,16 @@ position = Vector2(1648, 258)
 [node name="Checkpoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="Checkpoints"]
-position = Vector2(86, 47)
+position = Vector2(210, 45)
+
+[node name="9" parent="Checkpoints" instance=ExtResource("2_iqp7u")]
+position = Vector2(220, 565)
+
+[node name="8" parent="Checkpoints" instance=ExtResource("2_iqp7u")]
+position = Vector2(210, 21)
 
 [node name="1" type="Node2D" parent="Checkpoints"]
-position = Vector2(60, 512)
+position = Vector2(216, 497)
 
 [node name="2" parent="Checkpoints" instance=ExtResource("2_iqp7u")]
 position = Vector2(752, 313)
@@ -56,4 +62,4 @@ position = Vector2(1123, 329)
 [node name="100" parent="." instance=ExtResource("3_rmy2p")]
 position = Vector2(1718, 257)
 _dest = "Map5"
-_origin = "Map4"
+_origin = "Map3"

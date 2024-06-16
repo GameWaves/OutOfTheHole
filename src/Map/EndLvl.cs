@@ -30,12 +30,19 @@ public partial class EndLvl : Node2D
 			SceneManager.lvl += 1;
 			GD.Print("LVL: ", SceneManager.lvl);
 
+			Node Master = new Node();
+			
+			GD.Print(GetTree().Root.GetNode("MapMaster"));
 
 			foreach (var child in GetTree().Root.GetChildren())
 			{
 				GD.Print("DEST: ", child);
 				if (child.GetNode(_dest) != null)
+				{
+					Master = child;
 					Dest = child.GetNode(_dest);
+				}
+					
 				if (child.GetNode(_origin) != null)
 					Origin = child.GetNode(_origin);
 			}
@@ -43,23 +50,27 @@ public partial class EndLvl : Node2D
 			Vector2 Spawn1 = Dest.GetNode("Checkpoints").GetNode<Node2D>("1").GlobalPosition;
 			Vector2 Spawn2 = Dest.GetNode("Checkpoints").GetNode<Node2D>("0").GlobalPosition;
 
+			GD.Print(Spawn1, Spawn2);
 			
 			bool authHasSpawned = false;
 
 			int i = 0;
 			
-			foreach (var child in Origin.GetChildren())
+			foreach (var map in Master.GetChildren())
 			{
-				if (child is Player)
-					if (i == 0)
-					{
-						((Player)child).Teleport(Spawn1.X,Spawn1.Y, false);
-						i++;
-					}
-					else
-					{
-						((Player)child).Teleport(Spawn2.X,Spawn2.Y, false);
-					}
+				foreach (Node child in map.GetChildren())
+				{
+					if (child is Player)
+						if (i == 0)
+						{
+							((Player)child).Teleport(Spawn1.X,Spawn1.Y, false);
+							i++;
+						}
+						else
+						{
+							((Player)child).Teleport(Spawn2.X,Spawn2.Y, false);
+						}
+				}
 			}
 			
 			

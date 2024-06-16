@@ -38,6 +38,12 @@ position = Vector2(1822, 312)
 [node name="5" parent="Checkpoints" instance=ExtResource("2_j60il")]
 position = Vector2(2022, 248)
 
+[node name="9" parent="Checkpoints" instance=ExtResource("2_j60il")]
+position = Vector2(81, 778)
+
+[node name="8" parent="Checkpoints" instance=ExtResource("2_j60il")]
+position = Vector2(85, 21)
+
 [node name="100" parent="." instance=ExtResource("3_qppc8")]
 position = Vector2(3381, 369)
 _dest = "Map"

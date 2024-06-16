@@ -18,9 +18,9 @@ _player2Scene = ExtResource("3_a1mgh")
 _enemy1Scene = ExtResource("4_g6dma")
 _enemy1ReversedScene = ExtResource("5_xnio6")
 _bossScene = ExtResource("6_6glw8")
-_firstMap = NodePath("Map")
+_firstMap = NodePath("Map1")
 
-[node name="Map" parent="." instance=ExtResource("2_plr7r")]
+[node name="Map1" parent="." instance=ExtResource("2_plr7r")]
 
 [node name="Map2" parent="." instance=ExtResource("4_fs85y")]
 position = Vector2(2238, 0)
