@@ -50,6 +50,9 @@ public partial class Player : Entity
 	public bool jump;
 	
 	public bool Reversed;
+
+	
+	
 	public override void _Ready()
 	{
 		GD.Print(_gunScene);
@@ -281,6 +284,22 @@ public partial class Player : Entity
 		IsInvicible = true;
 		invicibleTime = 50;
 
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void Teleport(float X, float Y, bool rpc)
+	{
+		GD.Print("HEY ", Multiplayer.GetUniqueId()," " , Multiplayer.GetPeers()[0]);
+		Vector2 temp = Position;
+		temp.X += 400;
+
+		Position = temp;
+		
+		if (rpc == false)
+		{
+			GD.Print("CHEERS");
+			// RpcId(Multiplayer.GetPeers()[0], "Teleport", 0,0, true);
+		}
 	}
 	
 	/// <summary>

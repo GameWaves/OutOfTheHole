@@ -1,22 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://pon8jmgidg3t"]
+[gd_scene load_steps=4 format=3 uid="uid://pon8jmgidg3t"]
 
-[ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_sltxc"]
-[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_rpwrp"]
-[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_elbok"]
-[ext_resource type="PackedScene" uid="uid://jiaef84oed5c" path="res://src/Entity/Enemies/Enemy1.tscn" id="4_xgvqn"]
-[ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_5137g"]
 [ext_resource type="TileSet" uid="uid://m7ypucnbnhgl" path="res://assets/tiles/TileSet.tres" id="6_1nsat"]
-[ext_resource type="PackedScene" uid="uid://bigqxjmh6xaow" path="res://src/Entity/Enemies/Boss.tscn" id="6_iskit"]
 [ext_resource type="PackedScene" uid="uid://dh7fcdk5ryxrp" path="res://src/Map/Checkpoints.tscn" id="7_3xeek"]
 [ext_resource type="PackedScene" uid="uid://bq2s6eqymgd4s" path="res://src/Map/EndLvl.tscn" id="9_p8ead"]
 
 [node name="Map" type="Node2D"]
-script = ExtResource("1_sltxc")
-_player1Scene = ExtResource("2_rpwrp")
-_player2Scene = ExtResource("3_elbok")
-_enemy1Scene = ExtResource("4_xgvqn")
-_enemy1ReversedScene = ExtResource("5_5137g")
-_bossScene = ExtResource("6_iskit")
 
 [node name="Boss" type="Node2D" parent="." groups=["Boss"]]
 position = Vector2(1862, 89)
@@ -83,8 +71,6 @@ position = Vector2(1225, 54)
 [node name="7" parent="Checkpoints" instance=ExtResource("7_3xeek")]
 position = Vector2(1224, 121)
 
-[node name="100" parent="." instance=ExtResource("9_p8ead")]
-position = Vector2(1909, 57)
-
 [node name="101" parent="." instance=ExtResource("9_p8ead")]
-position = Vector2(1909, 121)
+position = Vector2(1896, 89)
+_dest = "Map2"

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dh7fcdk5ryxrp" path="res://src/Map/Checkpoints.tscn" id="2_j60il"]
 [ext_resource type="PackedScene" uid="uid://bq2s6eqymgd4s" path="res://src/Map/EndLvl.tscn" id="3_qppc8"]
 
-[node name="Map5" type="Node2D"]
+[node name="Map" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(-1, 0)

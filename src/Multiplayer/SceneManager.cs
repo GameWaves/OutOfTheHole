@@ -16,6 +16,8 @@ public partial class SceneManager : Node2D
 	[Export] private PackedScene _enemy1Scene;
 	[Export] private PackedScene _enemy1ReversedScene;
 	[Export] private PackedScene _bossScene;
+
+	[Export] private Node _firstMap;
 	
 	
 	public int CouldownSumon = 0;
@@ -52,7 +54,7 @@ public partial class SceneManager : Node2D
 			}
 
 			currentPlayer.Name = item.Id.ToString();
-			AddChild(currentPlayer);
+			_firstMap.AddChild(currentPlayer);
 			index++;
 		}
 
