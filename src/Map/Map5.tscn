@@ -46,8 +46,8 @@ position = Vector2(85, 21)
 
 [node name="100" parent="." instance=ExtResource("3_qppc8")]
 position = Vector2(3381, 369)
-_dest = "Map"
-_origin = "Map5"
+_dest = "Map6"
+_origin = "Map4"
 
 [node name="Boss" type="Node2D" parent="." groups=["Boss"]]
 position = Vector2(3315, 370)

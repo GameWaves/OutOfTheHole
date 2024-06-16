@@ -30,6 +30,7 @@ public partial class SceneManager : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		lvl = 1;
 		var index = 0;
 		foreach (var item in GameManager.Players)
 		{
@@ -59,17 +60,10 @@ public partial class SceneManager : Node2D
 		}
 
 
-		Array<Node> bossNodes = GetTree().GetNodesInGroup("Boss");
-		foreach (Node2D VARIABLE in bossNodes)
-		{
-			Boss boss;
-			boss = _bossScene.Instantiate<Boss>();
-			boss.tier = 2;
-			AddChild(boss);
-			boss.GlobalPosition = VARIABLE.GlobalPosition;
-		}
 		
-		Array<Node> eNodes = GetTree().GetNodesInGroup("EnemySpawnPoints");
+		
+		Array<Node> eNodes = GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").GetTree().GetNodesInGroup("EnemySpawnPoints");
+		GD.Print("NODES: ", eNodes.Count);
 		foreach (Node2D VARIABLE in eNodes)
 		{
 			Enemy enemy;
@@ -86,8 +80,16 @@ public partial class SceneManager : Node2D
 			AddChild(enemy);
 			enemy.GlobalPosition = VARIABLE.GlobalPosition;
 		}
-
-		lvl = 1;
+		
+		Array<Node> bossNodes = GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").GetTree().GetNodesInGroup("Boss");
+		foreach (Node2D VARIABLE in bossNodes)
+		{
+			Boss boss;
+			boss = _bossScene.Instantiate<Boss>();
+			boss.tier = 1;
+			GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").AddChild(boss);	
+			boss.GlobalPosition = VARIABLE.GlobalPosition;
+		}
 
 
 

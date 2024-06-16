@@ -100,9 +100,10 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ta0xx"]
 size = Vector2(12, 20)
 
-[node name="Player2" type="CharacterBody2D"]
+[node name="Player2" type="CharacterBody2D" node_paths=PackedStringArray("Cam")]
 script = ExtResource("1_77yes")
 _gunScene = ExtResource("2_klm4n")
+Cam = NodePath("Cam1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)
