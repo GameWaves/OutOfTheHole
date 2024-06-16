@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://k2hxcnswlefa"]
+[gd_scene load_steps=4 format=3 uid="uid://c3ky7yx1dj2ng"]
 
 [ext_resource type="TileSet" uid="uid://m7ypucnbnhgl" path="res://assets/tiles/TileSet.tres" id="1_r50al"]
 [ext_resource type="PackedScene" uid="uid://bq2s6eqymgd4s" path="res://src/Map/EndLvl.tscn" id="2_6n54d"]
@@ -25,6 +25,8 @@ position = Vector2(355, 50)
 
 [node name="100" parent="." instance=ExtResource("2_6n54d")]
 position = Vector2(1772, 276)
+_dest = "Map4"
+_origin = "Map2"
 
 [node name="Boss" type="Node2D" parent="." groups=["Boss"]]
 position = Vector2(1720, 274)

@@ -29,10 +29,10 @@ position = Vector2(869, 118)
 [node name="Checkpoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="Checkpoints"]
-position = Vector2(56, 47)
+position = Vector2(889, 96)
 
 [node name="1" type="Node2D" parent="Checkpoints"]
-position = Vector2(86, 204)
+position = Vector2(891, 149)
 
 [node name="7" parent="Checkpoints" instance=ExtResource("2_doltx")]
 position = Vector2(86, 216)
@@ -54,3 +54,5 @@ position = Vector2(588, 217)
 
 [node name="100" parent="." instance=ExtResource("3_dleo8")]
 position = Vector2(935, 121)
+_dest = "Map3"
+_origin = "Map"
