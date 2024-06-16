@@ -1,84 +1,111 @@
-[gd_scene load_steps=14 format=3 uid="uid://bhx6odnew5x1o"]
+[gd_scene load_steps=10 format=3 uid="uid://bhx6odnew5x1o"]
 
 [ext_resource type="Script" path="res://src/Entity/Enemies/Enemy.cs" id="1_mcut5"]
-[ext_resource type="Texture2D" uid="uid://bsui5hmkgn02x" path="res://assets/sprites/Placeholder_enemy_idle2_R.png" id="2_vcinh"]
-[ext_resource type="Texture2D" uid="uid://rup1quhs44bw" path="res://assets/sprites/Placeholder_enemy_idle3_R.png" id="3_sjgh0"]
-[ext_resource type="Texture2D" uid="uid://busxogoaiw8ko" path="res://assets/sprites/Placeholder_enemy_idle_R.png" id="4_km30a"]
-[ext_resource type="Texture2D" uid="uid://c7tl7lt5riym0" path="res://assets/sprites/Placeholder_enemy_left2_R.png" id="5_x36yc"]
-[ext_resource type="Texture2D" uid="uid://1ajuq1jq2rhp" path="res://assets/sprites/Placeholder_enemy_left_R.png" id="6_poxwe"]
-[ext_resource type="Texture2D" uid="uid://b2paqjqp0fc6b" path="res://assets/sprites/Placeholder-Right2_R.png" id="7_qc4bo"]
-[ext_resource type="Texture2D" uid="uid://krbuy1tlvko2" path="res://assets/sprites/Placeholder-Right1_R.png" id="8_xd85k"]
+[ext_resource type="Texture2D" uid="uid://d15ljf1p6ncky" path="res://assets/sprites/Enemy2-Sheet.png" id="2_s43pw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ug518"]
-size = Vector2(18, 26)
+size = Vector2(58.1818, 56.6364)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_bpwht"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_s8ldg"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_vcinh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_sjgh0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_km30a")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}]
+[sub_resource type="Animation" id="Animation_enfnb"]
+resource_name = "RunLeft"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
+}
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_lduwi"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_x36yc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_poxwe")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="Animation" id="Animation_lawbe"]
+resource_name = "RunRight"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_os3nu"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_qc4bo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_xd85k")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="Animation" id="Animation_3hkkn"]
+resource_name = "WalkLeft"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_q1are"]
+resource_name = "WalkRight"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7x6cx"]
+_data = {
+"RunLeft": SubResource("Animation_enfnb"),
+"RunRight": SubResource("Animation_lawbe"),
+"WalkLeft": SubResource("Animation_3hkkn"),
+"WalkRight": SubResource("Animation_q1are")
+}
 
 [node name="Enemy" type="CharacterBody2D"]
 scale = Vector2(0.275, 0.275)
 script = ExtResource("1_mcut5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -3)
+position = Vector2(2.08165e-12, 29)
 shape = SubResource("RectangleShape2D_ug518")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_bpwht")
 
-[node name="Idle" type="AnimatedSprite2D" parent="."]
-position = Vector2(-2, -4)
-sprite_frames = SubResource("SpriteFrames_s8ldg")
-animation = &"idle"
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, 38.2727)
+scale = Vector2(3, 3)
+texture = ExtResource("2_s43pw")
+hframes = 16
+frame = 12
 
-[node name="WalkLeft" type="AnimatedSprite2D" parent="."]
-position = Vector2(-2, -4)
-sprite_frames = SubResource("SpriteFrames_lduwi")
-
-[node name="Walkright" type="AnimatedSprite2D" parent="."]
-position = Vector2(-2, -4)
-sprite_frames = SubResource("SpriteFrames_os3nu")
+[node name="Animations" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7x6cx")
+}

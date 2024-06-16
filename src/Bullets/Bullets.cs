@@ -21,7 +21,7 @@ public abstract partial class Bullets : RigidBody2D
 		
 	}
 
-	public OutofTheHole.Entity.Entity source;
+	public OutofTheHole.Entity.Entity Source;
 	
 	//lifspan of bullet
 	public int Longetivity { get; set; }
@@ -59,6 +59,7 @@ public abstract partial class Bullets : RigidBody2D
 
 	private void _on_area_2d_body_entered(Node2D body)
 	{
+		// GD.Print($"Bullet from {source.Name} hit {body.Name}");
 		OnHit(body);
 	}
 }

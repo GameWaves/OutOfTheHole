@@ -22,6 +22,8 @@ public partial class MultiplayerController : CanvasLayer
 
 	private List<string> _addrArray = new List<string>();
 
+	[Export] private PackedScene _nextScene;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -93,10 +95,10 @@ public partial class MultiplayerController : CanvasLayer
 	{
 		GD.Print("PlayerInfo connected: " + id);
 		GetNode<Button>(
-				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButton")
+				"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartGameButton")
 			.Disabled = false;
 		GetNode<Button>(
-			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartButton").Show();
+			"MenuMarginContainer/MenuVBoxContainer/ButtonContainer/StartGameButton").Show();
 		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/JoinButton")
 			.Hide();
 		GetNode<Button>("MenuMarginContainer/MenuVBoxContainer/ButtonContainer/HostButton")
@@ -202,7 +204,7 @@ public partial class MultiplayerController : CanvasLayer
 	private void StartGame()
 	{
 		foreach (var item in GameManager.Players) GD.Print(item.Name + " is playing");
-		var scene = ResourceLoader.Load<PackedScene>("res://src/Map/Map.tscn").Instantiate<Node2D>();
+		var scene = _nextScene.Instantiate<Node2D>();
 		GetTree().Root.AddChild(scene);
 		Hide();
 	}

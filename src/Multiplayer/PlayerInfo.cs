@@ -1,3 +1,5 @@
+using OutofTheHole.Entity.Players;
+
 namespace OutofTheHole.Multiplayer;
 
 public class PlayerInfo
@@ -6,4 +8,5 @@ public class PlayerInfo
 	public string Name;
 	public int Role; //Can be Player 1 or 2
 	public int Score;
+	public Player Player;
 }

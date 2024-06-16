@@ -32,13 +32,12 @@ public abstract partial class Entity : CharacterBody2D
 	//hpLoss is the amount of damage 
 	public abstract void Hurt(int hpLoss,Entity source);
 
-	public void Death()
+	public bool IsInvicible { get; set; } = false;
+	public int invicibleTime { get; protected set; } = 0;
+
+	public virtual void Death()
 	{
 		Alive = false;
-		//hide the entity 
-		_idleSprite.Visible = false;
-		_walkright.Visible = false;
-		_walkleft.Visible = false;
 		QueueFree();
 		if (IsQueuedForDeletion()) Free();
 	}

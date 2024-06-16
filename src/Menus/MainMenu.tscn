@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bj8r0766uo6ap"]
+[gd_scene load_steps=11 format=3 uid="uid://bj8r0766uo6ap"]
 
 [ext_resource type="Script" path="res://src/Menus/MainMenu.cs" id="1_ee6e6"]
 [ext_resource type="Texture2D" uid="uid://cv4qb088la36g" path="res://assets/background/Background_000.png" id="2_8up6o"]
+[ext_resource type="PackedScene" uid="uid://dep5hldcbeksn" path="res://src/Menus/InputSettings/InputSettings.tscn" id="2_jnx0k"]
 [ext_resource type="FontFile" uid="uid://ckhbd0myqg3k3" path="res://assets/fonts/BrokenConsole/Broken Console Regular.ttf" id="2_rah62"]
 [ext_resource type="Theme" uid="uid://c5ucyskhud1l2" path="res://assets/ui/MenuTheme.tres" id="3_apybp"]
 [ext_resource type="Texture2D" uid="uid://dba4vh6q4f5es" path="res://assets/ui/container.png" id="5_3e2fx"]
@@ -66,47 +67,50 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rah62")
 text = "exit"
 
-[node name="OptionsTexture" type="TextureRect" parent="."]
+[node name="OptionsMenu" type="CanvasLayer" parent="."]
+
+[node name="OptionsTexture" type="TextureRect" parent="OptionsMenu"]
 offset_left = 700.0
 offset_top = 300.0
 offset_right = 1220.0
 offset_bottom = 780.0
 texture = ExtResource("5_3e2fx")
 
-[node name="OptionsButtons" type="VBoxContainer" parent="."]
+[node name="OptionsButtons" type="VBoxContainer" parent="OptionsMenu"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -176.0
-offset_top = -123.0
+offset_top = -69.0
 offset_right = 177.0
-offset_bottom = 170.0
+offset_bottom = 111.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 5
 theme = ExtResource("3_apybp")
 
-[node name="Volume" type="Button" parent="OptionsButtons"]
-layout_mode = 2
-text = "Volume
-"
-
-[node name="Keymaps" type="Button" parent="OptionsButtons"]
+[node name="Keymaps" type="Button" parent="OptionsMenu/OptionsButtons"]
 layout_mode = 2
 text = "Keymap"
 
-[node name="Back" type="Button" parent="OptionsButtons"]
+[node name="Back" type="Button" parent="OptionsMenu/OptionsButtons"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_yumbm")
 theme_override_styles/hover = SubResource("StyleBoxTexture_cogrj")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_06b4n")
 text = " "
 
+[node name="KeymapMenu" type="CanvasLayer" parent="."]
+
+[node name="InputSettings" parent="KeymapMenu" instance=ExtResource("2_jnx0k")]
+visible = false
+
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/PlayButton" to="." method="_on_play_button_button_down"]
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/OptionButton" to="." method="_on_option_button_button_down"]
 [connection signal="pressed" from="MenuMarginContainer/MenuVBoxContainer/OptionButton" to="." method="_on_option_button_pressed"]
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/CreditsButton" to="." method="_on_credits_button_button_down"]
 [connection signal="button_down" from="MenuMarginContainer/MenuVBoxContainer/ExitButton" to="." method="_on_exit_button_button_down"]
-[connection signal="button_down" from="OptionsButtons/Back" to="." method="_on_back_button_down"]
+[connection signal="button_down" from="OptionsMenu/OptionsButtons/Keymaps" to="." method="_on_keymaps_button_down"]
+[connection signal="button_down" from="OptionsMenu/OptionsButtons/Back" to="." method="_on_back_button_down"]

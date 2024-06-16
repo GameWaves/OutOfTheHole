@@ -15,13 +15,22 @@ public partial class SceneManager : Node2D
 	[Export] private PackedScene _player2Scene;
 	[Export] private PackedScene _enemy1Scene;
 	[Export] private PackedScene _enemy1ReversedScene;
+	[Export] private PackedScene _bossScene;
 
+	[Export] private Node _firstMap;
+	
+	
 	public int CouldownSumon = 0;
-	private int cyclespawn = 0;
+	private int _cyclespawn = 0;
+
+	public static int lvl;
+	
+	private int _enemyCount = 0; // counts the number of enemies that have been spawned in the game.
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		lvl = 1;
 		var index = 0;
 		foreach (var item in GameManager.Players)
 		{
@@ -31,12 +40,14 @@ public partial class SceneManager : Node2D
 				currentPlayer = _player1Scene.Instantiate<Player>();
 				currentPlayer.Name = item.Id.ToString();
 				currentPlayer.Reversed = false;
+				item.Player = currentPlayer;
 			}
 			else if (item.Role == 2)
 			{
 				currentPlayer = _player2Scene.Instantiate<Player>();
 				currentPlayer.Gravity = -currentPlayer.Gravity;
 				currentPlayer.Reversed = true;
+				item.Player = currentPlayer;
 			}
 			else
 			{
@@ -44,64 +55,102 @@ public partial class SceneManager : Node2D
 			}
 
 			currentPlayer.Name = item.Id.ToString();
-			AddChild(currentPlayer);
-			foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("SpawnPoints"))
-				if (int.Parse(spawnPoint.Name) == index)
-					currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
+			_firstMap.AddChild(currentPlayer);
 			index++;
 		}
+
+
 		
+		
+		Array<Node> eNodes = GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").GetTree().GetNodesInGroup("EnemySpawnPoints");
+		GD.Print("NODES: ", eNodes.Count);
+		foreach (Node2D VARIABLE in eNodes)
+		{
+			Enemy enemy;
+			if (int.Parse(VARIABLE.Name) % 2 == 0)
+			{
+				enemy = _enemy1ReversedScene.Instantiate<Enemy>();
+				enemy.Reversed = true;
+			}
+			else
+			{
+				enemy = _enemy1Scene.Instantiate<Enemy>();
+				enemy.Reversed = false;
+			}
+			AddChild(enemy);
+			enemy.GlobalPosition = VARIABLE.GlobalPosition;
+		}
+		
+		Array<Node> bossNodes = GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").GetTree().GetNodesInGroup("Boss");
+		foreach (Node2D VARIABLE in bossNodes)
+		{
+			Boss boss;
+			boss = _bossScene.Instantiate<Boss>();
+			boss.tier = 1;
+			GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").AddChild(boss);	
+			boss.GlobalPosition = VARIABLE.GlobalPosition;
+		}
+
+
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
-		//temporary feature : summon ennemy
-		CouldownSumon -= 1;
-		if (CouldownSumon < 0)
-		{
-			InitEnemy();
-			CouldownSumon = 500;
-		}
 	}
 
+	/// <summary>
+	/// Handles all the enemy spawning logic
+	/// </summary>
+	/// <param name="cycle">Spawn Position cycle</param>
+	/// <param name="reversed">Whether the enemy should be a reversed or a normal one</param>
+	/// <param name="name">The name of the enemy (Enemy_X)</param>
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void SpawnEnemy(int cycle, bool reversed, StringName name)
+	{
+
+	}
+	/// <summary>
+	/// Function called by the host's _Process() function to spawn an enemy.
+	/// It alternates between reversed and normal enemies.
+	/// It makes a rpc call in TCP mode for the "secondary player" and directly calls the SpawnEnemy function for the Host.
+	/// This Method consists of "The Host is the server and a client at the same time"
+	/// </summary>
 	public void InitEnemy()
 	{
-		
-		Array<Node> ES = GetTree().GetNodesInGroup("Enemy_1_spawn");
-		
-		if (cyclespawn%3 == 0)
-		{
-			Enemy enemy1_Rev;
-			enemy1_Rev = _enemy1ReversedScene.Instantiate<Enemy>();
-			enemy1_Rev.Reversed = true;
-			AddChild(enemy1_Rev);
-			enemy1_Rev.GlobalPosition = ((Node2D)ES[cyclespawn%2]).GlobalPosition;
+		bool reversed = _cyclespawn%3 == 0;
 
-		}
-		else
-		{
-			Enemy enemy1;
-			enemy1 = _enemy1Scene.Instantiate<Enemy>();
-			enemy1.Reversed = false;
-			AddChild(enemy1);
-			enemy1.GlobalPosition = ((Node2D)ES[cyclespawn%2]).GlobalPosition;
-		}
+		StringName name = new StringName($"Enemy_{_enemyCount}"); //unique identifier for each enemy (could be replaced by UUID)
+		_enemyCount++;
+		// GD.Print($"Enemy Init : {Multiplayer.GetUniqueId()}");
 
-		cyclespawn = cyclespawn + 1;
-		
+		SpawnEnemy(_cyclespawn%2, reversed, name); //Spawn Call for the host
+		Rpc("SpawnEnemy", _cyclespawn%2, reversed, name); //Spawn Call for the Player 2
+		_cyclespawn++;
 	}
 	
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventKey eventKey)
 			if (eventKey.Pressed && eventKey.Keycode == Key.Escape)
-				GetNode<Control>("PauseMenu").Visible = !GetNode<Control>("PauseMenu").Visible;
+				Rpc("_pauseGame");
+				
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true,TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void _pauseGame()
+	{
+		GD.Print("Execution of the function");
+		GetNode<Control>("PauseMenu").Visible = !GetNode<Control>("PauseMenu").Visible;
 	}
 
 	private void _on_disconnect_button_pressed()
 	{
 		GetTree().Quit();
+	}
+
+	public void NextLevel()
+	{
 	}
 }

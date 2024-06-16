@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using OutOfTheHole.Entity.Enemies;
 
 
 namespace OutofTheHole.Entity.Players;
@@ -11,7 +12,7 @@ public partial class Player : Entity
 	public string GunType = "Basic";
 	
 	//Set a Jump Height / Jump speed
-	public const float JumpVelocity = -400.0f;
+	public const float JumpVelocity = -250.0f;
 
 	public new static bool Alive;
 
@@ -25,7 +26,15 @@ public partial class Player : Entity
  
 	private float GunRotation;
 
+	private AnimationPlayer _spirtePlayer;
+
+	private string _lastInput;
+	
+	public Vector2 Spawn;
+
 	[Export] private PackedScene _gunScene;
+
+	[Export] public Camera2D Cam;
 
 	/// <summary>
 	/// All value are in pixel
@@ -36,13 +45,17 @@ public partial class Player : Entity
 
 	public new int MaxHp = 100;
 
-	public new float Speed = 200.0f;
-	
+	public new float Speed = 110.0f;
 
+	public bool jump;
 	
 	public bool Reversed;
+
+	
+	
 	public override void _Ready()
 	{
+		GD.Print(_gunScene);
 		// instantiate the gun of the player 
 		_gunObject = _gunScene.Instantiate<Gun.Gun>();
 		_gunObject.Id = int.Parse(Name);
@@ -50,19 +63,18 @@ public partial class Player : Entity
 		//set the sprite
 		if (Reversed)
 		{
-			this.Gravity = -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			_idleSprite = GetNode<AnimatedSprite2D>("Idle2");
-			_walkleft = GetNode<AnimatedSprite2D>("WalkLeft2");
-			_walkright = GetNode<AnimatedSprite2D>("WalkRight2");
+			this.Gravity = (float)(0.9 * -ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle());
+			Spawn = GetParent().GetNode("Checkpoints").GetNode<Node2D>("0").Position;
+			Position = Spawn;
 		}
 		else
 		{
-			this.Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-			_idleSprite = GetNode<AnimatedSprite2D>("Idle");
-			_walkleft = GetNode<AnimatedSprite2D>("WalkLeft");
-			_walkright = GetNode<AnimatedSprite2D>("Walkright");
+			this.Gravity = (float)(0.9 * ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle());
+			Spawn = GetParent().GetNode("Checkpoints").GetNode<Node2D>("1").Position;
+			Position = Spawn;
 		}
-
+		_spirtePlayer = GetNode<AnimationPlayer>("Animations");
+		
 		//set player hp
 		Hp = MaxHp;
 		Alive = true;
@@ -70,8 +82,24 @@ public partial class Player : Entity
 		// Allows this player to be played only by the player that is assigned to player 1
 		GD.Print(Name);
 		GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse((string)Name));
+		
+		// Instantiate the personal camera for each player
+		if (Multiplayer.GetUniqueId() == GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority())
+		{
+			Cam.MakeCurrent();
+		}
+
+		_spirtePlayer.Play("WalkRight");
 	}
 
+	/// <summary>
+	/// Will be called every frame
+	/// </summary>
+	/// <param name="delta"></param>
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+	}
 
 	/// <summary>
 	/// Main loop, will update every 60 frame
@@ -80,7 +108,6 @@ public partial class Player : Entity
 	/// <returns> void </returns>
 	public override void _PhysicsProcess(double delta)
 	{
-
 		// Check if the player is allowed to control this player according to the authority set at initialization. 
 		if (Alive && GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() ==
 			Multiplayer.GetUniqueId())
@@ -95,8 +122,11 @@ public partial class Player : Entity
 				if (!IsOnCeiling()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnCeiling())
+				if (jump)
+				{
 					velocity.Y -= JumpVelocity;
+					jump = false;
+				}
 			}
 			else
 			{
@@ -104,52 +134,53 @@ public partial class Player : Entity
 				if (!IsOnFloor()) velocity.Y += Gravity * (float)delta;
 				
 				// Handle Jump
-				if ((Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.Up)) && IsOnFloor())
+				if (jump)
+				{
 					velocity.Y += JumpVelocity;
+					jump = false;
+				}
 			}
 
-			Vector2 pos = CoordsHelper.ConvertCoords(new Vector2(1920, 1080), new Vector2(320, 180),
-				GetViewport().GetMousePosition());
+			Vector2 pos = GetGlobalMousePosition();
 			
 			GetNode<Node2D>("Gun").LookAt(pos);
 
 			//set movement (currenty arrow)
-			if (Input.IsKeyPressed(Key.Right))
+			if (Input.IsActionPressed("move_right"))
 			{
-				//show (or not) each sprite
-				_idleSprite.Visible = false;
-				_walkleft.Visible = false;
-				_walkright.Visible = true;
 				if (velocity.X >= 300)
 					velocity.X -= Speed;
 				else if (velocity.X < 0)
 					velocity.X -= Acceleration;
 				else
 					velocity.X = Speed;
+				//show the animation going right
+				_spirtePlayer.Play("WalkRight");
+				_lastInput = " ";
 			}
 
-			if (Input.IsKeyPressed(Key.Left))
+			if (Input.IsActionPressed("move_left"))
 			{
-				//show (or not) each sprite
-				_idleSprite.Visible = false;
-				_walkleft.Visible = true;
-				_walkright.Visible = false;
 				if (velocity.X <= -300)
 					velocity.X += Speed;
 				else if (velocity.X > 0)
 					velocity.X += Acceleration;
 				else
 					velocity.X = -Speed;
+				//show the animation going left
+				_spirtePlayer.Play("WalkLeft");
+				_lastInput = "left";
 			}
 
 			//adding a litlle momentum
-			if ((!Input.IsKeyPressed(Key.Left) && !Input.IsKeyPressed(Key.Right)) ||
-				(Input.IsKeyPressed(Key.Left) && Input.IsKeyPressed(Key.Right)))
+			if ((!Input.IsActionPressed("move_left") && !Input.IsActionPressed("move_right")) ||
+				(Input.IsActionPressed("move_left") && Input.IsActionPressed("move_right")))
 			{
 				//show (or not) each sprite
-				_idleSprite.Visible = true;
-				_walkleft.Visible = false;
-				_walkright.Visible = false;
+				if (_lastInput == "left")
+					_spirtePlayer.Play("IdleLeft");
+				else
+					_spirtePlayer.Play("IdleRight");
 				if (velocity.X <= 8 * Acceleration && velocity.X >= -8 * Acceleration) velocity.X = 0;
 
 				if (velocity.X > 0) velocity.X -= 8 * Acceleration;
@@ -158,14 +189,7 @@ public partial class Player : Entity
 			}
 
 			Velocity = velocity;
-
-			//play the sprite
-			if (_idleSprite.Visible) _idleSprite.Play();
-
-			if (_walkleft.Visible) _walkleft.Play();
-
-			if (_walkright.Visible) _walkright.Play();
-
+			
 			if (Input.IsActionPressed("click") && _gunObject.FireRate < _timeUntilFire)
 			{
 				_timeUntilFire = 0f;
@@ -182,6 +206,14 @@ public partial class Player : Entity
 
 			//Prepare the gun rotation for the sync and the "Mathf.Lerp".
 			GunRotation = GetNode<Node2D>("Gun").RotationDegrees;
+			if (invicibleTime != 0)
+			{
+				invicibleTime -= 1;
+			}
+			else
+			{
+				IsInvicible = false;
+			}
 		}
 		else
 		{
@@ -189,18 +221,84 @@ public partial class Player : Entity
 			GetNode<Node2D>("Gun").RotationDegrees =
 				Mathf.Lerp(GetNode<Node2D>("Gun").RotationDegrees, GunRotation, .1f);
 		}
-	}
 
+	}
+	/// <summary>
+	/// Wrapper for Death() Method that also includes a game quit. 
+	/// </summary>
+	/// <param name="target"></param>
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void KillPlayer()
+	{
+		
+		GlobalPosition = Spawn;
+		Hp = MaxHp;
+		Alive = true;
+		//Death();
+		//GetTree().Quit();
+	}
+	
+	/// <summary>
+	/// Sends the message to both instances that player should be Hurt, with intensity n and from the source.
+	/// If the player is invicible, nothing append
+	/// </summary>
+	/// <param name="n"> the amount of damage taken</param>
+	/// <param name="source">Entity That Hurt the player</param>
+	public override void Hurt(int n, Entity source)
+	{
+		if (IsInvicible != true)
+		{
+			if (source is Player)
+			{
+				n = 1;
+				jump = true;
+			}
+			Rpc("HurtPlayer", n, source);
+		}
+		
+	}
+	
 	/// <summary>
 	/// Set the damage, and death
 	/// </summary>
 	/// <param name="n"> the amount of damage taken</param>
-	public override void Hurt(int n,Entity source)
+	/// <param name="source">Entity That Hurt the player</param>
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void HurtPlayer(int n, Entity source)
 	{
-		Hp = Hp - n;
-		if (Hp <= 0)
+		if (IsInvicible != true)
 		{
-			Death();
+			Hp = Hp - n;
+			GD.Print($"Player {Name} Hurted by {source.Name}, Hp = {Hp}, Managed by {Multiplayer.GetUniqueId()}");
+			if (Hp <= 0)
+			{
+				// GD.Print($"Player {Name} Killed by {source.Name}", $" ID {Name}");
+				GD.Print("tp1");
+				Rpc("KillPlayer", Name); // Propagates the info that the player {Name} Should be killed. 
+				//Hp = MaxHp;
+				//Position = Spawn;
+				//Alive = true;
+			}
+		}
+
+		IsInvicible = true;
+		invicibleTime = 50;
+
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void Teleport(float X, float Y, bool rpc)
+	{
+		GD.Print("HEY ", Multiplayer.GetUniqueId()," " , Multiplayer.GetPeers()[0]);
+		// Vector2 temp = Position;
+		// temp.X += 400;
+
+		Position = new Vector2(X, Y);
+		
+		if (rpc == false)
+		{
+			GD.Print("CHEERS");
+			// RpcId(Multiplayer.GetPeers()[0], "Teleport", 0,0, true);
 		}
 	}
 	
@@ -210,11 +308,18 @@ public partial class Player : Entity
 	/// </summary>
 	
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	
 	private void FireBulletRpc()
 	{
+		// GD.Print($"{Name} shot, Managed by {Multiplayer.GetUniqueId()}");
 		var gunNode = GetNode<Node2D>("Gun");
 		var shootPoint = GetNode<Node2D>("Gun/ShootPoint");
 		_gunObject.FireBullet(gunNode, shootPoint, GetTree(),GunType,this);
 	}
+
+	private void _on_hit_box_map_body_entered(Node2D body)
+	{
+		GD.Print("got spiked by body");
+		KillPlayer();
+	}
+	
 }
