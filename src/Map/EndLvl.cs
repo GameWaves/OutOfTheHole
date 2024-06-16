@@ -5,7 +5,7 @@ using OutofTheHole.Multiplayer;
 
 public partial class EndLvl : Node2D
 {
-	[Export] private PackedScene Scene;
+	
 	public bool can;
 	public override void _Ready()
 	{
@@ -14,27 +14,25 @@ public partial class EndLvl : Node2D
 		{
 			GetNode<Sprite2D>("Sprite").Visible = false;
 		}
-		else
-		{
-			GetNode<Sprite2D>("SpriteReversed").Visible = false;
-		}
 	}
 	
 	private void _on_area_2d_body_entered(Node2D body) 
 	{
 		if (body is Player)
 		{
-			if (can)
-			{
-				can = false;
-				SceneManager.lvl += 1;
-			}
+				GameManager.Players[1].Player.GlobalPosition = body.GlobalPosition;
+				GameManager.Players[0].Player.GlobalPosition = body.GlobalPosition;
+			
+				GD.Print(Owner.GetPath());
+				GetTree().Root.AddChild(((PackedScene)ResourceLoader.Load("res://src/Map/Map2.tscn")).Instantiate());
+				GD.Print($"{GetTree().Root.GetChild(1).GetPath()}");
+				//Owner = GetTree().Root.GetChild(0);
+				//GetTree().ChangeSceneToPacked();
+				//((PackedScene)ResourceLoader.Load("res://src/Map/Map1.tscn")).Instantiate();
+			
+				Owner.Free();
 		}
-		GetParent<Node2D>().Visible = false; 
-		GetParent<Node2D>().Position = new Vector2(-10000000,10000000);
-		GetTree().ChangeSceneToFile($"res://src/Map/Map{SceneManager.lvl}.tscn");
 	}
-	
 }
 
 

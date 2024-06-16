@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgruv6lygtw3f"]
+
+[ext_resource type="PackedScene" uid="uid://dlvhhn7d3yn7g" path="res://src/Map/MapChanger.tscn" id="1_7jg2w"]
+
+[node name="Main" type="Node2D"]
+
+[node name="LevelHandler" parent="." instance=ExtResource("1_7jg2w")]
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="0" type="Node2D" parent="Checkpoints"]
+
+[node name="1" type="Node2D" parent="Checkpoints"]

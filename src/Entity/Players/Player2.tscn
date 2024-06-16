@@ -115,7 +115,6 @@ visibility_layer = 4
 position = Vector2(2, 9)
 
 [node name="Cam2" type="Camera2D" parent="."]
-zoom = Vector2(6, 6)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1, 12)

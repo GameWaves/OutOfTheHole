@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2scipkfpf3m1"]
+[gd_scene load_steps=9 format=3 uid="uid://k2hxcnswlefa"]
 
 [ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_i60y0"]
 [ext_resource type="TileSet" uid="uid://m7ypucnbnhgl" path="res://assets/tiles/TileSet.tres" id="1_r50al"]

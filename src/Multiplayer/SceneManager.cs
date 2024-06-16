@@ -16,12 +16,19 @@ public partial class SceneManager : Node2D
 	[Export] private PackedScene _enemy1Scene;
 	[Export] private PackedScene _enemy1ReversedScene;
 	[Export] private PackedScene _bossScene;
+
+	private static PackedScene[] _levels =
+	{
+		(PackedScene)ResourceLoader.Load("res://src/Map/Map1.tscn"),
+		(PackedScene)ResourceLoader.Load("res://src/Map/Map2.tscn"),
+		(PackedScene)ResourceLoader.Load("res://src/Map/Map3.tscn"),
+		(PackedScene)ResourceLoader.Load("res://src/Map/Map4.tscn"),
+		(PackedScene)ResourceLoader.Load("res://src/Map/Map5.tscn")
+	};
 	
 	
 	public int CouldownSumon = 0;
 	private int _cyclespawn = 0;
-
-	public static int lvl;
 	
 	private int _enemyCount = 0; // counts the number of enemies that have been spawned in the game.
 
@@ -84,11 +91,6 @@ public partial class SceneManager : Node2D
 			AddChild(enemy);
 			enemy.GlobalPosition = VARIABLE.GlobalPosition;
 		}
-
-		lvl = 1;
-
-
-
 	}
 	
 
@@ -118,7 +120,9 @@ public partial class SceneManager : Node2D
 		GetTree().Quit();
 	}
 
-	public void NextLevel()
+	public void NextLevel(int i)
 	{
+		GetTree().ChangeSceneToPacked(_levels[i + 1]);
 	}
+	
 }

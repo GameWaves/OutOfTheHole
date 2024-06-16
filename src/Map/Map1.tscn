@@ -1,19 +1,124 @@
-[gd_scene load_steps=10 format=3 uid="uid://pon8jmgidg3t"]
+[gd_scene load_steps=21 format=3 uid="uid://pon8jmgidg3t"]
 
 [ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_sltxc"]
 [ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_rpwrp"]
-[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_elbok"]
+[ext_resource type="Script" path="res://src/Entity/Players/Player.cs" id="3_emt53"]
+[ext_resource type="PackedScene" uid="uid://byexr753no7oj" path="res://src/Gun/Gun.tscn" id="4_sgshg"]
 [ext_resource type="PackedScene" uid="uid://jiaef84oed5c" path="res://src/Entity/Enemies/Enemy1.tscn" id="4_xgvqn"]
+[ext_resource type="Texture2D" uid="uid://bqpos4qxnmqij" path="res://assets/sprites/Player2-Sheet.png" id="5_8aeaq"]
 [ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_5137g"]
 [ext_resource type="TileSet" uid="uid://m7ypucnbnhgl" path="res://assets/tiles/TileSet.tres" id="6_1nsat"]
 [ext_resource type="PackedScene" uid="uid://bigqxjmh6xaow" path="res://src/Entity/Enemies/Boss.tscn" id="6_iskit"]
 [ext_resource type="PackedScene" uid="uid://dh7fcdk5ryxrp" path="res://src/Map/Checkpoints.tscn" id="7_3xeek"]
 [ext_resource type="PackedScene" uid="uid://bq2s6eqymgd4s" path="res://src/Map/EndLvl.tscn" id="9_p8ead"]
 
-[node name="Map" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fj4y"]
+size = Vector2(47.2727, 69.0909)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5h1fq"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:GunRotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:Hp")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:Alive")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_oujr7"]
+resource_name = "IdleLeft"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_wt0wr"]
+resource_name = "IdleRight"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_8rxgh"]
+resource_name = "WalkLeft"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_ppc46"]
+resource_name = "WalkRight"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ttfhr"]
+_data = {
+"IdleLeft": SubResource("Animation_oujr7"),
+"IdleRight": SubResource("Animation_wt0wr"),
+"WalkLeft": SubResource("Animation_8rxgh"),
+"WalkRight": SubResource("Animation_ppc46")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r5u4d"]
+size = Vector2(13, 19)
+
+[sub_resource type="PackedScene" id="PackedScene_1eqmj"]
+_bundled = {
+"conn_count": 1,
+"conns": PackedInt32Array(1073741833, 1073741834, 41, 42, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("Player", "CharacterBody2D", "position", "script", "_gunScene", "Cam", "CollisionShape2D", "CollisionShape2D", "position", "scale", "shape", "MultiplayerSynchronizer", "MultiplayerSynchronizer", "replication_config", "Shoot_point", "Node2D", "position", "Gun", "light_mask", "visibility_layer", "position", "Cam2", "Camera2D", "zoom", "Sprite2D", "Sprite2D", "position", "texture", "hframes", "frame", "Animations", "AnimationPlayer", "libraries", "HitBoxMap", "Area2D", "collision_mask", "CollisionShape2D", "CollisionShape2D", "position", "shape", "debug_color", "body_entered", "_on_hit_box_map_body_entered"),
+"node_count": 10,
+"node_paths": [NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("./HitBoxMap"), NodePath("HitBoxMap"), NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 4, 2, 0, 3, 1, 4, 2, 1073741829, 3, 0, 1073741824, 0, 7, 6, -1, 3, 8, 4, 9, 5, 10, 6, 0, 1073741825, 0, 12, 11, -1, 1, 13, 7, 0, 1073741826, 0, 15, 14, -1, 1, 16, 8, 0, 1073741827, 0, 2147483647, 17, 9, 3, 18, 10, 19, 11, 20, 12, 0, 1073741828, 0, 22, 21, -1, 1, 23, 13, 0, 1073741829, 0, 25, 24, -1, 4, 26, 14, 27, 15, 28, 16, 29, 17, 0, 1073741830, 0, 31, 30, -1, 1, 32, 18, 0, 1073741831, 0, 34, 33, -1, 1, 35, 19, 0, 1073741832, 0, 37, 36, -1, 3, 38, 20, 39, 21, 40, 22, 0),
+"variants": [Vector2(1, 0), ExtResource("3_emt53"), ExtResource("4_sgshg"), NodePath("Cam2"), Vector2(1.5, 9.5), Vector2(0.275, 0.275), SubResource("RectangleShape2D_1fj4y"), SubResource("SceneReplicationConfig_5h1fq"), Vector2(0.1562, 0), ExtResource("4_sgshg"), 0, 4, Vector2(2, 9), Vector2(6, 6), Vector2(-1, 12), ExtResource("5_8aeaq"), 16, 12, {
+"": SubResource("AnimationLibrary_ttfhr")
+}, 2, Vector2(1.5, 9.5), SubResource("RectangleShape2D_r5u4d"), Color(1, 0.0137799, 0.00544604, 0.42)],
+"version": 3
+}
+
+[node name="Map1" type="Node2D"]
 script = ExtResource("1_sltxc")
 _player1Scene = ExtResource("2_rpwrp")
-_player2Scene = ExtResource("3_elbok")
+_player2Scene = SubResource("PackedScene_1eqmj")
 _enemy1Scene = ExtResource("4_xgvqn")
 _enemy1ReversedScene = ExtResource("5_5137g")
 _bossScene = ExtResource("6_iskit")
@@ -60,10 +165,10 @@ spawn_path = NodePath("..")
 [node name="Checkpoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="Checkpoints"]
-position = Vector2(1908, 120)
+position = Vector2(1897, 61)
 
 [node name="1" type="Node2D" parent="Checkpoints"]
-position = Vector2(64, 151)
+position = Vector2(1899, 119)
 
 [node name="2" parent="Checkpoints" instance=ExtResource("7_3xeek")]
 position = Vector2(265, 70)
@@ -83,5 +188,5 @@ position = Vector2(1225, 54)
 [node name="7" parent="Checkpoints" instance=ExtResource("7_3xeek")]
 position = Vector2(1224, 121)
 
-[node name="EndLvl" parent="." instance=ExtResource("9_p8ead")]
-position = Vector2(1913, 94)
+[node name="101" parent="." instance=ExtResource("9_p8ead")]
+position = Vector2(1915, 84)
