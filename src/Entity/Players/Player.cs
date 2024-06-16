@@ -83,9 +83,7 @@ public partial class Player : Entity
 		// Instantiate the personal camera for each player
 		if (Multiplayer.GetUniqueId() == GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority())
 		{
-			Camera2D cam = new Camera2D();
-			cam.Zoom = new Vector2(6, 6);
-			this.AddChild(cam);	
+			Cam.MakeCurrent();
 		}
 
 		_spirtePlayer.Play("WalkRight");
