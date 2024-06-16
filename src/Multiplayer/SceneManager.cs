@@ -17,14 +17,20 @@ public partial class SceneManager : Node2D
 	[Export] private PackedScene _enemy1ReversedScene;
 	[Export] private PackedScene _bossScene;
 
+	[Export] private Node _firstMap;
+	
+	
 	public int CouldownSumon = 0;
 	private int _cyclespawn = 0;
 
+	public static int lvl;
+	
 	private int _enemyCount = 0; // counts the number of enemies that have been spawned in the game.
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		lvl = 1;
 		var index = 0;
 		foreach (var item in GameManager.Players)
 		{
@@ -49,22 +55,15 @@ public partial class SceneManager : Node2D
 			}
 
 			currentPlayer.Name = item.Id.ToString();
-			AddChild(currentPlayer);
+			_firstMap.AddChild(currentPlayer);
 			index++;
 		}
 
 
-		Array<Node> bossNodes = GetTree().GetNodesInGroup("Boss");
-		foreach (Node2D VARIABLE in bossNodes)
-		{
-			Boss boss;
-			boss = _bossScene.Instantiate<Boss>();
-			boss.tier = 2;
-			AddChild(boss);
-			boss.GlobalPosition = VARIABLE.GlobalPosition;
-		}
 		
-		Array<Node> eNodes = GetTree().GetNodesInGroup("EnemySpawnPoints");
+		
+		Array<Node> eNodes = GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").GetTree().GetNodesInGroup("EnemySpawnPoints");
+		GD.Print("NODES: ", eNodes.Count);
 		foreach (Node2D VARIABLE in eNodes)
 		{
 			Enemy enemy;
@@ -82,8 +81,18 @@ public partial class SceneManager : Node2D
 			enemy.GlobalPosition = VARIABLE.GlobalPosition;
 		}
 		
-		
-		
+		Array<Node> bossNodes = GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").GetTree().GetNodesInGroup("Boss");
+		foreach (Node2D VARIABLE in bossNodes)
+		{
+			Boss boss;
+			boss = _bossScene.Instantiate<Boss>();
+			boss.tier = 1;
+			GetTree().Root.GetNode("MapMaster").GetNode($"Map{lvl}").AddChild(boss);	
+			boss.GlobalPosition = VARIABLE.GlobalPosition;
+		}
+
+
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -139,5 +148,9 @@ public partial class SceneManager : Node2D
 	private void _on_disconnect_button_pressed()
 	{
 		GetTree().Quit();
+	}
+
+	public void NextLevel()
+	{
 	}
 }

@@ -1,16 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://c2em77lmsto1a"]
+[gd_scene load_steps=23 format=3 uid="uid://c2em77lmsto1a"]
 
-[ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_yw8ut"]
-[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_lptt6"]
-[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_x5212"]
-[ext_resource type="PackedScene" uid="uid://jiaef84oed5c" path="res://src/Entity/Enemies/Enemy1.tscn" id="4_0snh7"]
-[ext_resource type="StyleBox" uid="uid://5ldwkxfugrym" path="res://assets/ui/new_style_box_texture.tres" id="4_ns4c3"]
-[ext_resource type="Texture2D" uid="uid://ckmioauc8qfgp" path="res://assets/tiles/Corner_left.png" id="4_tc6ew"]
-[ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_8w7nm"]
-[ext_resource type="Texture2D" uid="uid://deawxkwaf53ng" path="res://assets/tiles/Corner_right.png" id="5_l41sn"]
-[ext_resource type="Texture2D" uid="uid://drpl4tto1fckc" path="res://assets/tiles/Core_planet.png" id="6_d2of0"]
-[ext_resource type="PackedScene" uid="uid://bigqxjmh6xaow" path="res://src/Entity/Enemies/Boss.tscn" id="6_e7b15"]
-[ext_resource type="Texture2D" uid="uid://uf6i3t62a0y3" path="res://assets/ui/button.png" id="9_6s6l0"]
+[ext_resource type="Script" path="res://src/Multiplayer/SceneManager.cs" id="1_6ol1o"]
+[ext_resource type="PackedScene" uid="uid://c13btmnbey1tq" path="res://src/Entity/Players/Player1.tscn" id="2_id22t"]
+[ext_resource type="PackedScene" uid="uid://b8s0e4hxebqpn" path="res://src/Entity/Players/Player2.tscn" id="3_lv4al"]
+[ext_resource type="PackedScene" uid="uid://jiaef84oed5c" path="res://src/Entity/Enemies/Enemy1.tscn" id="4_mxfqj"]
+[ext_resource type="PackedScene" uid="uid://bhx6odnew5x1o" path="res://src/Entity/Enemies/Enemy1Reversed.tscn" id="5_mk6wx"]
+[ext_resource type="StyleBox" uid="uid://5ldwkxfugrym" path="res://assets/ui/new_style_box_texture.tres" id="6_70pc3"]
+[ext_resource type="Texture2D" uid="uid://ckmioauc8qfgp" path="res://assets/tiles/Corner_left.png" id="7_470yr"]
+[ext_resource type="Texture2D" uid="uid://deawxkwaf53ng" path="res://assets/tiles/Corner_right.png" id="8_2q4il"]
+[ext_resource type="Texture2D" uid="uid://c6mr6u17ouwqb" path="res://assets/background/credits.png" id="9_mwcw7"]
+[ext_resource type="Texture2D" uid="uid://uf6i3t62a0y3" path="res://assets/ui/button.png" id="10_cgrei"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_muvmw"]
 size = Vector2(1163.64, 229.091)
@@ -25,28 +24,28 @@ size = Vector2(65.4545, 21.8182)
 size = Vector2(1163.64, 65.5454)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bh5vn"]
-texture = ExtResource("4_tc6ew")
+texture = ExtResource("7_470yr")
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 1
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_157v8"]
-texture = ExtResource("5_l41sn")
+texture = ExtResource("8_2q4il")
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_86088"]
-texture = ExtResource("6_d2of0")
+texture = ExtResource("9_mwcw7")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_byud6"]
-texture = ExtResource("9_6s6l0")
+texture = ExtResource("10_cgrei")
 region_rect = Rect2(7.99898, 26.6477, 47.2957, 12.2167)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8mbf4"]
-texture = ExtResource("9_6s6l0")
+texture = ExtResource("10_cgrei")
 region_rect = Rect2(7.99898, 26.6477, 47.2957, 12.2167)
 modulate_color = Color(0.32549, 0.32549, 0.32549, 1)
 
-[sub_resource type="Image" id="Image_octdl"]
+[sub_resource type="Image" id="Image_esfd5"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 68, 68, 183, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 68, 68, 180, 255, 255, 255, 0, 255, 255, 255, 0, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 69, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 227, 69, 255, 255, 227, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 69, 255, 128, 255, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 69, 255, 128, 255, 69, 255, 128, 255, 68, 179, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 68, 176, 128, 255, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 69, 255, 128, 255, 69, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 69, 255, 128, 255, 69, 255, 128, 255, 69, 255, 128, 255, 68, 209, 128, 255, 64, 8, 255, 255, 255, 0, 255, 255, 255, 0, 128, 255, 64, 8, 128, 255, 68, 214, 255, 255, 255, 0, 255, 255, 255, 0, 69, 255, 162, 255, 69, 255, 162, 255, 255, 255, 255, 0, 255, 255, 255, 0, 69, 255, 162, 255, 69, 255, 162, 255, 69, 255, 162, 255, 68, 255, 162, 243, 70, 255, 160, 40, 255, 255, 255, 0, 67, 255, 163, 91, 68, 255, 163, 86, 255, 255, 255, 0, 67, 255, 161, 49, 255, 255, 255, 0, 255, 255, 255, 0, 69, 255, 162, 255, 69, 255, 162, 255, 255, 255, 255, 0, 69, 255, 162, 255, 69, 255, 162, 255, 69, 255, 162, 255, 69, 255, 162, 255, 68, 255, 163, 94, 255, 255, 255, 0, 69, 255, 162, 33, 69, 255, 162, 241, 68, 255, 161, 239, 68, 255, 162, 30, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 69, 215, 255, 255, 69, 215, 255, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 0, 255, 255, 1, 68, 215, 255, 194, 69, 215, 255, 255, 69, 215, 255, 255, 68, 215, 255, 191, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 69, 215, 255, 255, 69, 215, 255, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 67, 215, 255, 114, 69, 215, 255, 255, 69, 215, 255, 255, 69, 215, 255, 255, 69, 215, 255, 255, 68, 215, 255, 108, 255, 255, 255, 0, 255, 255, 255, 0, 128, 69, 255, 255, 128, 69, 255, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 128, 68, 255, 227, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 255, 128, 68, 255, 224, 255, 255, 255, 0, 255, 255, 255, 0, 128, 69, 255, 255, 128, 69, 255, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 128, 69, 255, 233, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 255, 128, 69, 255, 230, 255, 255, 255, 0, 255, 255, 255, 0, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 68, 152, 64, 255, 255, 255, 0, 255, 68, 151, 139, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 68, 150, 134, 255, 255, 255, 0, 255, 255, 255, 0, 255, 68, 150, 180, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 69, 150, 255, 255, 68, 150, 191, 255, 255, 255, 0, 255, 85, 170, 3, 255, 68, 150, 138, 255, 69, 150, 233, 255, 69, 150, 233, 255, 68, 149, 135, 255, 0, 128, 2, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -56,7 +55,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_inxwy"]
-image = SubResource("Image_octdl")
+image = SubResource("Image_esfd5")
 
 [sub_resource type="Theme" id="Theme_6q6sw"]
 Button/styles/focus = SubResource("StyleBoxTexture_byud6")
@@ -65,13 +64,12 @@ Button/styles/normal = SubResource("StyleBoxTexture_byud6")
 Button/styles/pressed = SubResource("StyleBoxTexture_8mbf4")
 EditorIcons/icons/StyleBoxTexture = SubResource("ImageTexture_inxwy")
 
-[node name="Map2" type="Node2D"]
-script = ExtResource("1_yw8ut")
-_player1Scene = ExtResource("2_lptt6")
-_player2Scene = ExtResource("3_x5212")
-_enemy1Scene = ExtResource("4_0snh7")
-_enemy1ReversedScene = ExtResource("5_8w7nm")
-_bossScene = ExtResource("6_e7b15")
+[node name="Map" type="Node2D"]
+script = ExtResource("1_6ol1o")
+_player1Scene = ExtResource("2_id22t")
+_player2Scene = ExtResource("3_lv4al")
+_enemy1Scene = ExtResource("4_mxfqj")
+_enemy1ReversedScene = ExtResource("5_mk6wx")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(1, 4)
@@ -117,30 +115,21 @@ shape = SubResource("RectangleShape2D_wxjti")
 position = Vector2(298.182, 101.818)
 shape = SubResource("RectangleShape2D_wxjti")
 
-[node name="EnemySpawns" type="Node2D" parent="."]
+[node name="Checkpoints" type="Node2D" parent="."]
 position = Vector2(24, 0)
 
-[node name="2" type="Node2D" parent="EnemySpawns" groups=["EnemySpawnPoints"]]
-position = Vector2(46, 72)
+[node name="0" type="Node2D" parent="Checkpoints" groups=["SpawnPoints"]]
+position = Vector2(26, 102)
 
-[node name="3" type="Node2D" parent="EnemySpawns" groups=["EnemySpawnPoints"]]
-position = Vector2(56, 136)
-
-[node name="0" type="Node2D" parent="EnemySpawns" groups=["SpawnPoints"]]
-position = Vector2(33, 100)
-
-[node name="1" type="Node2D" parent="EnemySpawns" groups=["SpawnPoints"]]
+[node name="1" type="Node2D" parent="Checkpoints" groups=["SpawnPoints"]]
 position = Vector2(23, 36)
-
-[node name="4" type="Node2D" parent="EnemySpawns" groups=["Boss Spawn"]]
-position = Vector2(235, 52)
 
 [node name="Panel3" type="Panel" parent="."]
 offset_left = 218.0
 offset_top = 82.0
 offset_right = 236.0
 offset_bottom = 89.0
-theme_override_styles/panel = ExtResource("4_ns4c3")
+theme_override_styles/panel = ExtResource("6_70pc3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel6" type="Panel" parent="."]
@@ -156,7 +145,7 @@ offset_left = 106.0
 offset_top = 42.0
 offset_right = 124.0
 offset_bottom = 48.0
-theme_override_styles/panel = ExtResource("4_ns4c3")
+theme_override_styles/panel = ExtResource("6_70pc3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel4" type="Panel" parent="."]
@@ -164,7 +153,7 @@ offset_left = 144.0
 offset_top = 54.0
 offset_right = 162.0
 offset_bottom = 61.0
-theme_override_styles/panel = ExtResource("4_ns4c3")
+theme_override_styles/panel = ExtResource("6_70pc3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel7" type="Panel" parent="."]
@@ -172,7 +161,7 @@ offset_left = 180.0
 offset_top = 71.0
 offset_right = 198.0
 offset_bottom = 78.0
-theme_override_styles/panel = ExtResource("4_ns4c3")
+theme_override_styles/panel = ExtResource("6_70pc3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel8" type="Panel" parent="."]
@@ -180,14 +169,14 @@ offset_left = 255.0
 offset_top = 94.0
 offset_right = 273.0
 offset_bottom = 101.0
-theme_override_styles/panel = ExtResource("4_ns4c3")
+theme_override_styles/panel = ExtResource("6_70pc3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel9" type="Panel" parent="."]
 offset_left = 295.0
 offset_right = 320.0
 offset_bottom = 132.0
-theme_override_styles/panel = ExtResource("4_ns4c3")
+theme_override_styles/panel = ExtResource("6_70pc3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel10" type="Panel" parent="."]
@@ -200,20 +189,23 @@ metadata/_edit_use_anchors_ = true
 offset_top = 117.0
 offset_right = 320.0
 offset_bottom = 180.0
-theme_override_styles/panel = ExtResource("4_ns4c3")
+theme_override_styles/panel = ExtResource("6_70pc3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
 offset_right = 320.0
 offset_bottom = 18.0
-theme_override_styles/panel = ExtResource("4_ns4c3")
+theme_override_styles/panel = ExtResource("6_70pc3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel11" type="Panel" parent="."]
 show_behind_parent = true
 z_index = -1
-offset_right = 320.0
-offset_bottom = 180.0
+offset_left = 25.0
+offset_top = 1.0
+offset_right = 345.0
+offset_bottom = 181.0
+scale = Vector2(0.847512, 0.785714)
 theme_override_styles/panel = SubResource("StyleBoxTexture_86088")
 metadata/_edit_use_anchors_ = true
 
