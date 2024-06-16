@@ -12,7 +12,7 @@ public partial class Boss : Entity
 	public bool awaken = false;
 	public Player P1 = GameManager.Players[0].Player;
 	public Player P2 = GameManager.Players[1].Player;
-	public int cowldown = 50;
+	public int cowldown = 100;
 	public int tier;
 	public int MaxHp = 2000;
 
@@ -107,7 +107,7 @@ public partial class Boss : Entity
 						SpawnProjectile(true);
 
 					}
-					cowldown = 50;
+					cowldown = 100;
 				}
 			}
 		}

@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfwxtrlaof02c"]
+
+[ext_resource type="Texture2D" uid="uid://deawxkwaf53ng" path="res://assets/tiles/Corner_right.png" id="1_ai0p5"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_yyd76"]
+script/source = "using Godot;
+using System;
+
+public partial class MapChange : Node2D
+{
+    [Export] private PackedScene _map;
+    public override void _Ready()
+    {
+        
+    }
+
+    public void _on_area_2d_body_entered(Node Body)
+    {
+        var root = GetTree();
+        GD.Print($\"{Body.Name} hit the block\");
+        GetTree().ChangeSceneToPacked(_map);
+    }
+}
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f1okm"]
+
+[node name="Node2D" type="Node2D"]
+script = SubResource("CSharpScript_yyd76")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_f1okm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ai0p5")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
